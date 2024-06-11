@@ -1,0 +1,265 @@
+<div
+  class="container p-3 p-sm-5"
+  style="background-color: white; height: auto; width: 100%; border-radius: 8px"
+>
+  <div class="row">
+    <div class="col">
+      <img src="./assets/images/ma.jpeg" height="60px" alt="" />
+    </div>
+  </div>
+  <br />
+
+  <div class="row">
+    <div class="col">
+      <h2 class="text-muted">Get started!</h2>
+    </div>
+  </div>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <ng-container *ngIf="stepsForm === 1">
+      <div class="row">
+        <div class="col">
+          <label>First Name</label>
+          <input
+            type="text"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="FirstName"
+          />
+          <div *ngIf="isInvalidAndTouched('FirstName')" class="text-danger">
+            First name is required
+          </div>
+        </div>
+        <div class="col">
+          <label>Last Name</label>
+          <input
+            type="text"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="LastName"
+          />
+          <div *ngIf="isInvalidAndTouched('LastName')" class="text-danger">
+            Last name is required
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label>Email</label>
+          <input
+            type="email"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="UserName"
+          />
+          <div *ngIf="isInvalidAndTouched('UserName')" class="text-danger">
+            Email/username is required
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="d-grid gap-2">
+        <a class="btn btn-primary" type="button" (click)="changeStep(2)">
+          Next
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="stepsForm === 2">
+      <div class="row">
+        <div class="col">
+          <label>Address</label>
+          <input
+            type="text"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="Address"
+          />
+          <div *ngIf="isInvalidAndTouched('Address')" class="text-danger">
+            Address is required
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label>City</label>
+          <input
+            type="text"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="City"
+          />
+          <div *ngIf="isInvalidAndTouched('City')" class="text-danger">
+            City is required
+          </div>
+        </div>
+        <div class="col">
+          <label>State</label>
+          <select name="" id="" class="form-control" formControlName="StateID">
+            <option value="" selected disabled>Select one...</option>
+            <option *ngFor="let state of profileState" [value]="state.StateID">
+              {{state.StateAbbreviation}}
+            </option>
+          </select>
+          <div *ngIf="isInvalidAndTouched('StateID')" class="text-danger">
+            State is required
+          </div>
+        </div>
+        <div class="col">
+          <label>Zip</label>
+          <input
+            type="text"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="Zip"
+          />
+          <div *ngIf="isInvalidAndTouched('Zip')" class="text-danger">
+            Zip code is required
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label>Phone number</label>
+          <input
+            type="tel"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="PhoneNumber"
+            appPhoneNumberMask
+          />
+          <div *ngIf="isInvalidAndTouched('PhoneNumber')" class="text-danger">
+            Phone number is required
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="d-flex gap-2">
+        <button
+          class="btn btn-secondary w-100"
+          type="button"
+          (click)="changeStep(1)"
+        >
+          Back
+        </button>
+        <button
+          class="btn btn-primary w-100"
+          type="button"
+          (click)="changeStep(3)"
+        >
+          Next
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="stepsForm === 3">
+      <div class="row">
+        <div class="col">
+          <label>National Producer Number (NPN)</label>
+          <input
+            type="number"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="NationalProducerNumber"
+          />
+          <div
+            *ngIf="isInvalidAndTouched('NationalProducerNumber')"
+            class="text-danger"
+          >
+            NPN is required
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label>Password</label>
+          <input
+            type="password"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="Userpassword"
+          />
+          <div
+            *ngIf="profileForm.get('Userpassword')?.invalid && profileForm.get('Userpassword')!.touched"
+            class="text-danger"
+          >
+            Password must be at least 8 characters, include 1 uppercase letter
+            and 1 number
+          </div>
+          <div *ngIf="isInvalidAndTouched('Userpassword')" class="text-danger">
+            Password is required
+          </div>
+        </div>
+        <div class="col">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name=""
+            id=""
+            class="form-control"
+            formControlName="ConfirmPassword"
+          />
+          <div
+            *ngIf="profileForm.hasError('mismatch') && profileForm.get('ConfirmPassword')?.touched"
+            class="text-danger"
+          >
+            Passwords do not match
+          </div>
+          <div
+            *ngIf="isInvalidAndTouched('ConfirmPassword')"
+            class="text-danger"
+          >
+            Confirm Password is required
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <div class="d-flex gap-2">
+        <button
+          class="btn btn-secondary w-100"
+          type="button"
+          (click)="changeStep(2)"
+        >
+          Back
+        </button>
+        <button class="btn btn-success w-100" type="submit">
+          <div
+            class="spinner-border text-light"
+            role="status"
+            style="height: 20px; width: 20px"
+            *ngIf="isLoading"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div *ngIf="!isLoading">Register</div>
+        </button>
+      </div>
+    </ng-container>
+
+    <br />
+    <h6>
+      Already have an account?
+      <small
+        ><a class="text-primary" [routerLink]="['/public/sign-in']"
+          >Sign In</a
+        ></small
+      >
+    </h6>
+  </form>
+</div>

@@ -1,0 +1,96 @@
+.card-people{
+  height: 100px;
+  width: 200px;
+  background-color: #55D6C2;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 10px;
+  margin-bottom: 20px;
+
+  .number-part{
+    height: 80%;
+    width: 100%;
+    font-size: 40px;
+    font-weight: bold;
+    padding:5px  10px;
+  }
+
+  .title-part{
+    background-color: #38AE9C;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+  }
+}
+
+.card-duplicate{
+  height: 100px;
+  width: 200px;
+  background-color: #F9B609;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 20px;
+
+  .number-part{
+    height: 80%;
+    width: 100%;
+    font-size: 40px;
+    font-weight: bold;
+    padding:5px  10px;
+  }
+
+  .title-part{
+    background-color: #D29B0C;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+  }
+}
+
+.chart-container{
+
+
+}
+
+
+.custom-buttom{
+  background-color: #2271b8;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover{
+    box-shadow: 0px 0px 3px 0px #000;
+  }
+}
+
+
+thead{
+  vertical-align: middle !important;
+  height: 40px;
+
+  th{
+    padding-right: 30px;
+  }
+}
+
+.pagination .page-item .page-link {
+  cursor: pointer;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .card-people, .card-duplicate{
+    width: 100%;
+  }
+}

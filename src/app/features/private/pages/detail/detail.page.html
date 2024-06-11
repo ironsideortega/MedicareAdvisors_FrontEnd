@@ -1,0 +1,2119 @@
+<br />
+<div class="row">
+  <div class="col">
+    <h4 class="mb-0">
+      <a class="btn btn-link" [routerLink]="['/private/summary']"
+        ><i class="bi bi-arrow-left"></i
+      ></a>
+      Contact Details
+    </h4>
+    <p class="mb-0 text-muted">
+      Detailed information about your selected contact.
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-lg-3 mt-4"></div>
+  <div class="col-sm-12 col-lg-3 mt-4">
+    <div class="row">
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-lg-6"></div>
+</div>
+<br />
+<div
+  class="row d-none d-md-flex"
+  style="border-bottom: 1px solid rgba(128, 128, 128, 0.252)"
+>
+  <div class="col">
+    <div
+      class="custom-buttom-check"
+      [ngClass]="{ 'active': buttonActive.includes('Prospect') }"
+      (click)="addOrRemoveTabs('Prospect')"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    >
+      <img
+        src="./assets/icons/employees.png"
+        alt=""
+        width="32px"
+        style="padding-bottom: 10px"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div
+      class="custom-buttom-check"
+      [ngClass]="{ 'active': buttonActive.includes('Doctor') }"
+      (click)="addOrRemoveTabs('Doctor')"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#doctorCollapse"
+      aria-expanded="false"
+      aria-controls="doctorCollapse"
+    >
+      <img
+        src="./assets/icons/doctor.png"
+        alt=""
+        width="32px"
+        style="padding-bottom: 10px"
+      />
+    </div>
+  </div>
+
+  <div class="col">
+    <div
+      class="custom-buttom-check"
+      [ngClass]="{ 'active': buttonActive.includes('Rx') }"
+      (click)="addOrRemoveTabs('Rx')"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#rxCollapse"
+      aria-expanded="false"
+      aria-controls="rxCollapse"
+    >
+      <img
+        src="./assets/icons/check-up.png"
+        alt=""
+        width="32px"
+        style="padding-bottom: 10px"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div
+      class="custom-buttom-check"
+      [ngClass]="{ 'active': buttonActive.includes('Policy') }"
+      (click)="addOrRemoveTabs('Policy')"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#policyCollapse"
+      aria-expanded="false"
+      aria-controls="policyCollapse"
+    >
+      <img
+        src="./assets/icons/insurance.png"
+        alt=""
+        width="32px"
+        style="padding-bottom: 10px"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div
+      class="custom-buttom-check"
+      [ngClass]="{ 'active': buttonActive.includes('Private') }"
+      (click)="addOrRemoveTabs('Private')"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#privateCollapse"
+      aria-expanded="false"
+      aria-controls="privateCollapse"
+    >
+      <img
+        src="./assets/icons/secure-data.png"
+        alt=""
+        width="32px"
+        style="padding-bottom: 10px"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <!-- <div class="custom-buttom-check">Open all tabs</div> -->
+  </div>
+  <div class="col"></div>
+  <div class="col">
+    <!-- <div class="custom-buttom-check">Manage View</div> -->
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-12">
+    <div
+      class="custom-collapse-button"
+      [ngClass]="{ 'active': buttonActive.includes('Prospect') }"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      (click)="addOrRemoveTabs('Prospect')"
+    >
+      <div class="col-6 d-flex justify-content-star align-items-center">
+        Prospect:
+      </div>
+      <div class="col-4"></div>
+      <div class="col-2 d-flex gap-3 justify-content-end">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="collapse show" id="collapseExample">
+      <div class="card card-body">
+        <form [formGroup]="contactForm">
+          <div class="row">
+            <div class="col-sm-12 col-lg-4">
+              <h6>Personal info</h6>
+              <br />
+              <div class="form-group">
+                <label for="">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="">Middle Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="midleName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="">Gender</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="gender"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let gender of gender"
+                    [value]="gender.GenderID"
+                  >
+                    {{gender.GenderValue}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Suffix</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="suffix"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let suffix of suffixes"
+                    [value]="suffix.SuffixID"
+                  >
+                    {{suffix.SuffixValue}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Title</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="title"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option *ngFor="let title of titles" [value]="title.TitleID">
+                    {{title.TitleValue}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">DOB</label>
+                <input type="date" class="form-control" formControlName="dob" />
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+              <h6>Other Info</h6>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Spouse</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="spouse"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Marital Status</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="maritalStatus"
+                    >
+                      <option selected disabled value="">Select one...</option>
+                      <option
+                        *ngFor="let mStatus of maritalStatus"
+                        [value]="mStatus.MaritalStatusID"
+                      >
+                        {{mStatus.MaritalStatusValue}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Preferred Language</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="preferredLanguage"
+                    >
+                      <option selected disabled value="">Select one...</option>
+                      <option
+                        *ngFor="let language of pLanguage"
+                        [value]="language.PreferredLanguageID"
+                      >
+                        {{language.PreferredLanguageValue}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Special Designation</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="specialDesignation"
+                    >
+                      <option selected disabled value="">Select one...</option>
+                      <option
+                        *ngFor="let special of specialD"
+                        [value]="special.SpecialDesignationID"
+                      >
+                        {{special.SpecialDesignationValue}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Ocupation</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="ocupation"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Resident Status</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="residentStatus"
+                    >
+                      <option selected disabled value="">Select one...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-sm-12 col-lg-4">
+              <h6>Communication and Location</h6>
+              <br />
+              <div class="row">
+                <div class="col-10">
+                  <div class="form-group">
+                    <label for="">Preferred Email</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="email"
+                    />
+                  </div>
+                </div>
+                <div class="col-2 mt-4">
+                  <div class="form-group">
+                    <label for="">&nbsp;</label>
+                    <button
+                      class="btn btn-custom-color"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-envelope"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-10">
+                  <div class="form-group">
+                    <label for="">Preferred Phone</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      formControlName="phone"
+                      appPhoneNumberMask
+                    />
+                  </div>
+                </div>
+                <div class="col-2 mt-4">
+                  <div class="form-group">
+                    <label for="">&nbsp;</label>
+                    <button
+                      class="btn btn-custom-color"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModalPhone"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-telephone"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-10">
+                  <div class="form-group">
+                    <label for="">Preferred Address</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="address"
+                    />
+                  </div>
+                </div>
+                <div class="col-2 mt-4">
+                  <div class="form-group">
+                    <label for="">&nbsp;</label>
+                    <button
+                      class="btn btn-custom-color"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModalAddress"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-geo"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <h6>Status & Source</h6>
+
+              <div class="form-group" style="margin-top: 13px">
+                <label for="">Status</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="status"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let status of statuses"
+                    [value]="status.ContactStatusID"
+                  >
+                    {{status.ContactStatusValue}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Source</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="source"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let source of sources"
+                    [value]="source.SourceID"
+                  >
+                    {{source.SourceValue}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Referred By</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="referredBy"
+                />
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                class="btn"
+                [ngClass]="{ 'btn-warning': buttonUpdateForContact === 'Update', 'btn-danger': buttonUpdateForContact !== 'Update' }"
+                (click)="enableForm('contact')"
+              >
+                {{buttonUpdateForContact}}</button
+              >&nbsp;&nbsp;
+              <button
+                *ngIf="buttonUpdateContactEnabled"
+                type="submit"
+                class="btn btn-success"
+                (click)="saveData()"
+                [disabled]="isLoading"
+              >
+                <div
+                  class="spinner-border text-light"
+                  role="status"
+                  style="height: 20px; width: 20px"
+                  *ngIf="isLoading"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div *ngIf="!isLoading">Save</div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-12">
+    <div
+      class="custom-collapse-button"
+      [ngClass]="{ 'active': buttonActive.includes('Doctor') }"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#doctorCollapse"
+      aria-expanded="false"
+      aria-controls="doctorCollapse"
+      (click)="addOrRemoveTabs('Doctor')"
+    >
+      <div class="col-6 d-flex justify-content-star align-items-center">
+        Doctor:
+      </div>
+      <div class="col-4"></div>
+      <div class="col-2 d-flex gap-3 justify-content-end">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="collapse" id="doctorCollapse">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col d-flex justify-content-end">
+            <button
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalDoctor"
+            >
+              Add New
+            </button>
+          </div>
+          <br />
+          <br />
+          <div class="row mt-4">
+            <div class="col-12 col-md-3 mb-3" *ngFor="let doctor of doctorData">
+              <div class="doctor-card">
+                <div class="row p-0">
+                  <div class="col p-0 d-flex justify-content-end">
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-link"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-three-dots"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"
+                          />
+                        </svg>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item text-danger"
+                            (click)="deleteDoctor(doctor.ProviderID)"
+                            >delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-lungs-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 1a.5.5 0 0 1 .5.5v5.243L9 7.1V4.72C9 3.77 9.77 3 10.72 3c.524 0 1.023.27 1.443.592.431.332.847.773 1.216 1.229.736.908 1.347 1.946 1.58 2.48.176.405.393 1.16.556 2.011.165.857.283 1.857.24 2.759-.04.867-.232 1.79-.837 2.33-.67.6-1.622.556-2.741-.004l-1.795-.897A2.5 2.5 0 0 1 9 11.264V8.329l-1-.715-1 .715V7.214c-.1 0-.202.03-.29.093l-2.5 1.786a.5.5 0 1 0 .58.814L7 8.329v2.935A2.5 2.5 0 0 1 5.618 13.5l-1.795.897c-1.12.56-2.07.603-2.741.004-.605-.54-.798-1.463-.838-2.33-.042-.902.076-1.902.24-2.759.164-.852.38-1.606.558-2.012.232-.533.843-1.571 1.579-2.479.37-.456.785-.897 1.216-1.229C4.257 3.27 4.756 3 5.28 3 6.23 3 7 3.77 7 4.72V7.1l.5-.357V1.5A.5.5 0 0 1 8 1m3.21 8.907a.5.5 0 1 0 .58-.814l-2.5-1.786A.5.5 0 0 0 9 7.214V8.33z"
+                      />
+                    </svg>
+                    &nbsp;
+                    <span class="dr-name"
+                      >{{doctor.FirstName}} {{doctor.LastName}}
+                      <small
+                        *ngIf="doctor.Source"
+                        class="bg-secondary text-white p-1"
+                        style="
+                          border-radius: 5px;
+                          font-size: 12px;
+                          cursor: pointer;
+                        "
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Doctor's data was entered manually"
+                        >M</small
+                      >
+                      <small
+                        *ngIf="!doctor.Source"
+                        class="bg-secondary text-white p-1"
+                        style="
+                          border-radius: 5px;
+                          font-size: 12px;
+                          cursor: pointer;
+                        "
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Doctor's data was not entered manually"
+                        >A</small
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex">
+                    <div style="width: 24px; display: block"></div>
+                    &nbsp;
+                    <span class="dr-title"
+                      >{{doctor.ProviderSpecialtyAPI ||
+                      doctor.ProviderSpecialtyValue}}</span
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex">
+                    <div style="width: 24px; display: block"></div>
+                    &nbsp;
+                    <div class="dr-importance">
+                      {{doctor.ProviderImportanceValue}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-12">
+    <div
+      class="custom-collapse-button"
+      [ngClass]="{ 'active': buttonActive.includes('Rx') }"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#rxCollapse"
+      aria-expanded="false"
+      aria-controls="rxCollapse"
+      (click)="addOrRemoveTabs('Rx')"
+    >
+      <div class="col-3 d-flex justify-content-star align-items-center">
+        Health:
+      </div>
+      <div class="col-7"></div>
+      <div class="col-2 d-flex gap-3 justify-content-end">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="collapse" id="rxCollapse">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col d-flex justify-content-end">
+            <button
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalRx"
+            >
+              Add New
+            </button>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-3" *ngFor="let prescriptions of prescriptionsList">
+              <div class="doctor-card">
+                <div class="row p-0">
+                  <div class="col p-0 d-flex justify-content-end">
+                    <a class="btn btn-link">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <i class="bi bi-capsule-pill"></i>
+                    &nbsp;
+                    <span class="dr-name">{{prescriptions.DrugName}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex">
+                    <div style="width: 24px; display: block"></div>
+                    &nbsp; &nbsp;
+                    <span class="rx-dosage">{{prescriptions.Package}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex">
+                    <div style="width: 24px; display: block"></div>
+
+                    <div class="dr-importance">{{prescriptions.Quantity}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-12">
+    <div
+      class="custom-collapse-button"
+      [ngClass]="{ 'active': buttonActive.includes('Policy') }"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#policyCollapse"
+      aria-expanded="false"
+      aria-controls="policyCollapse"
+      (click)="addOrRemoveTabs('Policy')"
+    >
+      <div class="col-3 d-flex justify-content-star align-items-center">
+        Policy:
+      </div>
+      <div class="col-7"></div>
+      <div class="col-2 d-flex gap-3 justify-content-end">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="collapse" id="policyCollapse">
+      <div class="card card-body">
+        <br />
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="alert alert-danger" role="alert">
+              This section is currently under construction.
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-12">
+    <div
+      class="custom-collapse-button"
+      [ngClass]="{ 'active': buttonActive.includes('Private') }"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#privateCollapse"
+      aria-expanded="false"
+      aria-controls="privateCollapse"
+      (click)="addOrRemoveTabs('Private')"
+    >
+      <div class="col-3 d-flex justify-content-star align-items-center">
+        Private Info:
+      </div>
+      <div class="col-7"></div>
+      <div class="col-2 d-flex gap-3 justify-content-end">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="collapse" id="privateCollapse">
+      <div class="card card-body">
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="alert alert-danger" role="alert">
+              This section is currently under construction.
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-2">
+            <label for="">Security Pin</label>
+            <input type="password" class="form-control" />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">Identification</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col-4">
+                  <label>Social Security Number</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col-4">
+                  <label>Drivers License Number</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col-3">
+                  <label>Household Income</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col-1">
+                  <label>IRMAA</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Notes</label>
+                  <textarea disabled class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">Medicare</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label>Medicare Number</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Part A Effective</label>
+                  <input disabled type="date" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Part B Effective</label>
+                  <input disabled type="date" class="form-control" />
+                </div>
+              </div>
+              <br />
+              <hr />
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>medicare.gov Username</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>medicare.gov Password</label>
+                  <input disabled type="password" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>medicare.gov Answer</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">Medicaid (LIS)</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label>Medicaid Number (if applicable)</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Assistance Level</label>
+                  <select disabled name="" id="" class="form-control">
+                    <option selected disabled value="">Select...</option>
+                  </select>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Medicaid plan</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col-3">
+                  <label>Renewal</label>
+                  <input disabled type="date" class="form-control" />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Notes</label>
+                  <textarea disabled class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">SPAP</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label>SPAP Plan name</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Member ID</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Group ID</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>RxBin</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Notes</label>
+                  <textarea disabled class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">VA</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label>ID #</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+                <div class="col">
+                  <label>Group #</label>
+                  <input disabled type="text" class="form-control" />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Notes</label>
+                  <textarea disabled class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <div class="custom-card-header">Vault</div>
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label>Catch all for other sensitive data</label>
+                  <textarea disabled class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()">
+        <div class="modal-body">
+          <h3>Prospect Emails</h3>
+          <br />
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">Email Type</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                  formControlName="EmailTypeID"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let response of emailType"
+                    value="{{response.EmailTypeID}}"
+                  >
+                    {{response.EmailTypeValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedEmail('EmailTypeID')"
+                  class="text-danger"
+                >
+                  Email Type is required
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Email</label>
+                <input
+                  class="form-control"
+                  formControlName="EmailAddressValue"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedEmail('EmailAddressValue')"
+                  class="text-danger"
+                >
+                  Invalid Email Address
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModalEmail()"
+              >
+                Close
+              </button>
+              &nbsp;&nbsp;
+              <button
+                *ngIf="emailIdUpdate !=0"
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelEditEmail()"
+              >
+                Cancelar</button
+              >&nbsp;&nbsp;
+              <ng-container *ngIf="emailIdUpdate != 0">
+                <button type="submit" class="btn btn-warning">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingEmail"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+
+                  <div *ngIf="!isLoadingEmail">Save Email</div>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="emailIdUpdate == 0">
+                <button type="submit" class="btn btn-primary">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingEmail"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+
+                  <div *ngIf="!isLoadingEmail">Add Email</div>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <br />
+          <div class="alert alert-danger" role="alert">
+            This section is currently under construction, and the preferred
+            settings are not yet fully configured.
+          </div>
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Email Type</th>
+              <th>Email Address</th>
+              <th>Is Preferred</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let email of emailList">
+                <td>{{email.EmailID}}</td>
+                <td>{{email.EmailTypeValue}}</td>
+                <td>{{email.EmailAddressValue}}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    [checked]="email.IsPreferredEmail"
+                    [disabled]="email.IsPreferredEmail"
+                  />
+                </td>
+                <td>
+                  <a class="btn btn-link"
+                    ><i
+                      class="bi bi-pencil text-warning"
+                      (click)="loadDataForEditEmail(email)"
+                    ></i
+                  ></a>
+                  &nbsp;
+                  <a
+                    *ngIf="!email.IsPreferredEmail"
+                    class="btn btn-link"
+                    (click)="deleteEmail(email.EmailID)"
+                    ><i class="bi bi-trash text-danger"></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalPhone"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="phoneForm" (ngSubmit)="onSubmitPhone()">
+        <div class="modal-body">
+          <h5 class="modal-title">Prospect Phones</h5>
+          <br />
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">Phone Type</label>
+                <select class="form-control" formControlName="PhoneTypeID">
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let response of phoneType"
+                    value="{{response.PhoneTypeID}}"
+                  >
+                    {{response.PhoneTypeValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouched('PhoneTypeID')"
+                  class="text-danger"
+                >
+                  Phone Type is required
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="PhoneNumber"
+                  appPhoneNumberMask
+                  maxlength="14"
+                />
+                <div
+                  *ngIf="isInvalidAndTouched('PhoneNumber')"
+                  class="text-danger"
+                >
+                  Invalid Phone Number
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModalPhone()"
+              >
+                Close</button
+              >&nbsp;&nbsp;
+              <button
+                *ngIf="phoneIdUpdate !=0"
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelEditPhone()"
+              >
+                Cancelar</button
+              >&nbsp;&nbsp;
+              <ng-container *ngIf="phoneIdUpdate !=0">
+                <button type="submit" class="btn btn-warning">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingPhone"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div *ngIf="!isLoadingPhone">Save Phone</div>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="phoneIdUpdate ==0">
+                <button type="submit" class="btn btn-primary">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingPhone"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div *ngIf="!isLoadingPhone">Add Phone</div>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <br />
+          <div class="alert alert-danger" role="alert">
+            This section is currently under construction, and the preferred
+            settings are not yet fully configured.
+          </div>
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Phone Type</th>
+              <th>Phone Number</th>
+              <th>Is Preferred</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let phone of phoneList">
+                <td>{{phone.PhoneID}}</td>
+                <td>{{phone.PhoneTypeValue}}</td>
+                <td>{{phone.PhoneNumber}}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    [checked]="phone.IsPreferredPhone"
+                    [disabled]="phone.IsPreferredPhone"
+                  />
+                </td>
+                <td>
+                  <a class="btn btn-link"
+                    ><i
+                      class="bi bi-pencil text-warning"
+                      (click)="loadDataForEditPhone(phone)"
+                    ></i
+                  ></a>
+                  <a
+                    *ngIf="!phone.IsPreferredPhone"
+                    class="btn btn-link"
+                    (click)="deletePhone(phone.PhoneID)"
+                    ><i class="bi bi-trash text-danger"></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalAddress"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3>New Address</h3>
+        <br />
+        <form [formGroup]="addressForm" (ngSubmit)="onSubmitAddress()">
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <label for="">Address Type</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                  formControlName="AddressTypeID"
+                >
+                  <!-- <option selected disabled value="">Select...</option> -->
+                  <option
+                    *ngFor="let address of addressType"
+                    [value]="address.AddressTypeID"
+                  >
+                    {{address.AddressTypeValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('AddressTypeID')"
+                  class="text-danger"
+                >
+                  Address Type is required
+                </div>
+              </div>
+            </div>
+            <div class="col-9">
+              <div class="form-group">
+                <label for="">Street</label>
+                <input class="form-control" formControlName="Street" />
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('Street')"
+                  class="text-danger"
+                >
+                  Street is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="">City</label>
+                <input class="form-control" formControlName="City" />
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('City')"
+                  class="text-danger"
+                >
+                  City is required
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-4">
+              <div class="form-group">
+                <label for="">Country</label>
+                <input class="form-control" formControlName="Country" />
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('Country')"
+                  class="text-danger"
+                >
+                  Country is required
+                </div>
+              </div>
+            </div> -->
+            <div class="col-3">
+              <div class="form-group">
+                <label for="">Zip</label>
+                <input class="form-control" formControlName="Zip" />
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('Zip')"
+                  class="text-danger"
+                >
+                  Zip code is required
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <label for="">State</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                  formControlName="StateID"
+                >
+                  <option disabled selected value="">Select...</option>
+                  <option
+                    *ngFor="let state of stateList"
+                    [value]="state.StateID"
+                  >
+                    {{state.StateAbbreviation}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedAddress('StateID')"
+                  class="text-danger"
+                >
+                  State is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModalAddress()"
+              >
+                Close</button
+              >&nbsp;&nbsp;
+              <button
+                *ngIf="addressIdUpdate !=0"
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelEditAddress()"
+              >
+                Cancelar</button
+              >&nbsp;&nbsp;
+              <ng-container *ngIf="addressIdUpdate !=0">
+                <button type="submit" class="btn btn-warning">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingAddress"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div *ngIf="!isLoadingAddress">Save Address</div>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="addressIdUpdate ==0">
+                <button type="submit" class="btn btn-primary">
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoadingAddress"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div *ngIf="!isLoadingAddress">Add Address</div>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+        </form>
+        <br />
+        <div class="alert alert-danger" role="alert">
+          This section is currently under construction, and the preferred
+          settings are not yet fully configured.
+        </div>
+        <table class="table">
+          <thead>
+            <th>#</th>
+            <th>Address Type</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+            <!-- <th>Country</th> -->
+            <th>Is Preferred</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let address of addressList">
+              <td>{{address.ContactAddressID}}</td>
+              <td>{{address.AddressTypeValue}}</td>
+              <td>{{address.Street}}</td>
+              <td>{{address.City}}</td>
+              <td>{{address.StateAbbreviation}}</td>
+              <!-- <td>{{address.Country}}</td> -->
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="address.IsPreferredAddress"
+                  [disabled]="address.IsPreferredAddress"
+                />
+              </td>
+              <td>
+                <a class="btn btn-link"
+                  ><i
+                    class="bi bi-pencil text-warning"
+                    (click)="loadDataForEditAddress(address)"
+                  ></i
+                ></a>
+                <a
+                  *ngIf="!address.IsPreferredAddress"
+                  class="btn btn-link"
+                  (click)="deleteAddress(address.ContactAddressID)"
+                  ><i class="bi bi-trash text-danger"></i
+                ></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalDoctor"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="doctorSelected || addDoctorManual">
+        <form [formGroup]="doctorForm" (ngSubmit)="onSubmiteDoctor()">
+          <div class="row">
+            <div class="col">
+              <h5 class="modal-title">
+                New Doctor
+                <small
+                  *ngIf="addDoctorManual"
+                  class="bg-info py-1 px-2"
+                  style="
+                    border-radius: 10px;
+                    margin-left: 10px;
+                    font-size: 12px;
+                    cursor: pointer;
+                  "
+                  (click)="changeDoctorToManually()"
+                  >Add from API</small
+                >
+              </h5>
+            </div>
+            <div class="col-1">
+              <a (click)="closeModalDoctor()" class="btn btn-link"
+                ><i class="bi bi-x-lg"></i
+              ></a>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LastName"
+              />
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('LastName')"
+                class="text-danger"
+              >
+                Last Name is required
+              </div>
+            </div>
+            <div class="col form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="FirstName"
+              />
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('FirstName')"
+                class="text-danger"
+              >
+                First Name is required
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-3 form-group">
+              <label>Doctor ID</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ProviderNPI"
+              />
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('ProviderNPI')"
+                class="text-danger"
+              >
+                ProviderNPI is required
+              </div>
+            </div>
+            <div class="col-3 form-group">
+              <label>Doctor Phone</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ProviderPhone"
+                appPhoneNumberMask
+                maxlength="14"
+              />
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('ProviderPhone')"
+                class="text-danger"
+              >
+                Provider phone is required
+              </div>
+            </div>
+
+            <div class="col form-group">
+              <label>Facility Address</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="FacilityAddress"
+              />
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('FacilityAddress')"
+                class="text-danger"
+              >
+                Facility Address is required
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div class="row">
+            <div class="col form-group">
+              <label for="">Specialty</label>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                formControlName="ProviderSpecialtyAPI"
+                *ngIf="!addDoctorManual"
+              />
+              <select
+                class="form-control"
+                *ngIf="addDoctorManual"
+                formControlName="ProviderSpecialtyID"
+              >
+                <option selected disabled value="">Select one...</option>
+                <option
+                  *ngFor="let specialty of doctorSpecialty"
+                  [value]="specialty.ProviderSpecialtyID"
+                >
+                  {{specialty.ProviderSpecialtyValue}}
+                </option>
+              </select>
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('ProviderSpecialtyID')"
+                class="text-danger"
+              >
+                Specialty is required
+              </div>
+            </div>
+            <div class="col form-group">
+              <label><small class="text-danger">*</small> Status</label>
+              <select class="form-control" formControlName="ProviderStatusID">
+                <option selected disabled value="">Select one...</option>
+                <option
+                  *ngFor="let status of doctorStatus"
+                  [value]="status.ProviderStatusID"
+                >
+                  {{status.ProviderStatusValue}}
+                </option>
+              </select>
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('ProviderStatusID')"
+                class="text-danger"
+              >
+                Provider status is required
+              </div>
+            </div>
+            <div class="col form-group">
+              <label><small class="text-danger">*</small> Importance </label>
+              <select
+                class="form-control"
+                formControlName="ProviderImportanceID"
+              >
+                <option selected disabled value="">Select one...</option>
+                <option
+                  *ngFor="let importance of doctorImportance"
+                  [value]="importance.ProviderImportanceID"
+                >
+                  {{importance.ProviderImportanceValue}}
+                </option>
+              </select>
+              <div
+                *ngIf="isInvalidAndTouchedDoctor('ProviderImportanceID')"
+                class="text-danger"
+              >
+                Provider importance is required
+              </div>
+            </div>
+
+            <div class="col form-group">
+              <label for="">Practice/Facility Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="PracticeFacilityName"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col form-group">
+              <label for="">Notes</label>
+              <textarea
+                name=""
+                id=""
+                class="form-control"
+                formControlName="Notes"
+              ></textarea>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col form-group">
+              <label for="">Networks</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="Networks"
+              />
+              <small style="font-size: 9pt"
+                ><i
+                  >Seperate network names by a comma "UHC, Banner, etc"</i
+                ></small
+              >
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModalDoctor()"
+              >
+                Close
+              </button>
+              &nbsp;&nbsp;
+              <button type="submit" class="btn btn-primary">
+                <div
+                  class="spinner-border text-light"
+                  role="status"
+                  style="height: 20px; width: 20px"
+                  *ngIf="isLoadingDoctor"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div *ngIf="!isLoadingDoctor">Add doctor</div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" *ngIf="!doctorSelected && !addDoctorManual">
+        <div class="row">
+          <div class="col">
+            <h5 class="modal-title">
+              Find Doctor
+              <small
+                class="bg-warning py-1 px-2"
+                style="
+                  border-radius: 10px;
+                  margin-left: 10px;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+                (click)="changeDoctorToManually()"
+                >Add manually</small
+              >
+            </h5>
+          </div>
+          <div class="col-1">
+            <a (click)="closeModalDoctor()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col">
+            <h4>
+              Result Count:
+              <small class="text-danger">{{doctorList.length}}</small>
+            </h4>
+          </div>
+          <div class="col-3 form-group">
+            <label for="">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              (ngModelChange)="onChangeDoctorLastName($event)"
+              [(ngModel)]="doctorLastName"
+            />
+            <ng-container *ngIf="doctorLastNameIsRequired">
+              <div class="text-danger">{{doctorLastNameMessage}}</div>
+            </ng-container>
+          </div>
+
+          <div class="col-2 form-group">
+            <label for="">Zip code</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="doctorZipCode"
+            />
+          </div>
+
+          <div class="col-1">
+            <button
+              class="btn btn-primary mt-4"
+              (click)="getDoctorsByLastName()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-5">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>NPI</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Primary Practice Address</th>
+                <th>State</th>
+                <th>Phone</th>
+                <th>Primary Taxonomy</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doctor of doctorList">
+                <td class="text-primary">{{doctor.number}}</td>
+                <td>{{doctor.basic.first_name}}</td>
+                <td>
+                  {{doctor.basic.last_name}}
+                  <ng-container
+                    *ngIf="doctor.other_names && doctor.other_names.length > 0"
+                  >
+                    {{ doctor.other_names[0].last_name }}
+                  </ng-container>
+                </td>
+                <td>
+                  {{doctor.addresses[0].address_1}} <br />
+                  {{doctor.addresses[0].city}}
+                  {{doctor.addresses[0].postal_code}}
+                </td>
+                <td>{{doctor.addresses[0].state}}</td>
+                <td style="width: 150px; padding-left: 10px">
+                  {{doctor.addresses[0].telephone_number}}
+                </td>
+                <td>{{doctor.taxonomies[0].desc}}</td>
+                <td>
+                  <a class="btn btn-link" (click)="loadDoctorSelected(doctor)"
+                    ><i class="bi bi-card-checklist"></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalRx"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="!doctorSelected">
+        <div class="row">
+          <div class="col"><h3>Find Drug</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalRx()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <br />
+        <form [formGroup]="medicationForm" (ngSubmit)="onSubmitDrug()">
+          <div class="row">
+            <div class="col">
+              <label for="">Type drug name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="rxName"
+                  aria-label="Recipient's username"
+                  aria-describedby="button-addon2"
+                  formControlName="DrugName"
+                />
+                <button
+                  class="btn btn-primary"
+                  (click)="getRxByName()"
+                  type="button"
+                  id="button-addon2"
+                >
+                  Search
+                </button>
+              </div>
+              <!-- <label for="" class="text-danger"
+              >No FDA approved drugs found
+            </label> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label
+                >Dosage
+                <div
+                  class="spinner-border text-success"
+                  role="status"
+                  style="height: 20px; width: 20px"
+                  *ngIf="isLoadingDosage"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div></label
+              >
+              <select
+                class="form-control"
+                [(ngModel)]="rxDosageValue"
+                (change)="getRxByCui()"
+                formControlName="Dosage"
+              >
+                <option disabled selected value="">Select one...</option>
+                <option *ngFor="let rx of rxResult" [value]="rx.rxcui">
+                  {{ rx.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <label for="">Package</label>
+              <select
+                class="form-control"
+                [disabled]="!rxPackage || rxPackage.length === 0"
+                formControlName="Package"
+              >
+                <option disabled selected value="">Select one...</option>
+                <option *ngFor="let package of rxPackage">
+                  {{ package.packaging }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <label for="">Quantity</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="Quantity"
+                value="1"
+              />
+            </div>
+            <div class="col">
+              <label for="">Frequency/Fill</label>
+              <select class="form-control" formControlName="FrequencyID">
+                <option disabled selected value="">Select one...</option>
+                <option
+                  *ngFor="let frequency of drugFrequency"
+                  [value]="frequency.FrequencyID"
+                >
+                  {{frequency.FrequencyName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <label for="">Notes</label>
+              <textarea
+                class="form-control"
+                id=""
+                formControlName="Note"
+              ></textarea>
+            </div>
+          </div>
+          <br />
+          <div class="alert alert-danger" role="alert">
+            This section is currently under construction.
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-danger" type="button">Cancel</button
+              >&nbsp;&nbsp;
+              <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+          </div>
+        </form>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

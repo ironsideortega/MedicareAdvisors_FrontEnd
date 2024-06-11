@@ -1,0 +1,32 @@
+.navbar{
+  background-color: #2271B8;
+  color: black;
+  font-weight: bold;
+}
+
+.name-find{
+  margin-bottom: 14px;
+  text-decoration: none !important;
+}
+
+.menu-bar{
+  height: 60px;
+  background-color: #FFF;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  .custom-links{
+    text-decoration: none !important;
+    color: #435966;
+    font-size: .875em;
+    margin-right: 5px;
+  }
+
+  .custom-links.active {
+    font-weight: 600;
+    font-size: 11pt;
+  }
+}

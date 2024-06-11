@@ -1,0 +1,14 @@
+{
+  "/api": {
+    "target": "https://npiregistry.cms.hhs.gov/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api-rx":{
+    "target": "https://api.fda.gov/drug/ndc.json",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

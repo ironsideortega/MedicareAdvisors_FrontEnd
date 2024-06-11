@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+
+body{
+  background-color: #EDF0F9;
+}
+
+.bg-primary-gradient {
+  background: linear-gradient(to right, #2271b8 0%, #2272b87d  100%) !important;
+  color: #FFF;
+}
+
+.custom-card{
+  box-shadow: -8px 12px 18px 0 #dadee8;
+  padding: 20px;
+  background-color: #FFF;
+  margin-block-end: 1.5rem;
+
+  .card-title{
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .fs-12{font-size: .75rem;}
+
+  .card-header{
+    background-color: white;
+    color:#242f48;
+    border-bottom: none;
+    padding: 0px;
+    margin-bottom: 5px;
+  }
+}
+
+.custom-icon-chart{
+  display: inline-block;
+  width: 37px;
+  height: 37px;
+  text-align: center;
+  border-radius: 100%;
+
+  inset-inline-start: 3px;
+  font-size: 20px;
+  line-height: 37px;
+  color: #FFF;
+  margin-right: 10px;
+}
+
+.missing{
+  background: linear-gradient(45deg, #f82222, #f58383);
+}
+
+.man{
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+}
+
+.female{
+  background: linear-gradient(45deg, #ff79c6, #ffb6c1);
+}
+
+

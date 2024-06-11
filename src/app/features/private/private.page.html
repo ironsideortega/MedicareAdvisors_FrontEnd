@@ -1,0 +1,245 @@
+<nav class="navbar sticky-top">
+  <div class="container-fluid">
+    <div class="col-12 col-sm-8">
+      <a class="navbar-brand">
+        <i class="bi bi-heart-pulse-fill"></i>&nbsp; MA CRM</a
+      >
+    </div>
+    <div class="col-10 col-sm-3">
+      <form class="d-flex">
+        <div class="input-group show">
+          <input
+            class="form-control dropdown-toggle searchInput me-2"
+            data-id="agent"
+            type="text"
+            placeholder="Search prospects"
+            autocomplete="off"
+            [formControl]="searchField"
+          />
+          <div
+            [ngClass]="{ 'show': searchResults.length > 0 }"
+            class="dropdown-menu"
+            style="
+              margin-right: 30px;
+              margin-top: 45px;
+              width: 350px;
+              position: absolute;
+              will-change: transform;
+            "
+          >
+            <div
+              class="searchReturnItem name-find"
+              *ngFor="let result of searchResults"
+            >
+              <a
+                (click)="navigateToDetail(result.ContactID)"
+                style="
+                  color: #222222 !important;
+                  font-size: 10pt;
+                  padding: 20px 0px;
+                  text-decoration: none !important;
+                  cursor: pointer;
+                "
+                class="px-3 cp"
+              >
+                <i class="far fa-user-circle mr-5"></i>&nbsp;&nbsp;{{
+                result.FirstName }} {{ result.LastName }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-2 col-sm-1">
+      <div class="dropdown">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{initials}}
+        </button>
+        <ul class="dropdown-menu" style="left: -100px">
+          <li>
+            <a class="dropdown-item btn" [routerLink]="['/private/settings']"
+              ><i class="bi bi-gear text-primary"></i>&nbsp;&nbsp; Settings</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item btn" (click)="logout()"
+              ><i class="bi bi-box-arrow-left text-danger"></i>&nbsp;&nbsp; Log
+              out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="menu-bar container-fluid">
+  <button
+    class="btn btn-link custom-links"
+    [routerLink]="['/private/dashboard']"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-pie-chart"></i> Dashboard
+  </button>
+  <button
+    class="btn btn-link custom-links"
+    [routerLink]="['/private/summary']"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-card-list"></i> Summary
+  </button>
+  <button
+    class="btn btn-link custom-links"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModalNewProspect"
+  >
+    <i class="bi bi-person-plus-fill text-primary"></i>
+  </button>
+</div>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalNewProspect"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col"><h5 class="modal-title">New prospect</h5></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalProspect()" class="btn btn-link"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-x-lg"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                /></svg
+            ></a>
+          </div>
+        </div>
+        <br />
+        <form [formGroup]="myFormCreate" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="firstName"
+                />
+                <div
+                  *ngIf="isInvalidAndTouched('firstName')"
+                  class="text-danger"
+                >
+                  First Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="lastName"
+                />
+                <div
+                  *ngIf="isInvalidAndTouched('lastName')"
+                  class="text-danger"
+                >
+                  Last Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="phoneNumber"
+                  appPhoneNumberMask
+                  maxlength="14"
+                />
+                <div
+                  *ngIf="isInvalidAndTouched('phoneNumber')"
+                  class="text-danger"
+                >
+                  Invalid Phone Number
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+                <div *ngIf="isInvalidAndTouched('email')" class="text-danger">
+                  Invalid Email Address
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="row d-flex justify-content-center">
+            <div class="col text-center">
+              <button
+                type="submit"
+                class="btn"
+                style="background-color: #2271b8; color: #fff"
+              >
+                <div
+                  class="spinner-border text-light"
+                  role="status"
+                  style="height: 20px; width: 20px"
+                  *ngIf="isLoading"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div *ngIf="!isLoading">Save data</div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <footer class="footer mt-auto py-3 bg-white text-center fixed-bottom">
+  <div class="container">
+    <span class="text-muted">
+      Copyright © <span id="year">2024</span>
+      <a href="javascript:void(0);" class="text-dark fw-semibold">
+        Datavista Analytics</a
+      >. All rights reserved
+    </span>
+  </div>
+</footer> -->

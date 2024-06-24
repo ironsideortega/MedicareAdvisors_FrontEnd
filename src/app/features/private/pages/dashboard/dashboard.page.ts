@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ChangeDetectorRef} from "@angular/core";
 import * as Chart from 'chart.js';
 import { KPIService } from "src/app/core/services/dashboard/dashboard.service";
 import { DataKPIContact, DataKPIGender } from "src/app/core/services/dashboard/models";
@@ -41,8 +41,11 @@ export class DashboardPage implements OnInit{
   public chartOptions!: Partial<ChartOptions>;
   public chartSeries!: any[];
 
+
+
   constructor(
     private kpiService:KPIService,
+    private cdr: ChangeDetectorRef
 
   ) {
     this.chartOptions = {
@@ -86,11 +89,14 @@ export class DashboardPage implements OnInit{
     this.getKpiForGender();
     this.getKpiChartBar();
     this.userName = this.getName();
+
   }
 
   getKpiForContact(){
     this.isLoading = true;
     this.kpiService.getKpiForContact().subscribe(response =>{
+      console.log(response.data);
+
       this.kpiContact = response.data;
       this.isLoading = false;
     });
@@ -107,6 +113,7 @@ export class DashboardPage implements OnInit{
   getKpiChartBar(){
     this.kpiService.getKpiForPopulation().subscribe(response =>{
       const data = response.data[0];
+      console.log(data);
 
       const categories = Object.keys(data);
       const values = Object.values(data);
@@ -128,7 +135,7 @@ export class DashboardPage implements OnInit{
         },
         //colors: colors
       };
-
+      this.cdr.detectChanges();
     });
   }
 

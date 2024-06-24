@@ -53,7 +53,7 @@ export class SignUpPage implements OnInit {
       LastName: ['', Validators.required],
       Address: ['', Validators.required],
       City: ['', Validators.required],
-      StateID: ['', Validators.required],
+      StateID: ['1',],
       Zip: ['', Validators.required],
       PhoneNumber: ['', [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]],
       Picture: [''],

@@ -603,8 +603,13 @@ export class DetailPage implements OnInit{
         referredBy: response.data.ReferredBy,
         phone: response.data.Phone[0].PhoneNumber,
         email: response.data.Email[0].emailAddress,
-        address: response.data.Address[0].Street || "",
+        address: response.data.Address[0].street,
+
       });
+      console.log(response)
+      if(response.data.Address){
+        console.log("Esto esta vacioooooooo")
+      }
 
     });
   }
@@ -621,6 +626,7 @@ export class DetailPage implements OnInit{
           this.contactForm.disable();
           this.buttonUpdateForContact = 'Update';
           this.buttonUpdateContactEnabled = false;
+          this.isLoading = false;
           this.getDataForProspect();
         }else{
           this.contactForm.enable();
@@ -642,6 +648,7 @@ export class DetailPage implements OnInit{
 
   getEmailByProspect(){
     this.prospectService.getEmailByProspect(this.contactID).subscribe(response =>{
+      console.log(response);
       this.emailList = response.data;
     });
   }
@@ -659,6 +666,8 @@ export class DetailPage implements OnInit{
       delete formData.email;
       delete formData.phone;
       delete formData.address;
+      console.log(formData);
+      console.log(this.contactID);
       this.prospectService.updateProspect(formData, this.contactID).subscribe(response =>{
         this.isLoading = false;
         this.buttonUpdateContactEnabled = false;

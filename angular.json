@@ -17,8 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ma-crm",
-            "baseHref": "/ma-crm/",
+            "outputPath": "dist/MA_CRM",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -53,8 +52,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
@@ -113,6 +112,9 @@
 
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

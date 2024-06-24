@@ -6,7 +6,7 @@ export interface KPIContactModel {
 }
 
 export interface DataKPIContact {
-  ContactStatusVAlue: string;
+  ContactStatusValue: string;
   CNT:                number;
 }
 

@@ -36,14 +36,14 @@ export interface ContactData {
     isPreferredPhone: boolean;
   }[]; // arreglo de números de teléfono
   Address: {
-    Street: string;
-    Zip: string;
-    City: string;
-    State: string;
-    Country: string;
-    AddressTypeId: number;
-    AddressTypeValue: string;
-    IsPreferredAddress: boolean;
+    street: string;
+    zip: string;
+    city: string;
+    state: string;
+    country: string;
+    addressTypeId: number;
+    addressTypeValue: string;
+    isPreferredAddress: boolean;
   }[]; // arreglo de direcciones
 }
 

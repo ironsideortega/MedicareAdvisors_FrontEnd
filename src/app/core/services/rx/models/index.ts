@@ -87,4 +87,21 @@ export interface PrescriptionsData {
   ContactID:       number;
 }
 
+export interface HealthInfoModel {
+  status:  string;
+  code:    number;
+  message: string;
+  data:    HealthInfoData;
+}
+
+export interface HealthInfoData {
+  ContactID:        number;
+  HealthFeet:           number;
+  HealthInches:          number;
+  HealthWeight:           number;
+  HealthDNR:         boolean;
+  HealthNotes:          string;
+  CreatedDate?:      null;
+}
+
 

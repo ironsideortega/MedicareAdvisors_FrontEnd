@@ -41,6 +41,9 @@
         alt=""
         width="32px"
         style="padding-bottom: 10px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Prospect"
       />
     </div>
   </div>
@@ -60,6 +63,9 @@
         alt=""
         width="32px"
         style="padding-bottom: 10px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Doctor"
       />
     </div>
   </div>
@@ -80,6 +86,9 @@
         alt=""
         width="32px"
         style="padding-bottom: 10px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Rx"
       />
     </div>
   </div>
@@ -99,6 +108,9 @@
         alt=""
         width="32px"
         style="padding-bottom: 10px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Policy"
       />
     </div>
   </div>
@@ -118,6 +130,9 @@
         alt=""
         width="32px"
         style="padding-bottom: 10px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Private info"
       />
     </div>
   </div>
@@ -130,6 +145,7 @@
   </div>
 </div>
 <br />
+<!-- Prospect -->
 <div class="row">
   <div class="col-12">
     <div
@@ -542,6 +558,7 @@
   </div>
 </div>
 <br />
+<!-- Doctor -->
 <div class="row">
   <div class="col-12">
     <div
@@ -593,107 +610,34 @@
           <br />
           <br />
           <div class="row mt-4">
-            <div class="col-12 col-md-3 mb-3" *ngFor="let doctor of doctorData">
-              <div class="doctor-card">
-                <div class="row p-0">
-                  <div class="col p-0 d-flex justify-content-end">
-                    <div class="dropdown">
-                      <button
-                        class="btn btn-link"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-three-dots"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"
-                          />
-                        </svg>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a
-                            class="dropdown-item text-danger"
-                            (click)="deleteDoctor(doctor.ProviderID)"
-                            >delete</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-lungs-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 1a.5.5 0 0 1 .5.5v5.243L9 7.1V4.72C9 3.77 9.77 3 10.72 3c.524 0 1.023.27 1.443.592.431.332.847.773 1.216 1.229.736.908 1.347 1.946 1.58 2.48.176.405.393 1.16.556 2.011.165.857.283 1.857.24 2.759-.04.867-.232 1.79-.837 2.33-.67.6-1.622.556-2.741-.004l-1.795-.897A2.5 2.5 0 0 1 9 11.264V8.329l-1-.715-1 .715V7.214c-.1 0-.202.03-.29.093l-2.5 1.786a.5.5 0 1 0 .58.814L7 8.329v2.935A2.5 2.5 0 0 1 5.618 13.5l-1.795.897c-1.12.56-2.07.603-2.741.004-.605-.54-.798-1.463-.838-2.33-.042-.902.076-1.902.24-2.759.164-.852.38-1.606.558-2.012.232-.533.843-1.571 1.579-2.479.37-.456.785-.897 1.216-1.229C4.257 3.27 4.756 3 5.28 3 6.23 3 7 3.77 7 4.72V7.1l.5-.357V1.5A.5.5 0 0 1 8 1m3.21 8.907a.5.5 0 1 0 .58-.814l-2.5-1.786A.5.5 0 0 0 9 7.214V8.33z"
-                      />
-                    </svg>
-                    &nbsp;
-                    <span class="dr-name"
-                      >{{doctor.FirstName}} {{doctor.LastName}}
-                      <small
-                        *ngIf="doctor.Source"
-                        class="bg-secondary text-white p-1"
-                        style="
-                          border-radius: 5px;
-                          font-size: 12px;
-                          cursor: pointer;
-                        "
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Doctor's data was entered manually"
-                        >M</small
-                      >
-                      <small
-                        *ngIf="!doctor.Source"
-                        class="bg-secondary text-white p-1"
-                        style="
-                          border-radius: 5px;
-                          font-size: 12px;
-                          cursor: pointer;
-                        "
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Doctor's data was not entered manually"
-                        >A</small
-                      >
-                    </span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col d-flex">
-                    <div style="width: 24px; display: block"></div>
-                    &nbsp;
-                    <span class="dr-title"
-                      >{{doctor.ProviderSpecialtyAPI ||
-                      doctor.ProviderSpecialtyValue}}</span
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col d-flex">
-                    <div style="width: 24px; display: block"></div>
-                    &nbsp;
-                    <div class="dr-importance">
-                      {{doctor.ProviderImportanceValue}}
-                    </div>
-                  </div>
-                </div>
+            <div class="col">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Provider ID</th>
+                      <th>First name</th>
+                      <th>Last name</th>
+                      <th>Importance</th>
+                      <th>Phone</th>
+                      <th>Specialty</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let doctor of doctorData">
+                      <td>{{doctor.ProviderID}}</td>
+                      <td>{{doctor.FirstName}}</td>
+                      <td>{{doctor.LastName}}</td>
+                      <td>{{doctor.ProviderImportanceValue}}</td>
+                      <td>{{doctor.ProviderPhone}}</td>
+                      <td>{{doctor.ProviderSpecialtyValue}}</td>
+                      <td>{{doctor.ProviderStatusValue}}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -703,6 +647,7 @@
   </div>
 </div>
 <br />
+<!-- Health -->
 <div class="row">
   <div class="col-12">
     <div
@@ -742,45 +687,298 @@
     <div class="collapse" id="rxCollapse">
       <div class="card card-body">
         <div class="row">
-          <div class="col d-flex justify-content-end">
-            <button
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModalRx"
-            >
-              Add New
-            </button>
-          </div>
           <br />
           <div class="row">
-            <div class="col-3" *ngFor="let prescriptions of prescriptionsList">
-              <div class="doctor-card">
-                <div class="row p-0">
-                  <div class="col p-0 d-flex justify-content-end">
-                    <a class="btn btn-link">
-                      <i class="bi bi-three-dots"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <i class="bi bi-capsule-pill"></i>
-                    &nbsp;
-                    <span class="dr-name">{{prescriptions.DrugName}}</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col d-flex">
-                    <div style="width: 24px; display: block"></div>
-                    &nbsp; &nbsp;
-                    <span class="rx-dosage">{{prescriptions.Package}}</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col d-flex">
-                    <div style="width: 24px; display: block"></div>
+            <div class="col">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="health-rx-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#health-rx"
+                    type="button"
+                    role="tab"
+                    aria-controls="health-rx"
+                    aria-selected="false"
+                  >
+                    Health Rx
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="health-info-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#health-info"
+                    type="button"
+                    role="tab"
+                    aria-controls="health-info"
+                    aria-selected="false"
+                  >
+                    Health Info
+                  </button>
+                </li>
 
-                    <div class="dr-importance">{{prescriptions.Quantity}}</div>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="health-tracker-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#health-tracker"
+                    type="button"
+                    role="tab"
+                    aria-controls="health-tracker"
+                    aria-selected="true"
+                  >
+                    Health Tracker
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade"
+                  id="health-tracker"
+                  role="tabpanel"
+                  aria-labelledby="health-tracker-tab"
+                >
+                  <div class="row p-3">
+                    <div class="col">
+                      <h6>
+                        Health Tracker
+                        <i
+                          class="bi bi-pencil-square"
+                          style="cursor: pointer"
+                          (click)="enabledHealTrackerFn()"
+                        ></i>
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="p-3">
+                    <div class="col-8">
+                      <form
+                        [formGroup]="healthTrackerForm"
+                        (ngSubmit)="saveHealthTracker()"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-6"
+                            *ngFor="let control of healthTrackerForm.controls | keyvalue"
+                          >
+                            <label
+                              *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
+                            >
+                              <input
+                                *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
+                                type="checkbox"
+                                class="form-check-input"
+                                [formControlName]="control.key"
+                              />
+                              {{ control.key }}
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col d-flex justify-content-end">
+                            <button
+                              *ngIf="enabledHealthTracker"
+                              (click)="enabledHealTrackerFn()"
+                              class="btn btn-danger"
+                            >
+                              Cancel
+                            </button>
+                            &nbsp; &nbsp;
+                            <button
+                              *ngIf="enabledHealthTracker"
+                              type="submit"
+                              class="btn btn-primary"
+                            >
+                              {{ enabledHealthTrackerHasData ? 'Update' : 'Save'
+                              }}
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="health-info"
+                  role="tabpanel"
+                  aria-labelledby="health-info-tab"
+                >
+                  <div class="row p-3">
+                    <div class="col">
+                      <h6>
+                        Health Info
+                        <i
+                          class="bi bi-pencil-square"
+                          style="cursor: pointer"
+                          (click)="enableFormHealthInfo()"
+                        ></i>
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="p-3">
+                    <form action="" id="healthForm">
+                      <div class="row gutter-2">
+                        <div class="col-12 col-md-4">
+                          <label for="" class="label">Height</label>
+                          <div class="input-group">
+                            <select
+                              [disabled]="enabledHealthInfo"
+                              class="form-control"
+                              style="width: 30px"
+                              name="ind_height_foot"
+                              [(ngModel)]="heightFeetValue"
+                            >
+                              <option selected="" value="0">0'</option>
+                              <option value="1">1'</option>
+                              <option value="2">2'</option>
+                              <option value="3">3'</option>
+                              <option value="4">4'</option>
+                              <option value="5">5'</option>
+                              <option value="6">6'</option>
+                              <option value="7">7'</option>
+                              <option value="8">8'</option>
+                            </select>
+                            <select
+                              [disabled]="enabledHealthInfo"
+                              class="form-control"
+                              style="width: 35px; display: inline-block"
+                              name="ind_height_inch"
+                              [(ngModel)]="heightValue"
+                            >
+                              <option selected="" value="0">0"</option>
+                              <option value="1">1"</option>
+                              <option value="2">2"</option>
+                              <option value="3">3"</option>
+                              <option value="4">4"</option>
+                              <option value="5">5"</option>
+                              <option value="6">6"</option>
+                              <option value="7">7"</option>
+                              <option value="8">8"</option>
+                              <option value="9">9"</option>
+                              <option value="10">10"</option>
+                              <option value="11">11"</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label for="" class="label">Weight</label>
+                          <div class="input-group input-group-sm mb-3">
+                            <input
+                              [disabled]="enabledHealthInfo"
+                              type="text"
+                              class="form-control"
+                              aria-describedby="basic-addon2"
+                              name="ind_weight"
+                              value=""
+                              autocomplete="off"
+                              [(ngModel)]="weightValue"
+                            />
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="basic-addon2"
+                                >lbs</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col-12 col-md-4"
+                          style="margin-top: 30px !important"
+                        >
+                          <label class="checkbox-inline label">
+                            <input
+                              [disabled]="enabledHealthInfo"
+                              type="checkbox"
+                              value="checked"
+                              name="DNR"
+                              autocomplete="off"
+                              [(ngModel)]="dnrValue"
+                            />
+                            DNR
+                          </label>
+                        </div>
+
+                        <div class="col-12 mt-2">
+                          <label for="" class="label">Health Notes</label>
+                          <textarea
+                            [disabled]="enabledHealthInfo"
+                            style="height: 75px"
+                            class="form-control"
+                            name="ind_health_notes"
+                            [(ngModel)]="healthNotes"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="row p-3">
+                    <div class="col d-flex justify-content-end">
+                      <button
+                        *ngIf="!enabledHealthInfo"
+                        (click)="cancelFormHealthInfo()"
+                        class="btn btn-danger"
+                      >
+                        Cancel
+                      </button>
+                      &nbsp; &nbsp;
+                      <button
+                        *ngIf="!enabledHealthInfo"
+                        (click)="saveHeightInfo()"
+                        class="btn btn-primary"
+                      >
+                        {{ isForUpdateHealthInfo ? 'Update' : 'Save' }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade show active"
+                  id="health-rx"
+                  role="tabpanel"
+                  aria-labelledby="health-rx-tab"
+                >
+                  <div class="p-5">
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <button
+                          class="btn btn-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModalRx"
+                        >
+                          Add New
+                        </button>
+                      </div>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                      <table
+                        class="table table-bordered table-hover table-striped"
+                      >
+                        <thead>
+                          <tr>
+                            <th>Drug name</th>
+                            <th>Dosage</th>
+                            <th>Quantity</th>
+                            <th>Pacakage</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let prescriptions of prescriptionsList">
+                            <td>{{prescriptions.DrugName}}</td>
+                            <td>{{prescriptions.Dosage}}</td>
+                            <td>{{prescriptions.Quantity}}</td>
+                            <td>{{prescriptions.Package}}</td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -792,6 +990,7 @@
   </div>
 </div>
 <br />
+<!-- Policy -->
 <div class="row">
   <div class="col-12">
     <div
@@ -831,12 +1030,23 @@
     <div class="collapse" id="policyCollapse">
       <div class="card card-body">
         <br />
-        <br />
+
         <div class="row">
           <div class="col">
             <div class="alert alert-danger" role="alert">
               This section is currently under construction.
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-end">
+            <button
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalPolicy"
+            >
+              Add New
+            </button>
           </div>
         </div>
         <br />
@@ -845,7 +1055,9 @@
     </div>
   </div>
 </div>
+
 <br />
+<!-- Private Info -->
 <div class="row">
   <div class="col-12">
     <div
@@ -905,30 +1117,82 @@
             <div class="custom-card-header">Identification</div>
             <div class="card card-body">
               <div class="row">
-                <div class="col-4">
-                  <label>Social Security Number</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col-4">
-                  <label>Drivers License Number</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col-3">
-                  <label>Household Income</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col-1">
-                  <label>IRMAA</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-              </div>
-              <br />
-              <div class="row">
                 <div class="col">
-                  <label>Notes</label>
-                  <textarea disabled class="form-control" rows="3"></textarea>
+                  <h6>
+                    Social Info
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableSocialForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
+              <form
+                [formGroup]="personalDetailSocialForm"
+                (ngSubmit)="onSubmitSocial()"
+              >
+                <div class="row">
+                  <div class="col-4">
+                    <label>Social Security Number</label>
+                    <input
+                      formControlName="SSN"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-4">
+                    <label>Drivers License Number</label>
+                    <input
+                      formControlName="DL"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label>Household Income</label>
+                    <input
+                      formControlName="Household_Income"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-1">
+                    <label>IRMAA</label>
+                    <select formControlName="IRMAA" class="form-control">
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>Notes</label>
+                    <textarea
+                      formControlName="Notes"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <br />
+                <div class="row" *ngIf="personalDetailSocialForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableSocialForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -939,35 +1203,92 @@
             <div class="card card-body">
               <div class="row">
                 <div class="col">
-                  <label>Medicare Number</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Part A Effective</label>
-                  <input disabled type="date" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Part B Effective</label>
-                  <input disabled type="date" class="form-control" />
+                  <h6>
+                    Medicare
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableMedicareForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
-              <br />
-              <hr />
-              <br />
-              <div class="row">
-                <div class="col">
-                  <label>medicare.gov Username</label>
-                  <input disabled type="text" class="form-control" />
+              <form
+                [formGroup]="personalDetailMedicareForm"
+                (ngSubmit)="onSubmitMedicare()"
+              >
+                <div class="row">
+                  <div class="col">
+                    <label>Medicare Number</label>
+                    <input
+                      formControlName="MedicareNumber"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Part A Effective</label>
+                    <input
+                      formControlName="PartAEffective"
+                      type="date"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Part B Effective</label>
+                    <input
+                      formControlName="PartBEffective"
+                      type="date"
+                      class="form-control"
+                    />
+                  </div>
                 </div>
-                <div class="col">
-                  <label>medicare.gov Password</label>
-                  <input disabled type="password" class="form-control" />
+                <br />
+                <hr />
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>medicare.gov Username</label>
+                    <input
+                      formControlName="MedicareGov_UserName"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>medicare.gov Password</label>
+                    <input
+                      formControlName="MedicareGov_Password"
+                      type="password"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>medicare.gov Answer</label>
+                    <input
+                      formControlName="MedicareGov_Answer"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
                 </div>
-                <div class="col">
-                  <label>medicare.gov Answer</label>
-                  <input disabled type="text" class="form-control" />
+                <br />
+                <div class="row" *ngIf="personalDetailMedicareForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableMedicareForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -978,34 +1299,91 @@
             <div class="card card-body">
               <div class="row">
                 <div class="col">
-                  <label>Medicaid Number (if applicable)</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Assistance Level</label>
-                  <select disabled name="" id="" class="form-control">
-                    <option selected disabled value="">Select...</option>
-                  </select>
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col">
-                  <label>Medicaid plan</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col-3">
-                  <label>Renewal</label>
-                  <input disabled type="date" class="form-control" />
+                  <h6>
+                    Medicaid
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableMedicaidForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
-              <br />
-              <div class="row">
-                <div class="col">
-                  <label>Notes</label>
-                  <textarea disabled class="form-control" rows="3"></textarea>
+              <form [formGroup]="medicaidForm" (ngSubmit)="onSubmitMedicaid()">
+                <div class="row">
+                  <div class="col">
+                    <label>Medicaid Number (if applicable)</label>
+                    <input
+                      formControlName="Medicaid_No"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Assistance Level</label>
+                    <select
+                      formControlName="Assistance_Level_ID"
+                      name=""
+                      id=""
+                      class="form-control"
+                    >
+                      <option selected disabled value="">Select...</option>
+                      <option
+                        *ngFor="let assistence of assistenceLevelList"
+                        [value]="assistence.Assistance_Level_ID"
+                      >
+                        {{assistence.Assistance_Level_Value}}.
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>Medicaid plan</label>
+                    <input
+                      formControlName="Medicaid_Plan"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label>Renewal</label>
+                    <input
+                      formControlName="Renewal"
+                      type="date"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>Notes</label>
+                    <textarea
+                      formControlName="Note"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <br />
+                <div class="row" *ngIf="medicaidForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableMedicaidForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1016,29 +1394,82 @@
             <div class="card card-body">
               <div class="row">
                 <div class="col">
-                  <label>SPAP Plan name</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Member ID</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Group ID</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>RxBin</label>
-                  <input disabled type="text" class="form-control" />
+                  <h6>
+                    SPAP
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableSpapForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
-              <br />
-              <div class="row">
-                <div class="col">
-                  <label>Notes</label>
-                  <textarea disabled class="form-control" rows="3"></textarea>
+              <form
+                [formGroup]="personalDetailSpapForm"
+                (ngSubmit)="onSubmitSpap()"
+              >
+                <div class="row">
+                  <div class="col">
+                    <label>SPAP Plan name</label>
+                    <input
+                      formControlName="SpapName"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Member ID</label>
+                    <input
+                      formControlName="MemberID"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Group ID</label>
+                    <input
+                      formControlName="GroupID"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>RxBin</label>
+                    <input
+                      formControlName="RxBin"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
                 </div>
-              </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>Notes</label>
+                    <textarea
+                      formControlName="Notes"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <br />
+                <div class="row" *ngIf="personalDetailSpapForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableSpapForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1049,21 +1480,66 @@
             <div class="card card-body">
               <div class="row">
                 <div class="col">
-                  <label>ID #</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-                <div class="col">
-                  <label>Group #</label>
-                  <input disabled type="text" class="form-control" />
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col">
-                  <label>Notes</label>
-                  <textarea disabled class="form-control" rows="3"></textarea>
+                  <h6>
+                    VA
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableVAForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
+              <form
+                [formGroup]="personalDetailVAForm"
+                (ngSubmit)="onSubmitVA()"
+              >
+                <div class="row">
+                  <div class="col">
+                    <label>ID #</label>
+                    <input
+                      formControlName="ID"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label>Group #</label>
+                    <input
+                      formControlName="VaGroup"
+                      type="text"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <label>Notes</label>
+                    <textarea
+                      formControlName="Notes"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <br />
+                <div class="row" *ngIf="personalDetailVAForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableVAForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1074,10 +1550,47 @@
             <div class="card card-body">
               <div class="row">
                 <div class="col">
-                  <label>Catch all for other sensitive data</label>
-                  <textarea disabled class="form-control" rows="3"></textarea>
+                  <h6>
+                    Vault
+                    <i
+                      class="bi bi-pencil-square"
+                      style="cursor: pointer"
+                      (click)="enableVaultForm()"
+                    ></i>
+                  </h6>
                 </div>
               </div>
+              <form
+                [formGroup]="personalDetailVaultForm"
+                (ngSubmit)="onSubmitVault()"
+              >
+                <div class="row">
+                  <div class="col">
+                    <label>Catch all for other sensitive data</label>
+                    <textarea
+                      formControlName="Notes"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <br />
+                <div class="row" *ngIf="personalDetailVaultForm.enabled">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Update
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="disableVaultForm()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1086,7 +1599,10 @@
   </div>
 </div>
 <br />
+<br />
+<br />
 
+<!-- Modal Email -->
 <div
   class="modal fade"
   id="exampleModal"
@@ -1112,7 +1628,7 @@
                 >
                   <option selected disabled value="">Select one...</option>
                   <option
-                    *ngFor="let response of emailType"
+                    *ngFor="let response of getFilteredEmailTypes()"
                     value="{{response.EmailTypeID}}"
                   >
                     {{response.EmailTypeValue}}
@@ -1241,6 +1757,7 @@
   </div>
 </div>
 
+<!-- Modal Phone -->
 <div
   class="modal fade"
   id="exampleModalPhone"
@@ -1261,7 +1778,7 @@
                 <select class="form-control" formControlName="PhoneTypeID">
                   <option selected disabled value="">Select one...</option>
                   <option
-                    *ngFor="let response of phoneType"
+                    *ngFor="let response of getFilteredPhoneTypes()"
                     value="{{response.PhoneTypeID}}"
                   >
                     {{response.PhoneTypeValue}}
@@ -1390,6 +1907,7 @@
   </div>
 </div>
 
+<!-- Modal Address -->
 <div
   class="modal fade"
   id="exampleModalAddress"
@@ -1415,7 +1933,7 @@
                 >
                   <!-- <option selected disabled value="">Select...</option> -->
                   <option
-                    *ngFor="let address of addressType"
+                    *ngFor="let address of getFilteredAddressTypes()"
                     [value]="address.AddressTypeID"
                   >
                     {{address.AddressTypeValue}}
@@ -1458,17 +1976,17 @@
               </div>
             </div>
             <!-- <div class="col-4">
-              <div class="form-group">
-                <label for="">Country</label>
-                <input class="form-control" formControlName="Country" />
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('Country')"
-                  class="text-danger"
-                >
-                  Country is required
-                </div>
-              </div>
-            </div> -->
+          <div class="form-group">
+            <label for="">Country</label>
+            <input class="form-control" formControlName="Country" />
+            <div
+              *ngIf="isInvalidAndTouchedAddress('Country')"
+              class="text-danger"
+            >
+              Country is required
+            </div>
+          </div>
+        </div> -->
             <div class="col-3">
               <div class="form-group">
                 <label for="">Zip</label>
@@ -1607,6 +2125,7 @@
   </div>
 </div>
 
+<!-- Modal Doctor -->
 <div
   class="modal fade"
   id="exampleModalDoctor"
@@ -1970,6 +2489,7 @@
   </div>
 </div>
 
+<!-- Modal Rx -->
 <div
   class="modal fade"
   id="exampleModalRx"
@@ -2016,8 +2536,8 @@
                 </button>
               </div>
               <!-- <label for="" class="text-danger"
-              >No FDA approved drugs found
-            </label> -->
+          >No FDA approved drugs found
+        </label> -->
             </div>
           </div>
           <div class="row">
@@ -2113,6 +2633,3161 @@
           </div>
         </form>
         <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Policies -->
+<div
+  class="modal fade"
+  id="exampleModalPolicy"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col"><h3>Policy</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <br />
+        <div class="row gutter-2">
+          <div class="col-12 col-md-12 mb-2">
+            <label for="" class="label">Select policy type</label>
+            <select
+              class="form-control form-control-sm policyType"
+              [(ngModel)]="policySelected"
+            >
+              <option value="">Select...</option>
+              <option data-id="MAPD" value="newMAPDModal">MAPD</option>
+              <option data-id="PDP" value="newPDPModal">PDP</option>
+              <option data-id="SUP" value="newMedicareSupplementsModal">
+                Medicare Supplement
+              </option>
+              <option data-id="ANC" value="newAncillaryModal">Ancillary</option>
+              <option data-id="LIFE" value="newLifeModal">Life</option>
+              <option data-id="IND" value="newIndividualHealthModal">
+                Individual Health
+              </option>
+              <option data-id="ANNUITY" value="newAnnuityModal">Annuity</option>
+              <option data-id="LTC" value="newLtcModal">LTC</option>
+              <option data-id="GROUP" value="newGroupModal">Group</option>
+            </select>
+          </div>
+        </div>
+        <div class="row gutter-2">
+          <div class="col d-flex justify-content-end">
+            <button
+              class="btn btn-primary"
+              (disabled)="policySelected === ''"
+              (click)="openPolicyModal()"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- pdaMOdal -->
+<div
+  class="modal fade"
+  id="newMAPDModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  style="display: none; z-index: 1051"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New MAPD</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="MAPDForm">
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <small class="text-primary">Load available plans for: </small>
+              <select
+                name="address_type"
+                id="availableAddressMAPD"
+                class="form-control form-control-sm mb-3 mt-2 keep availableAddress"
+              >
+                <option>no address found</option>
+              </select>
+            </div>
+            <div class="col-12 mb-2 previousPlanDivCol d-none">
+              <label for="" class="label">Previous Plan</label>
+              <input
+                type="text"
+                class="form-control form-control-sm previousPlanModalMAPD"
+                name="policy_previous_plan"
+                autocomplete="off"
+              />
+              <small
+                class="text-danger"
+                id="policy_previous_plan_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/MAPD"
+                name="policy_company"
+                id="MAPDcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input
+                type="hidden"
+                name="company_name"
+                autocomplete="off"
+                value=""
+              />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small class="text-danger" id="MAPDcompaniesReturnModal_message"
+                ><span class="text-danger"
+                  >No companies found for that address.</span
+                ></small
+              >
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="MAPDplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="MAPDplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input
+                type="hidden"
+                name="plan_name"
+                autocomplete="off"
+                value=""
+              />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="MAPDplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Disenrolled">Disenrolled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalMAPD needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageMAPD"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Written As*</label>
+              <select
+                class="form-control form-control-sm writtenModal"
+                name="policy_written_as"
+                required=""
+                id="writtenAsMAPD"
+              >
+                <option value="">Select..</option>
+                <option data-id="I" value="New to Medicare">
+                  New to Medicare
+                </option>
+                <option data-id="R" value="Like Plan Change">
+                  Like Plan Change
+                </option>
+                <option data-id="R" value="Unlike Plan Change">
+                  Unlike Plan Change
+                </option>
+                <option data-id="R" value="AOR Change">AOR Change</option>
+                <option data-id="N" value="na">NA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Election Period </label>
+              <select
+                name="policy_election_period"
+                id=""
+                class="form-control form-control-sm"
+              >
+                <option value="NULL">Select..</option>
+                <option value="AEP">AEP</option>
+                <option value="IEP">IEP</option>
+                <option value="ICEP">ICEP</option>
+                <option value="OEP">OEP</option>
+                <option value="OEPI">OEPI</option>
+                <option value="SEP Dual Change of Status">
+                  SEP Dual Change of Status
+                </option>
+                <option value="SEP Service Area">SEP Service Area</option>
+                <option value="SEP EGHP Loss">SEP EGHP Loss</option>
+                <option value="SEP Chronic">SEP Chronic</option>
+                <option value="SEP Maintaining">SEP Maintaining</option>
+                <option value="SEP 5-Star">SEP 5-Star</option>
+                <option value="SEP Disaster">SEP Disaster</option>
+                <option value="SEP Creditable Coverage">
+                  SEP Creditable Coverage
+                </option>
+                <option value="SEP Other">SEP Other</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_election_period_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+                value=""
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label mr-2">Health Assessment/Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 mb-2 d-none policySpif">
+              <label for="" class="label mr-2">SPIF</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_spif"
+                  value=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_type"
+            value="MAPD"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addmapd">
+          Add MAPD
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDP Modal -->
+<div
+  class="modal fade"
+  id="newPDPModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New PDP</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="PDPForm">
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <small class="text-primary">Load available plans for: </small>
+              <select
+                name="address_type"
+                id="availableAddressPDP"
+                class="form-control form-control-sm mb-3 mt-2 availableAddress"
+              ></select>
+            </div>
+            <div class="col-12 mb-2 previousPlanDivCol d-none">
+              <label for="" class="label">Previous Plan</label>
+              <input
+                type="text"
+                class="form-control form-control-sm previousPlanModalMAPD"
+                name="policy_previous_plan"
+                autocomplete="off"
+              />
+              <small
+                class="text-danger"
+                id="policy_previous_plan_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/PDP"
+                name="policy_company"
+                id="PDPcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="PDPcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="PDPplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="PDPplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="PDPplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Disenrolled">Disenrolled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalPDP needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessagePDP"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Written As*</label>
+              <select
+                class="form-control form-control-sm writtenModal"
+                name="policy_written_as"
+                required=""
+                id="writtenAsPDP"
+              >
+                <option value="">Select..</option>
+                <option data-id="I" value="New to Medicare">
+                  New to Medicare
+                </option>
+                <option data-id="R" value="Like Plan Change">
+                  Like Plan Change
+                </option>
+                <option data-id="R" value="Unlike Plan Change">
+                  Unlike Plan Change
+                </option>
+                <option data-id="R" value="AOR Change">AOR Change</option>
+                <option data-id="N" value="na">NA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Election Period </label>
+              <select
+                name="policy_election_period"
+                id=""
+                class="form-control form-control-sm"
+              >
+                <option value="NULL">Select..</option>
+                <option value="AEP">AEP</option>
+                <option value="IEP">IEP</option>
+                <option value="ICEP">ICEP</option>
+                <option value="OEP">OEP</option>
+                <option value="OEPI">OEPI</option>
+                <option value="SEP Dual Change of Status">
+                  SEP Dual Change of Status
+                </option>
+                <option value="SEP Service Area">SEP Service Area</option>
+                <option value="SEP EGHP Loss">SEP EGHP Loss</option>
+                <option value="SEP Chronic">SEP Chronic</option>
+                <option value="SEP Maintaining">SEP Maintaining</option>
+                <option value="SEP 5-Star">SEP 5-Star</option>
+                <option value="SEP Disaster">SEP Disaster</option>
+                <option value="SEP Creditable Coverage">
+                  SEP Creditable Coverage
+                </option>
+                <option value="SEP Other">SEP Other</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_election_period_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="SSI Deduction">SSI Deduction</option>
+                <option value="RRB Check">RRB Check</option>
+                <option value="EFT">EFT</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="PDP"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addpdp">Add PDP</button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Medicare Supplements Modal -->
+<div
+  class="modal fade"
+  id="newMedicareSupplementsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Supplement</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+
+        <form id="SUPForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-6 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/SUP"
+                name="policy_company"
+                id="SUPcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="SUPcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-6 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="SUPplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="SUPplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="SUPplansReturnModal_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalSUP needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageSUP"
+                id="policy_effective_message"
+              ></small>
+            </div>
+          </div>
+
+          <div class="row gutter-2 writtenRow">
+            <div class="col-12 col-md-4 mb-2 compdiv">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-2 compdiv compPremDiv">
+              <label for="" class="label">Commissionable Premium* </label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_com_prem"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="SSI Deduction">SSI Deduction</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Credit Card">Credit Card</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="policy_type"
+            value="SUP"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addsup">Add Sup</button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Ancillary Modal -->
+<div
+  class="modal fade"
+  id="newAncillaryModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Ancillary</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="ANCForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-6 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/ANC"
+                name="policy_company"
+                id="ANCcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="ANCcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-6 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="ANCplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="ANCplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="ANCplansReturnModal_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalANC needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageANC"
+                id="policy_effective_message"
+              ></small>
+            </div>
+          </div>
+
+          <div class="row gutter-2 writtenRow">
+            <div class="col-12 col-md-4 mb-2 compdiv">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2 compdiv compPremDiv">
+              <label for="" class="label">Commissionable Premium* </label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_com_prem"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="SSI Deduction">SSI Deduction</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Credit Card">Credit Card</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="ANC"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addanc">
+          Add Ancillary
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- new life modal -->
+<div
+  class="modal fade"
+  id="newLifeModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Life</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="LIFEForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/LIFE"
+                name="policy_company"
+                id="LIFEcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="LIFEcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="LIFEplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="LIFEplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="LIFEplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalLIFE needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageLIFE"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Death Benefit</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_db"
+                  value="0"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2 writtenRow">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Type</label>
+              <select
+                class="form-control form-control-sm policySubType"
+                data-id="Modal"
+                name="policy_sub_type"
+              >
+                <option value="">Select...</option>
+                <option value="Final Expense">Final Expense</option>
+                <option value="Term">Term</option>
+                <option value="Whole Life">Whole Life</option>
+                <option value="IUL">IUL</option>
+                <option value="GUL">GUL</option>
+                <option value="Universal WL">Universal WL</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Term</label>
+              <select
+                class="form-control form-control-sm policyTermModal"
+                name="policy_term"
+              >
+                <option value="">Select...</option>
+                <option value="5yr">5yr</option>
+                <option value="10yr">10yr</option>
+                <option value="15yr">15yr</option>
+                <option value="20yr">20yr</option>
+                <option value="25yr">25yr</option>
+                <option value="30yr">30yr</option>
+                <option value="35yr">35yr</option>
+                <option value="Permanent">Permanent</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2 compDiv compPremDiv">
+              <label for="" class="label">Commissionable Premium* </label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_com_prem"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="SSI Deduction">SSI Deduction</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Single Premium">Single Premium</option>
+                <option value="5-pay">5-pay</option>
+                <option value="10-pay">10-pay</option>
+                <option value="Direct Express">Direct Express</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="LIFE"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addlife">
+          Add Life
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- new health modal -->
+<div
+  class="modal fade"
+  id="newIndividualHealthModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Health</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="INDForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/IND"
+                name="policy_company"
+                id="INDcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="INDcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="INDplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="INDplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="INDplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalIND needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageIND"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Credit Card">Credit Card</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Lives on Policy</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_lives"
+                id=""
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">App ID</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_app_id"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_app_id_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Subsidy</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_subsidy"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Deductible</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_deductible"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">OOP</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_oop"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Insureds</label>
+              <div id="dependentsModalReturn"></div>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="IND"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_spouse"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addind">
+          Add Health
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- new annuity modal -->
+<div
+  class="modal fade"
+  id="newAnnuityModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Annuity</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="ANNUITYForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Tax Status*</label>
+              <select class="form-control form-control-sm" required="">
+                <option value="">Select...</option>
+                <option value="Q">Qualified</option>
+                <option value="NQ">Non-Qualified</option>
+              </select>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/ANNUITY"
+                name="policy_company"
+                id="ANNUITYcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="ANNUITYcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Product*
+                <span class="text-primary" id="ANNUITYplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="ANNUITYplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="ANNUITYplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Declined">Surrendered</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalANNUITY needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageANNUITY"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Initial Premium*</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+                <input
+                  type="hidden"
+                  class="form-control form-control-sm"
+                  name="policy_com_prem"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2 writtenRow">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Type</label>
+              <select
+                class="form-control form-control-sm policySubType"
+                data-id="Modal"
+                name="policy_sub_type"
+              >
+                <option value="">Select...</option>
+                <option value="Index Annuity">Index Annuity</option>
+                <option value="Fixed Annuity">Fixed Annuity</option>
+                <option value="Variable Annuity">Variable Annuity</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="ANNUITY"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addAnnuity">
+          Add Annuity
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- new ltc modal -->
+<div
+  class="modal fade"
+  id="newLtcModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New LTC</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="LTCForm">
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/LTC"
+                name="policy_company"
+                id="LTCcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="LTCcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="LTCplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="LTCplansReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="LTCplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option value="Declined">Declined</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalLTC needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageLTC"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Daily Benefit</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_daily_benefit"
+                  value="0"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2 writtenRow">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Total Benefit Period</label>
+              <div class="input-group input-group-sm">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_benefit_period"
+                  value="0"
+                  autocomplete="off"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">Days</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Elimination Period</label>
+              <div class="input-group input-group-sm">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_elimination_period"
+                  value="0"
+                  autocomplete="off"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">Days</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">COLA</label>
+              <div class="input-group input-group-sm">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_cola"
+                  value="0"
+                  autocomplete="off"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2 compDiv compPremDiv">
+              <label for="" class="label">Commissionable Premium* </label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_com_prem"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="SSI Deduction">SSI Deduction</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Single Premium">Single Premium</option>
+                <option value="5-pay">5-pay</option>
+                <option value="10-pay">10-pay</option>
+                <option value="Direct Express">Direct Express</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_enrolled"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_was_agent"
+            value=""
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="policy_type"
+            value="LTC"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="form-control form-control-sm keep"
+            name="ind_id"
+            value="1420524"
+            autocomplete="off"
+          />
+          <input
+            type="hidden"
+            class="keep"
+            value="agent/ProfileController/insertNewPolicyAction/"
+            name="controllerURL"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addLTC">Add LTC</button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="newGroupModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto">
+        <div class="row">
+          <div class="col"><h3>New Group</h3></div>
+          <div class="col d-flex justify-content-end">
+            <a (click)="closeModalPolicy()" class="btn btn-link"
+              ><i class="bi bi-x-lg"></i
+            ></a>
+          </div>
+        </div>
+        <form id="GROUPForm">
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Group Name*</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_group_name"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-12 col-md-5 mb-2">
+              <label for="" class="label">Company*</label>
+              <select
+                class="form-control form-control-sm modalCompany companySel"
+                data-id="Modal/GROUP"
+                name="policy_company"
+                id="GROUPcompaniesReturnModal"
+                required=""
+              >
+                <option value="">Select...</option>
+              </select>
+              <input type="hidden" name="company_name" autocomplete="off" />
+              <small class="text-danger" id="policy_company_message"></small>
+              <small
+                class="text-danger"
+                id="GROUPcompaniesReturnModal_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label"
+                >Plan*
+                <span class="text-primary" id="GROUPplansReturn_spin"></span
+              ></label>
+              <select
+                class="form-control form-control-sm modalPlan"
+                name="policy_plan"
+                id="GROUPplansReturnModal"
+                required=""
+              ></select>
+              <input type="hidden" name="plan_name" autocomplete="off" />
+              <small class="text-danger" id="policy_plan_message"></small>
+              <small id="GROUPplansReturnModal_message"></small>
+            </div>
+            <div class="col-12 col-md-3 mb-2">
+              <label for="" class="label">Status*</label>
+              <select
+                class="form-control form-control-sm modalStatus"
+                name="policy_status"
+                required=""
+              >
+                <option value="">Select...</option>
+                <option value="Active">Active</option>
+                <option value="Active-non">Active (not agent of record)</option>
+                <option value="Pending">Pending/Submitted</option>
+                <option value="Replaced">Replaced</option>
+                <option value="Canceled">Canceled</option>
+                <option disabled="">-- PRE SUBMISSION --</option>
+                <option value="Kit Mailed">Kit Mailed</option>
+                <option value="Kit Emailed">Kit Emailed</option>
+                <option value="eSign Sent">eSign Sent</option>
+              </select>
+              <small class="text-danger" id="policy_status_message"></small>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Application Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm appDateModalMAPD needsSlashes"
+                  name="policy_app_date"
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger appDateModalMessageMAPD"
+                id="policy_app_date_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Effective Date*</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  type="text"
+                  class="form-control form-control-sm effectiveModalGROUP needsSlashes"
+                  name="policy_effective"
+                  required=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <small
+                class="text-danger effectiveModalMessageGROUP"
+                id="policy_effective_message"
+              ></small>
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label"
+                >Premium* <small><i>(monthly)</i></small></label
+              >
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm isPremium"
+                  name="policy_premium"
+                  value="0.00"
+                  required=""
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Billing Method</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_billing_method"
+              >
+                <option value="NULL">Select...</option>
+                <option value="EFT">EFT</option>
+                <option value="Direct Bill (M)">Direct Bill (M)</option>
+                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                <option value="Direct Bill (S)">Direct Bill (S)</option>
+                <option value="Direct Bill (A)">Direct Bill (A)</option>
+                <option value="Credit Card">Credit Card</option>
+              </select>
+              <small
+                class="text-danger"
+                id="policy_billing_method_message"
+              ></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Lives on Policy</label>
+              <select
+                class="form-control form-control-sm"
+                name="policy_lives"
+                id=""
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Policy Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_number"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_number_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">App ID</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="policy_app_id"
+                autocomplete="off"
+              />
+              <small class="text-danger" id="policy_app_id_message"></small>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label">Replacing </label>
+              <select
+                class="form-control form-control-sm replacingModal"
+                name="policy_replacing"
+              >
+                <option value="">Select..</option>
+                <option value="0">n/a</option>
+              </select>
+              <input
+                type="hidden"
+                name="policy_replace_name"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Bonus</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_survey"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">Deductible</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_deductible"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2">
+              <label for="" class="label mr-2">OOP</label>
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="policy_oop"
+                  value="0.00"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row gutter-2">
+            <div class="col-2 mb-2">
+              <input
+                type="checkbox"
+                value="AOR Change"
+                name="policy_written_as"
+                class="aorChangeModal"
+                autocomplete="off"
+              />
+              <span class="label">AOR Change</span>
+            </div>
+            <div class="col-2 mb-2 aorDateColModal d-none">
+              <label for="" class="label">AOR Date</label>
+              <div class="input-group date" data-provide="datepicker">
+                <input
+                  name="policy_aor_date"
+                  type="text"
+                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Riders</label>
+              <input
+                type="text"
+                class="form-control"
+                name="policy_riders"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="row gutter-2">
+            <div class="col-12 mb-2">
+              <label for="" class="label">Notes</label>
+              <textarea class="form-control" name="policy_notes"></textarea>
+            </div>
+          </div>
+          <input
+            type="hidden"
+            class="modalIndStatus"
+            name="ind_status"
+            value="Prospect"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary save" id="addgroup">
+          Add Group
+        </button>
+        <button
+          class="btn btn-sm btn-secondary closeModal"
+          (click)="closeModalPolicy()"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>

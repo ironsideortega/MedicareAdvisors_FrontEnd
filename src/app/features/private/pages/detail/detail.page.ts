@@ -16,11 +16,19 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { DoctorService } from "src/app/core/services/doctor/doctor.service";
 import { DataImportance, DataSpecialty, DataStatus, DoctorData, DoctorImportanceModel, DoctorSpecialtyModel, DoctorStatusModel, ProviderModel, Result } from "src/app/core/services/doctor/model";
 import { RxService } from "src/app/core/services/rx/rx.service";
-import { ConceptProperty, DrugFrequencyData, NdcProperty, PackagingList, PrescriptionsData, } from "src/app/core/services/rx/models";
+import { ConceptProperty, DrugFrequencyData, HealthInfoData, NdcProperty, PackagingList, PrescriptionsData, } from "src/app/core/services/rx/models";
 import { DataLoaderService } from "src/app/core/services/dataloader.service";
 import { forkJoin } from "rxjs";
 import { ProfileService } from "src/app/core/services/profile/profile.service";
 import { ProfileStateData } from "src/app/core/services/profile";
+import { PersonalService } from "src/app/core/services/personal/personal.service";
+import { SocialData } from '../../../../core/services/personal/social';
+import { MedicareData } from "src/app/core/services/personal/Medicare";
+import { SPapModelData } from "src/app/core/services/personal/Spap";
+import { PDVAModelData } from "src/app/core/services/personal/Va";
+import { PDVaultModelData } from "src/app/core/services/personal/Vault";
+import { PDAssistenceLevelModelData } from "src/app/core/services/personal/AssistenceLevel";
+import { PDMedicaidModelData } from "src/app/core/services/personal/Medicaid";
 
 interface EmailTypeModel{
   EmailTypeID: number,
@@ -54,6 +62,13 @@ export class DetailPage implements OnInit{
   doctorForm!: FormGroup;
   addressForm!: FormGroup;
   medicationForm!: FormGroup;
+  healthTrackerForm!: FormGroup;
+  personalDetailSocialForm!: FormGroup;
+  personalDetailMedicareForm!: FormGroup;
+  personalDetailSpapForm!: FormGroup;
+  personalDetailVAForm!: FormGroup;
+  personalDetailVaultForm!: FormGroup;
+  medicaidForm!: FormGroup;
   emailType: EmailTypeModel[] = [];
   phoneType: PhoneTypeModel[] = [];
   addressType:AddressTypeModel[] = [];
@@ -62,6 +77,13 @@ export class DetailPage implements OnInit{
   phoneList:Phone[]=[];
   emailList:Email[]=[];
   addressList:Address[]=[];
+  assistenceLevelList:PDAssistenceLevelModelData[] = [];
+  socialList!:SocialData;
+  medicareList!:MedicareData;
+  spapList!:SPapModelData;
+  pdvaList!:PDVAModelData;
+  pdVaultList!:PDVaultModelData;
+  pdMedicaidList!:PDMedicaidModelData;
   gender:any[]=[];
   suffixes:any[]=[];
   titles:any[]=[];
@@ -109,19 +131,10 @@ export class DetailPage implements OnInit{
   submittedDoctor:boolean = false;
   stateList:ProfileStateData[]=[];
 
-
-
-  // Nuevas variables
-
-
-  // dataForProspect: any;
-  // phoneByProspect: any;
-  // genders: any;
-  // status: any;
-  // mStatus: any;
-  // emailByProspect: any;
-  // rxByName: any;
-  // doctorsByContactId: any;
+  enabledHealthInfo:boolean = true;
+  enabledHealthTracker:boolean = false;
+  enabledHealthTrackerHasData:boolean = false;
+  policySelected:string = '';
 
 
 
@@ -137,6 +150,7 @@ export class DetailPage implements OnInit{
     private rxService: RxService,
     private dataLoaderService: DataLoaderService,
     private profileService:ProfileService,
+    private personalService:PersonalService,
 
   ) {
     // this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -171,6 +185,13 @@ export class DetailPage implements OnInit{
     this.createFormDoctor();
     this.createFormAddress();
     this.createFormDrugs();
+    this.createHealthTrackerForm();
+    this.createSocialForm();
+    this.createMedicareForm();
+    this.createSpapForm();
+    this.createVAForm();
+    this.createVaultForm();
+    this.createMedicaidForm();
   }
 
   createFormAddress(){
@@ -261,7 +282,19 @@ export class DetailPage implements OnInit{
     this.getState();
     this.getDrugFrequency();
     this.getDrugList();
+    this.getHeightInfo();
+    this.getHealthTracker();
+    this.healthTrackerForm.disable();
+    this.getSocialById();
+    this.getMedicareById();
+    this.getSpapById();
+    this.getVAById();
+    this.getVaultById();
+    this.getAllAssistenceLevels();
+    this.getMedicaidById();
    }
+
+
 
   addOrRemoveTabs(butomName: string){
     const index = this.buttonActive.indexOf(butomName);
@@ -503,8 +536,6 @@ export class DetailPage implements OnInit{
       this.getEmailByProspect();
     });
   }
-
-
 
   getEmailType(){
     this.emailService.getEmailType().subscribe(response => {
@@ -881,6 +912,528 @@ export class DetailPage implements OnInit{
 
   }
 
+  heightFeetValue:string = '';
+  heightValue:string = '';
+  weightValue:string = '';
+  healthNotes:string = '';
+  dnrValue:boolean = false;
+  isForUpdateHealthInfo:boolean = false;
 
+  enableFormHealthInfo(){
+    this.enabledHealthInfo = false;
+  }
+
+  cancelFormHealthInfo(){
+    this.enabledHealthInfo = true;
+    this.healthNotes = '';
+    this.dnrValue = false;
+    this.weightValue = '';
+    this.heightValue = '';
+    this.heightFeetValue = '';
+    this.getHeightInfo();
+  }
+
+  getHeightInfo(){
+    this.rxService.getHealthInfoById(this.contactID).subscribe(response =>{
+      console.log(response.data);
+      this.heightFeetValue = response.data.HealthFeet.toString();
+      this.heightValue = response.data.HealthInches.toString();
+      this.weightValue = response.data.HealthWeight.toString();
+      this.healthNotes = response.data.HealthNotes;
+      this.dnrValue = response.data.HealthDNR;
+
+      if(response.data != null){
+        this.isForUpdateHealthInfo = true;
+      }
+    });
+  }
+
+  saveHeightInfo(){
+    var data:HealthInfoData = {
+     ContactID: this.contactID,
+      HealthInches: parseInt(this.heightValue),
+      HealthFeet: parseInt(this.heightFeetValue),
+      HealthWeight: parseInt(this.weightValue),
+      HealthNotes: this.healthNotes,
+      HealthDNR: this.dnrValue,
+    }
+
+    if(this.isForUpdateHealthInfo){
+      this.rxService.updateHealthInfo(this.contactID, data).subscribe(response =>{
+        this.enabledHealthInfo = true;
+        this.getHeightInfo();
+      });
+    }else{
+      this.rxService.saveHealthInfo(data).subscribe(response =>{
+        this.enabledHealthInfo = true;
+        this.getHeightInfo();
+      });
+    }
+  }
+
+  createHealthTrackerForm(){
+    this.healthTrackerForm = this.formBuilder.group({
+      AFIB: [false],
+      Blind: [false],
+      COPD: [false],
+      Cancer: [false],
+      CrohnsDisease: [false],
+      DementiaAlzheimers: [false],
+      DisabledSSDI: [false],
+      HIVAIDS: [false],
+      HeavyRxUser: [false],
+      LimitedMobility: [false],
+      NonVerbal: [false],
+      Pacemaker: [false],
+      RheumatoidArthritis: [false],
+      StatinGrant: [false],
+      SystemicLupus: [false],
+      VA: [false],
+      AnnualRxReview: [false],
+      CHF: [false],
+      CPAP: [false],
+      CardiovascularDisease: [false],
+      Deaf: [false],
+      Diabetes: [false],
+      ESRD: [false],
+      HeartAttack: [false],
+      InsulinDependent: [false],
+      MentalHealth: [false],
+      Oxygen: [false],
+      Parkinsons: [false],
+      Scleroderma: [false],
+      Stroke: [false],
+      TriCare: [false],
+      Wheelchair: [false],
+      ContactID: [this.contactID]
+    });
+  }
+
+
+
+  getHealthTracker(){
+    this.rxService.getHealthTrackerById(this.contactID).subscribe(response =>{
+      if(response.data != null){
+       this.enabledHealthTrackerHasData = true;
+       this.healthTrackerForm.patchValue(response.data);
+      }else{
+        this.enabledHealthTrackerHasData = false;
+      }
+    });
+  }
+
+  enabledHealTrackerFn(){
+    if(this.healthTrackerForm.enabled){
+      this.healthTrackerForm.disable();
+      this.enabledHealthTracker = false;
+
+    }else{
+      this.enabledHealthTracker = true;
+      this.healthTrackerForm.enable();
+    }
+   }
+
+  saveHealthTracker(){
+    this.healthTrackerForm.patchValue({
+      ContactID: this.contactID,
+    });
+    if(this.enabledHealthTrackerHasData){
+      console.log('Modo edicion');
+      this.rxService.updateHealthTracker(this.contactID,this.healthTrackerForm.value).subscribe(response =>{
+        console.log(response);
+        console.log(this.healthTrackerForm.value);
+
+        this.getHealthTracker();
+        this.enabledHealthTracker = false;
+        this.healthTrackerForm.disable();
+      });
+    }else{
+      console.log('Modo creacion');
+
+      this.rxService.saveHealthTracker(this.healthTrackerForm.value).subscribe(response =>{
+        console.log(response);
+        console.log(this.healthTrackerForm.value);
+        this.getHealthTracker();
+        this.enabledHealthTracker = false;
+        this.healthTrackerForm.disable();
+      });
+    }
+  }
+
+  getFilteredEmailTypes() {
+    const usedEmailTypeIDs = this.emailList.map(email => email.EmailTypeID);
+    return this.emailType.filter(emailType => !usedEmailTypeIDs.includes(emailType.EmailTypeID));
+  }
+
+  getFilteredPhoneTypes() {
+    const usedPhoneTypeIDs = this.phoneList.map(phone => phone.PhoneTypeID);
+    return this.phoneType.filter(phoneType => !usedPhoneTypeIDs.includes(phoneType.PhoneTypeID));
+  }
+
+  getFilteredAddressTypes() {
+    const usedAddressTypeIDs = this.addressList.map(address => address.AddressTypeID);
+    return this.addressType.filter(addressType => !usedAddressTypeIDs.includes(addressType.AddressTypeID));
+  }
+
+  createSocialForm(){
+    this.personalDetailSocialForm = this.formBuilder.group({
+      SSN: ['',],
+      DL: ['', ],
+      Household_Income: [''],
+      IRMAA: [''],
+      Notes: [''],
+      ContactID: [this.contactID]
+    });
+  }
+
+  getSocialById(){
+    this.personalService.getSocialById(this.contactID).subscribe(response =>{
+      this.personalDetailSocialForm.disable();
+      if(response.data != null){
+        this.socialList = response.data;
+        this.personalDetailSocialForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableSocialForm(){
+    this.personalDetailSocialForm.enable();
+  }
+
+  disableSocialForm(){
+    this.personalDetailSocialForm.disable();
+  }
+
+  onSubmitSocial(){
+    var formData = this.personalDetailSocialForm.value;
+    if(formData.SSN == ''){
+      formData.SSN = null;
+    }
+    if(formData.DL == ''){
+      formData.DL = null;
+    }
+    if(formData.Household_Income == ''){
+      formData.Household_Income = null;
+    }
+    if(formData.IRMAA == ''){
+      formData.IRMAA = null;
+    }
+    if(formData.Notes == ''){
+      formData.Notes = null;
+    }
+    console.log(formData);
+    if(this.socialList == null){
+      this.personalService.saveSocial(formData).subscribe(response =>{
+        this.getSocialById();
+        this.personalDetailSocialForm.disable();
+      });
+    }else{
+      this.personalService.updateSocial(this.contactID, formData).subscribe(response =>{
+        this.getSocialById();
+        this.personalDetailSocialForm.disable();
+      });
+    }
+  }
+
+  createMedicareForm(){
+    this.personalDetailMedicareForm = this.formBuilder.group({
+      MedicareNumber: [''],
+      PartAEffective: [''],
+      PartBEffective: [''],
+      MedicareGov_UserName: [''],
+      ContactID: [this.contactID],
+      MedicareGov_Password: [''],
+      MedicareGov_Answer: [''],
+    });
+  }
+
+  onSubmitMedicare(){
+    var formData = this.personalDetailMedicareForm.value;
+
+    if(formData.MedicareNumber == ''){
+      formData.MedicareNumber = null;
+    }
+    if(formData.PartAEffective == ''){
+      formData.PartAEffective = null;
+    }
+    if(formData.PartBEffective == ''){
+      formData.PartBEffective = null;
+    }
+    if(formData.MedicareGov_UserName == ''){
+      formData.MedicareGov_UserName = null;
+    }
+    if(formData.MedicareGov_Password == ''){
+      formData.MedicareGov_Password = null;
+    }
+    if(formData.MedicareGov_Answer == ''){
+      formData.MedicareGov_Answer = null;
+    }
+
+    if(this.medicareList == null){
+      this.personalService.saveMedicare(formData).subscribe(response =>{
+        this.getMedicareById();
+        this.personalDetailMedicareForm.disable();
+      });
+    }else{
+      this.personalService.updateMedicare(this.contactID, formData).subscribe(response =>{
+        this.getMedicareById();
+        this.personalDetailSocialForm.disable();
+      });
+    }
+  }
+
+  getMedicareById(){
+    this.personalService.getMedicareById(this.contactID).subscribe(response =>{
+      this.personalDetailMedicareForm.disable();
+      if(response.data != null){
+        this.medicareList = response.data;
+        this.personalDetailMedicareForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableMedicareForm(){
+    this.personalDetailMedicareForm.enable();
+  }
+
+  disableMedicareForm(){
+    this.personalDetailMedicareForm.disable();
+  }
+
+
+  createSpapForm(){
+    this.personalDetailSpapForm = this.formBuilder.group({
+      SpapName: [''],
+      MemberID: [''],
+      GroupID: [''],
+      RxBin: [''],
+      Notes: [''],
+      ContactID: [this.contactID],
+    });
+  }
+
+  onSubmitSpap(){
+    var formData = this.personalDetailSpapForm.value;
+    if(formData.SpapName == ''){
+      formData.SpapName = null;
+    }
+    if(formData.MemberID == ''){
+      formData.MemberID = null;
+    }
+    if(formData.GroupID == ''){
+      formData.GroupID = null;
+    }
+    if(formData.RxBin == ''){
+      formData.RxBin = null;
+    }
+    if(formData.Notes == ''){
+      formData.Notes = null;
+    }
+
+
+    if(this.spapList == null){
+      this.personalService.saveSpap(formData).subscribe(response =>{
+        this.getSpapById();
+        this.personalDetailSpapForm.disable();
+      });
+    }else{
+      this.personalService.updateSpap(this.contactID, formData).subscribe(response =>{
+        this.getSpapById();
+        this.personalDetailSpapForm.disable();
+      });
+    }
+  }
+
+  getSpapById(){
+    this.personalService.getSpapById(this.contactID).subscribe(response =>{
+      this.personalDetailSpapForm.disable();
+      if(response.data != null){
+        this.spapList = response.data;
+        this.personalDetailSpapForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableSpapForm(){
+    this.personalDetailSpapForm.enable();
+  }
+
+  disableSpapForm(){
+    this.personalDetailSpapForm.disable();
+  }
+
+  createVAForm(){
+    this.personalDetailVAForm = this.formBuilder.group({
+      ID: [''],
+      VaGroup: [''],
+      Notes: [''],
+      ContactID: [this.contactID],
+    });
+  }
+
+  onSubmitVA(){
+    var formData = this.personalDetailVAForm.value;
+    if(formData.ID == ''){
+      formData.ID = null;
+    }
+    if(formData.VaGroup == ''){
+      formData.VaGroup = null;
+    }
+    if(formData.Notes == ''){
+      formData.Notes = null;
+    }
+
+    if(this.pdvaList == null){
+      this.personalService.saveVA(formData).subscribe(response =>{
+        this.getVAById();
+        this.personalDetailVAForm.disable();
+      });
+    }else{
+      this.personalService.updateVA(this.contactID, formData).subscribe(response =>{
+        this.getVAById();
+        this.personalDetailVAForm.disable();
+      });
+    }
+  }
+
+  getVAById(){
+    this.personalService.getVAById(this.contactID).subscribe(response =>{
+      this.personalDetailVAForm.disable();
+      if(response.data != null){
+        this.pdvaList = response.data;
+        this.personalDetailVAForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableVAForm(){
+    this.personalDetailVAForm.enable();
+  }
+
+  disableVAForm(){
+    this.personalDetailVAForm.disable();
+  }
+
+  createVaultForm(){
+    this.personalDetailVaultForm = this.formBuilder.group({
+      Notes: [''],
+      ContactID: [this.contactID],
+    });
+  }
+
+  onSubmitVault(){
+
+    if(this.pdVaultList == null){
+      this.personalService.saveVault(this.personalDetailVaultForm.value).subscribe(response =>{
+        this.getVaultById();
+        this.personalDetailVaultForm.disable();
+      });
+    }else{
+      this.personalService.updateVault(this.contactID, this.personalDetailVaultForm.value).subscribe(response =>{
+        this.getVaultById();
+        this.personalDetailVaultForm.disable();
+      });
+    }
+  }
+
+  getVaultById(){
+    this.personalService.getVaultById(this.contactID).subscribe(response =>{
+      this.personalDetailVaultForm.disable();
+      if(response.data != null){
+        this.pdVaultList = response.data;
+        this.personalDetailVaultForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableVaultForm(){
+    this.personalDetailVaultForm.enable();
+  }
+
+  disableVaultForm(){
+    this.personalDetailVaultForm.disable();
+  }
+
+  createMedicaidForm(){
+    this.medicaidForm = this.formBuilder.group({
+      Medicaid_No: [''],
+      Medicaid_Plan: [''],
+      Renewal: [''],
+      Note: [''],
+      ContactID: [this.contactID],
+      Assistance_Level_ID: ['']
+    });
+  }
+
+  getAllAssistenceLevels(){
+    this.personalService.getAssistenceLevels().subscribe(response =>{
+      this.assistenceLevelList = response.data;
+    });
+  }
+
+  onSubmitMedicaid(){
+    var formData = this.medicaidForm.value;
+    if(formData.Medicaid_No == ''){
+      formData.Medicaid_No = null;
+    }
+    if(formData.Medicaid_Plan == ''){
+      formData.Medicaid_Plan = null;
+    }
+    if(formData.Renewal == ''){
+      formData.Renewal = null;
+    }
+    if(formData.Note == ''){
+      formData.Note = null;
+    }
+    if(formData.Assistance_Level_ID == ''){
+      formData.Assistance_Level_ID = null;
+    }
+
+    if(this.pdMedicaidList == null){
+      this.personalService.saveMedicaid(formData).subscribe(response =>{
+        this.getMedicaidById();
+        this.medicaidForm.disable();
+      });
+    }else{
+      this.personalService.updateMedicaid(this.contactID, formData).subscribe(response =>{
+        this.getMedicaidById();
+        this.medicaidForm.disable();
+      });
+    }
+  }
+
+  getMedicaidById(){
+    this.personalService.getMedicaidById(this.contactID).subscribe(response =>{
+      this.medicaidForm.disable();
+      if(response.data != null){
+        this.pdMedicaidList = response.data;
+        this.medicaidForm.patchValue(response.data);
+      }
+    });
+  }
+
+  enableMedicaidForm(){
+    this.medicaidForm.enable();
+  }
+
+  disableMedicaidForm(){
+    this.medicaidForm.disable();
+  }
+
+  closeModalPolicy(){
+    $('#exampleModalPolicy').modal('hide');
+    $(`#${this.policySelected}`).modal('hide');
+    this.policySelected = '';
+  }
+
+
+  openPolicyModal(){
+    if(this.policySelected == ''){
+      alert('Please select a policy');
+      return;
+    }
+    $('#exampleModalPolicy').modal('hide');
+    $(`#${this.policySelected}`).modal('show');
+  }
 
 }

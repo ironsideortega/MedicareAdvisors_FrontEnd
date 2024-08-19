@@ -41,4 +41,30 @@ export class RxService {
     return this.http.GetRequest(`api/health/drugs/${contactID}`);
   }
 
+  saveHealthInfo(healthData: any): Observable<any> {
+    const url = 'api/health-info';
+    return this.http.PostRequest<any, any>(url, healthData);
+  }
+
+  getHealthInfoById(contactID:number): Observable<any> {
+    return this.http.GetRequest(`api/health-info/${contactID}`);
+  }
+
+  updateHealthInfo(contactID:number, healthData: any): Observable<any>{
+    return this.http.PutRequest(`api/health-info/${contactID}`, healthData);
+  }
+
+  getHealthTrackerById(contactID:number): Observable<any> {
+    return this.http.GetRequest(`api/healthtracker/${contactID}`);
+  }
+
+  saveHealthTracker(healthData: any): Observable<any> {
+    const url = 'api/healthtracker';
+    return this.http.PostRequest<any, any>(url, healthData);
+  }
+
+  updateHealthTracker(contactID:number, healthData: any): Observable<any>{
+    return this.http.PutRequest(`api/healthtracker/${contactID}`, healthData);
+  }
+
 }

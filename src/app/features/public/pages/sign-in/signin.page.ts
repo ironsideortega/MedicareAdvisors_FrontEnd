@@ -29,8 +29,8 @@ export class SignInPage implements OnInit {
 
   buildFormCreate(){
     this.myFormCreate = this.formBuilder.group({
-      username: ['eliuorteg@gmail.com', [Validators.required, Validators.email]],
-      userpassword:['SecurePass2024@', [Validators.required]]
+      username: ['', [Validators.required, Validators.email]],
+      userpassword:['', [Validators.required]]
     });
   }
 

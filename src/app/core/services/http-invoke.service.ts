@@ -12,6 +12,7 @@ export class HttpInvokeService {
   private backendUrl: string;
   private providerUrl: string;
   private handleError: boolean = false;
+  private corsAnywhereUrl: string = 'https://cors-anywhere.herokuapp.com/';
 
   public constructor(private http: HttpClient, private snakbar: SnackbarService) {
     this.backendUrl = environment.backendUrl;
@@ -30,7 +31,7 @@ export class HttpInvokeService {
 
   GetRequestProvider = <TResult>(request: string, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.get(`${this.providerUrl}${request}`));
+    return this.filterRequest(this.http.get(`${this.corsAnywhereUrl}${this.providerUrl}${request}`));
   };
 
   PutRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {

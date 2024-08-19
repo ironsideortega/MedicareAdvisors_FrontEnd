@@ -32,7 +32,7 @@ export class DoctorService {
   // }
 
   getDoctorByLastName(lastName: string, state:string, firstName:string, taxonomy:string): Observable<ProviderModel> {
-    return this.http2.get<ProviderModel>(`api/?last_name=${lastName}&postal_code=${state}&limit=200&version=2.1`);
+    return this.http.GetRequest<ProviderModel>(`api/search/?last_name=${lastName}&postal_code=${state}&limit=200&version=2.1`);
   }
 
   getDoctorByContactID(ContactId:number): Observable<DoctorModel>{

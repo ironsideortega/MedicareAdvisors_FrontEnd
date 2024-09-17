@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 // import * as Chart from 'chart.js';
 
 // import { TitleService } from "../../services/title.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { EmailService } from "src/app/core/services/email/email.service";
 import { PhoneService } from "src/app/core/services/phone/phone.service";
 import { ActivatedRoute } from "@angular/router";
@@ -97,6 +97,7 @@ export class DetailPage implements OnInit{
   submittedEmail = false;
   submittedPhone = false;
   submittedAddress = false;
+  submittedRx = false;
   isLoadingEmail:boolean = false;
   isLoadingPhone:boolean = false;
   isLoadingAddress:boolean = false;
@@ -327,6 +328,11 @@ export class DetailPage implements OnInit{
     return control!.invalid && (control!.touched || this.submittedAddress) && control!.value === '';
   }
 
+  isInvalidAndTouchedRX(controlName: string): boolean {
+    const control = this.medicationForm.get(controlName);
+    return control!.invalid && (control!.touched || this.submittedRx) && control!.value === '';
+  }
+
   onSubmitEmail(){
     this.submittedEmail = true;
     if(this.emailIdUpdate !=0){
@@ -501,6 +507,11 @@ export class DetailPage implements OnInit{
     return control!.invalid;
   }
 
+  isInvalidRx(controlName: string): boolean {
+    const control = this.medicationForm.get(controlName);
+    return control!.invalid;
+  }
+
   showAlertForInvalidFieldsEmail() {
     let errorMessage = '';
 
@@ -624,7 +635,7 @@ export class DetailPage implements OnInit{
         title: response.data.TitleID,
         dob:response.data.DOB !== null ? dobFormatted : '',
         spouse: response.data.SpouseFirstName,
-        maritalStatus: response.data.MAritalStatusID,
+        maritalStatus: response.data.MaritalStatusID,
         preferredLanguage: response.data.preferredLanguageID,
         specialDesignation: response.data.specialDesignationID,
         ocupation: response.data.Ocupation,
@@ -751,6 +762,7 @@ export class DetailPage implements OnInit{
   }
 
   getRxByName(){
+    this.rxResult = [];
     if(this.rxName){
       this.isLoadingDosage = true;
       this.rxService.getRxByName(this.rxName).subscribe(response =>{
@@ -782,6 +794,10 @@ export class DetailPage implements OnInit{
       EmailTypeID: email.EmailTypeID,
       EmailAddressValue:email.EmailAddressValue,
     });
+    if(this.getFilteredEmailTypes().length === 0){
+
+      this.emailForm.get('EmailTypeID')!.disable();
+    }
   }
 
   loadDataForEditPhone(phone:Phone){
@@ -790,6 +806,9 @@ export class DetailPage implements OnInit{
       PhoneTypeID: phone.PhoneTypeID,
       PhoneNumber:phone.PhoneNumber,
     });
+    if(this.getFilteredPhoneTypes().length === 0){
+      this.phoneForm.get('PhoneTypeID')!.disable();
+    }
   }
 
   loadDataForEditAddress(address:Address){
@@ -802,9 +821,13 @@ export class DetailPage implements OnInit{
       Country:address.Country,
       Zip:address.Zip,
     });
+    if(this.getFilteredAddressTypes().length === 0){
+      this.addressForm.get('AddressTypeID')!.disable();
+    }
   }
 
   updateEmail(){
+    // this.filteredEmailTypes = this.getFilteredEmailTypes(email);
     this.emailService.updateEmail(this.emailIdUpdate, this.emailForm.value).subscribe(response => {
       this.isLoadingEmail = false;
       this.emailForm.reset();
@@ -846,6 +869,7 @@ export class DetailPage implements OnInit{
 
   getDoctorStatus(){
     this.doctorService.getDoctorStatus().subscribe(response => {
+      console.log("Status", response);
       this.doctorStatus = response.data;
     });
   }
@@ -898,18 +922,16 @@ export class DetailPage implements OnInit{
   }
 
   onSubmitDrug(){
-    console.log(this.medicationForm.value);
-    this.rxService.saveDrugs(this.medicationForm.value).subscribe(response =>{
-      this.medicationForm.reset();
-      this.getDrugList();
-      this.closeModalRx();
-      this.createFormDrugs();
-
-
-
-      // this.submittedMedication = false;
-    });
-
+    this.submittedRx = true;
+    if(this.medicationForm.valid){
+      this.rxService.saveDrugs(this.medicationForm.value).subscribe(response =>{
+        this.medicationForm.reset();
+        this.getDrugList();
+        this.closeModalRx();
+        this.createFormDrugs();
+        this.submittedRx = false;
+      });
+    }
   }
 
   heightFeetValue:string = '';
@@ -1005,7 +1027,7 @@ export class DetailPage implements OnInit{
       Stroke: [false],
       TriCare: [false],
       Wheelchair: [false],
-      ContactID: [this.contactID]
+
     });
   }
 
@@ -1034,6 +1056,7 @@ export class DetailPage implements OnInit{
    }
 
   saveHealthTracker(){
+    this.healthTrackerForm.addControl('ContactID', new FormControl());
     this.healthTrackerForm.patchValue({
       ContactID: this.contactID,
     });
@@ -1042,7 +1065,8 @@ export class DetailPage implements OnInit{
       this.rxService.updateHealthTracker(this.contactID,this.healthTrackerForm.value).subscribe(response =>{
         console.log(response);
         console.log(this.healthTrackerForm.value);
-
+        this.healthTrackerForm.reset();
+        this.createHealthTrackerForm();
         this.getHealthTracker();
         this.enabledHealthTracker = false;
         this.healthTrackerForm.disable();
@@ -1060,20 +1084,45 @@ export class DetailPage implements OnInit{
     }
   }
 
-  getFilteredEmailTypes() {
+  getFilteredEmailTypes(emailTypeIdBeingEdited?: number) {
     const usedEmailTypeIDs = this.emailList.map(email => email.EmailTypeID);
-    return this.emailType.filter(emailType => !usedEmailTypeIDs.includes(emailType.EmailTypeID));
+
+    return this.emailType.filter(emailType => {
+      // Permitir que el email que se está editando sea visible
+      if (emailTypeIdBeingEdited && emailTypeIdBeingEdited === emailType.EmailTypeID) {
+        return true;
+      }
+      // Filtrar los que ya están en uso
+      return !usedEmailTypeIDs.includes(emailType.EmailTypeID);
+    });
   }
 
-  getFilteredPhoneTypes() {
+  getFilteredPhoneTypes(phoneTypeIdBeingEdited?: number) {
     const usedPhoneTypeIDs = this.phoneList.map(phone => phone.PhoneTypeID);
-    return this.phoneType.filter(phoneType => !usedPhoneTypeIDs.includes(phoneType.PhoneTypeID));
+
+    return this.phoneType.filter(phoneType => {
+      // Permitir que el phoneType que se está editando sea visible
+      if (phoneTypeIdBeingEdited && phoneTypeIdBeingEdited === phoneType.PhoneTypeID) {
+        return true;
+      }
+      // Filtrar los que ya están en uso
+      return !usedPhoneTypeIDs.includes(phoneType.PhoneTypeID);
+    });
   }
 
-  getFilteredAddressTypes() {
+  getFilteredAddressTypes(addressTypeIdBeingEdited?: number) {
     const usedAddressTypeIDs = this.addressList.map(address => address.AddressTypeID);
-    return this.addressType.filter(addressType => !usedAddressTypeIDs.includes(addressType.AddressTypeID));
+
+    return this.addressType.filter(addressType => {
+      // Permitir que el addressType que se está editando sea visible
+      if (addressTypeIdBeingEdited && addressTypeIdBeingEdited === addressType.AddressTypeID) {
+        return true;
+      }
+      // Filtrar los que ya están en uso
+      return !usedAddressTypeIDs.includes(addressType.AddressTypeID);
+    });
   }
+
 
   createSocialForm(){
     this.personalDetailSocialForm = this.formBuilder.group({

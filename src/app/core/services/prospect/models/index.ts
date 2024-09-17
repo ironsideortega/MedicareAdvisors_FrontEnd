@@ -23,7 +23,7 @@ export interface ContactData {
   ReferredBy: string | null;
   suffixValue: string | null;
   specialDesignationValue: string | null;
-  MAritalStatusID: string | null;
+  MaritalStatusID: string | null;
   GenderID: string | null;
   TitleID: string | null;
   suffixID: string | null;

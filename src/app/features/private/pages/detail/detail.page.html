@@ -965,7 +965,6 @@
                             <th>Dosage</th>
                             <th>Quantity</th>
                             <th>Pacakage</th>
-                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -974,7 +973,6 @@
                             <td>{{prescriptions.Dosage}}</td>
                             <td>{{prescriptions.Quantity}}</td>
                             <td>{{prescriptions.Package}}</td>
-                            <td></td>
                           </tr>
                         </tbody>
                       </table>
@@ -1153,7 +1151,7 @@
                     <label>Household Income</label>
                     <input
                       formControlName="Household_Income"
-                      type="text"
+                      type="number"
                       class="form-control"
                     />
                   </div>
@@ -1628,7 +1626,7 @@
                 >
                   <option selected disabled value="">Select one...</option>
                   <option
-                    *ngFor="let response of getFilteredEmailTypes()"
+                    *ngFor="let response of getFilteredEmailTypes(emailForm.controls['EmailTypeID'].value)"
                     value="{{response.EmailTypeID}}"
                   >
                     {{response.EmailTypeValue}}
@@ -1709,10 +1707,10 @@
           </div>
 
           <br />
-          <div class="alert alert-danger" role="alert">
+          <!-- <div class="alert alert-danger" role="alert">
             This section is currently under construction, and the preferred
             settings are not yet fully configured.
-          </div>
+          </div> -->
           <table class="table">
             <thead>
               <th>#</th>
@@ -1778,7 +1776,7 @@
                 <select class="form-control" formControlName="PhoneTypeID">
                   <option selected disabled value="">Select one...</option>
                   <option
-                    *ngFor="let response of getFilteredPhoneTypes()"
+                    *ngFor="let response of getFilteredPhoneTypes(phoneForm.controls['PhoneTypeID'].value)"
                     value="{{response.PhoneTypeID}}"
                   >
                     {{response.PhoneTypeValue}}
@@ -1860,10 +1858,10 @@
           </div>
 
           <br />
-          <div class="alert alert-danger" role="alert">
+          <!-- <div class="alert alert-danger" role="alert">
             This section is currently under construction, and the preferred
             settings are not yet fully configured.
-          </div>
+          </div> -->
           <table class="table">
             <thead>
               <th>#</th>
@@ -1933,7 +1931,7 @@
                 >
                   <!-- <option selected disabled value="">Select...</option> -->
                   <option
-                    *ngFor="let address of getFilteredAddressTypes()"
+                    *ngFor="let address of getFilteredAddressTypes(addressForm.controls['AddressTypeID'].value)"
                     [value]="address.AddressTypeID"
                   >
                     {{address.AddressTypeValue}}
@@ -2073,10 +2071,10 @@
           </div>
         </form>
         <br />
-        <div class="alert alert-danger" role="alert">
+        <!-- <div class="alert alert-danger" role="alert">
           This section is currently under construction, and the preferred
           settings are not yet fully configured.
-        </div>
+        </div> -->
         <table class="table">
           <thead>
             <th>#</th>
@@ -2535,6 +2533,12 @@
                   Search
                 </button>
               </div>
+              <div
+                *ngIf="isInvalidAndTouchedRX('DrugName')"
+                class="text-danger"
+              >
+                Drug Name is required
+              </div>
               <!-- <label for="" class="text-danger"
           >No FDA approved drugs found
         </label> -->
@@ -2545,17 +2549,27 @@
           </div>
           <div class="row">
             <div class="col">
-              <label
-                >Dosage
-                <div
-                  class="spinner-border text-success"
-                  role="status"
-                  style="height: 20px; width: 20px"
-                  *ngIf="isLoadingDosage"
-                >
-                  <span class="visually-hidden">Loading...</span>
-                </div></label
-              >
+              <div class="row">
+                <div class="col-2">
+                  <label
+                    >Dosage
+                    <div
+                      class="spinner-border text-success"
+                      role="status"
+                      style="height: 20px; width: 20px"
+                      *ngIf="isLoadingDosage"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div></label
+                  >
+                </div>
+                <div class="col d-flex justify-content-end" *ngIf="rxResult">
+                  Dosage found:&nbsp;
+                  <span class="text-danger">
+                    {{ rxResult.length > 0 ? rxResult.length : " 0" }}
+                  </span>
+                </div>
+              </div>
               <select
                 class="form-control"
                 [(ngModel)]="rxDosageValue"
@@ -2567,6 +2581,9 @@
                   {{ rx.name }}
                 </option>
               </select>
+              <div *ngIf="isInvalidAndTouchedRX('Dosage')" class="text-danger">
+                Dosage is required
+              </div>
             </div>
           </div>
           <br />
@@ -2583,6 +2600,9 @@
                   {{ package.packaging }}
                 </option>
               </select>
+              <div *ngIf="isInvalidAndTouchedRX('Package')" class="text-danger">
+                Package is required
+              </div>
             </div>
           </div>
           <br />
@@ -2607,6 +2627,12 @@
                   {{frequency.FrequencyName}}
                 </option>
               </select>
+              <div
+                *ngIf="isInvalidAndTouchedRX('Quantity')"
+                class="text-danger"
+              >
+                Quantity is required
+              </div>
             </div>
           </div>
           <br />
@@ -2621,12 +2647,17 @@
             </div>
           </div>
           <br />
-          <div class="alert alert-danger" role="alert">
+          <!-- <div class="alert alert-danger" role="alert">
             This section is currently under construction.
-          </div>
+          </div> -->
           <div class="row">
             <div class="col d-flex justify-content-end">
-              <button class="btn btn-danger" type="button">Cancel</button
+              <button
+                class="btn btn-danger"
+                (click)="closeModalRx()"
+                type="button"
+              >
+                Cancel</button
               >&nbsp;&nbsp;
               <button class="btn btn-primary" type="submit">Save</button>
             </div>

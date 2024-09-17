@@ -21,6 +21,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
       },
       {
+        path: 'analytics',
+        // canActivate: [RoleGuard],
+        loadChildren: () => import('./pages/analytics/analytics.module').then(m => m.AnalyticsPageModule)
+      },
+      {
         path: 'summary',
         // canActivate: [RoleGuard],
         loadChildren: () => import('./pages/summary/summary.module').then(m => m.SummaryPageModule)

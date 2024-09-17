@@ -14,7 +14,8 @@ declare var $: any;
 export class SignInPage implements OnInit {
 
   myFormCreate!: FormGroup;
-  isLoading:boolean = false;
+  isLoading: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,20 +28,20 @@ export class SignInPage implements OnInit {
     this.buildFormCreate();
   }
 
-  buildFormCreate(){
+  buildFormCreate() {
     this.myFormCreate = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]],
-      userpassword:['', [Validators.required]]
+      userpassword: ['', [Validators.required]]
     });
   }
 
-   onSubmit() {
+  onSubmit() {
     if (this.myFormCreate.valid) {
       this.isLoading = true;
-      this.authService.login(this.myFormCreate.value).subscribe(response =>{
-        if(response.code === 200){
+      this.authService.login(this.myFormCreate.value).subscribe(response => {
+        if (response.code === 200) {
           this.router.navigate(['/private']);
-        }else{
+        } else {
           this.isLoading = false;
           alert("Error al iniciar sesión");
         }

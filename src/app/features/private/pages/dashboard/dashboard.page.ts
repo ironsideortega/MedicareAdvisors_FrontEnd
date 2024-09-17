@@ -3,6 +3,7 @@ import * as Chart from 'chart.js';
 import { KPIService } from "src/app/core/services/dashboard/dashboard.service";
 import { DataKPIContact, DataKPIGender } from "src/app/core/services/dashboard/models";
 declare var $: any;
+import * as pbi from 'powerbi-client';
 
 export type ChartOptions = {
   series: any;
@@ -48,6 +49,18 @@ export class DashboardPage implements OnInit{
     private cdr: ChangeDetectorRef
 
   ) {
+
+  }
+
+
+
+
+  ngOnInit(): void {
+    // this.embedPowerBIReport();
+    this.getKpiForContact();
+    this.getKpiForGender();
+    this.getKpiChartBar();
+    this.userName = this.getName();
     this.chartOptions = {
       series: [],
       chart: {
@@ -67,7 +80,7 @@ export class DashboardPage implements OnInit{
           return val.toFixed(0); // Mostrar valores sin decimales
         },
         style: {
-          colors: ['#000'] // Color del texto
+          colors: ['#FFF'] // Color del texto
         },
         offsetY: -20
       },
@@ -77,19 +90,9 @@ export class DashboardPage implements OnInit{
       title: {
         text: 'Population Data'
       },
-      colors: ['#FF4560', '#775DD0', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#00E396', '#FEB019']
+      colors: ['#3A6FB3']
     };
-  }
-
-
-
-
-  ngOnInit(): void {
-    this.getKpiForContact();
-    this.getKpiForGender();
-    this.getKpiChartBar();
-    this.userName = this.getName();
-
+    console.log(this.chartOptions);
   }
 
   getKpiForContact(){
@@ -136,6 +139,8 @@ export class DashboardPage implements OnInit{
         //colors: colors
       };
       this.cdr.detectChanges();
+      this.cdr.reattach();
+      console.log(this.chartOptions);
     });
   }
 
@@ -183,5 +188,28 @@ export class DashboardPage implements OnInit{
     return name || '';
   }
 
+  embedPowerBIReport() {
+    const embedConfig = {
+      type: 'report',
+      id: 'a5e9b8c1-124d-4c4a-b793-7c652d69ab3a', // ID del informe público
+      embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=a5e9b8c1-124d-4c4a-b793-7c652d69ab3a&groupId=4e1b9a51-e9d8-4d65-b123-4a4ff6b1a01c',
+      accessToken: '', // No es necesario un token para informes públicos
+      tokenType: pbi.models.TokenType.Aad, // Tipo de token adecuado para informes públicos
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: false
+      }
+    };
+
+    const reportContainer = document.getElementById('reportContainer');
+    const powerbi = new pbi.service.Service(
+      pbi.factories.hpmFactory,
+      pbi.factories.wpmpFactory,
+      pbi.factories.routerFactory
+    );
+
+    powerbi.embed(reportContainer!, embedConfig);
+  }
 
 }
+

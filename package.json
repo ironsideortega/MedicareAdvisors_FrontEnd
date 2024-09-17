@@ -38,6 +38,7 @@
     "ng-chartjs": "^0.2.8",
     "ngx-mask": "16.4.2",
     "ngx-moment": "^6.0.2",
+    "powerbi-client": "^2.23.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.10.8",
     "tslib": "^2.3.0",

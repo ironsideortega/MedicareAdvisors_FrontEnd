@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProfileStateData } from 'src/app/core/services/profile';
 import { ProfileService } from 'src/app/core/services/profile/profile.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,12 +13,16 @@ declare var $: any;
 })
 export class SignUpPage implements OnInit {
   profileForm!: FormGroup;
-  profileState:ProfileStateData[] = [];
+  profileState: ProfileStateData[] = [];
   submittedPhone = false;
-  isLoading:boolean = false;
+  isLoading: boolean = false;
+
+  @Input() currentValue: number = 1;  // Valor actual (numerador)
+  @Input() maxValue: number = 3;      // Valor máximo (denominador)
+  progress: number = 33;
 
   constructor(
-    private profileService:ProfileService,
+    private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private readonly router: Router,
   ) { }
@@ -28,21 +32,29 @@ export class SignUpPage implements OnInit {
     this.buildFormCreate();
   }
 
-  stepsForm:number = 1;
+  stepsForm: number = 1;
 
-  changeStep(value:number){
+  changeStep(value: number) {
     this.stepsForm = value;
+    this.currentValue = value;
+    if (value == 1) {
+      this.progress = 33;
+    } else if (value == 2) {
+      this.progress = 66;
+    } else {
+      this.progress = 100;
+    }
   }
 
-  getAllStates(){
-    this.profileService.getProfileState().subscribe(res=>{
+  getAllStates() {
+    this.profileService.getProfileState().subscribe(res => {
       this.profileState = res.data;
     });
   }
 
-  buildFormCreate(){
+  buildFormCreate() {
     this.profileForm = this.formBuilder.group({
-      UserName: ['',Validators.required],
+      UserName: ['', Validators.required],
       Userpassword: ['', [
         Validators.required,
         Validators.minLength(8),
@@ -70,10 +82,10 @@ export class SignUpPage implements OnInit {
     return null;
   }
 
-  onSubmit(){
+  onSubmit() {
     this.submittedPhone = true;
     this.isLoading = true;
-    if(this.profileForm.valid){
+    if (this.profileForm.valid) {
       this.profileForm.patchValue({
         NationalProducerNumber: this.profileForm.value.NationalProducerNumber.toString(),
       });
@@ -86,14 +98,14 @@ export class SignUpPage implements OnInit {
         this.router.navigate(['/public/sign-in'], { replaceUrl: true }).then(() => {
           window.location.reload();
         });
-    });
-  }else{
-    this.isLoading = false;
-    console.log(this.profileForm.value);
+      });
+    } else {
+      this.isLoading = false;
+      console.log(this.profileForm.value);
 
-    console.log('form invalid');
+      console.log('form invalid');
 
-  }
+    }
 
   }
 

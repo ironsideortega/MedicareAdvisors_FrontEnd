@@ -36,6 +36,7 @@
     "moment": "^2.30.1",
     "ng-apexcharts": "^1.7.0",
     "ng-chartjs": "^0.2.8",
+    "ng-circle-progress": "^1.7.1",
     "ngx-mask": "16.4.2",
     "ngx-moment": "^6.0.2",
     "powerbi-client": "^2.23.1",

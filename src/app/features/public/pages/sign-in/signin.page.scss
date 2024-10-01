@@ -1,0 +1,33 @@
+.custom-pic {
+  position: relative;
+  top: 384px;
+  left: 90px;
+  width: 574px;
+  height: 323px;
+  /* UI Properties */
+  background: transparent url("./../../../../../assets/puntos.svg") 0% 0%
+    no-repeat padding-box;
+  opacity: 0.35;
+  z-index: 1;
+}
+
+.custom-pic2 {
+  position: fixed;
+  top: 462px;
+  left: -140px;
+  width: 600px;
+  /* height: 380px; */
+  padding: 0px;
+  z-index: 10;
+  border-radius: 16px;
+  opacity: 1;
+}
+
+.raya {
+  width: 0px;
+  height: 137px;
+  /* UI Properties */
+  border: 9px solid #ffffff;
+  opacity: 1;
+  border-radius: 16px;
+}

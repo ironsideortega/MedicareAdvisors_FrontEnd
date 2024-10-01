@@ -1,61 +1,132 @@
-<div
-  class="container p-3 p-sm-5"
-  style="background-color: white; height: auto; width: 100%; border-radius: 8px"
->
-  <div class="row">
-    <div class="col">
-      <img src="./assets/images/ma.jpeg" height="60px" alt="" />
-    </div>
-  </div>
-  <br />
-  <div class="row">
-    <div class="col">
-      <h2 class="text-muted">Sign in to your CRM!</h2>
-    </div>
-  </div>
-
-  <form [formGroup]="myFormCreate" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="col">
-        <label>Email</label>
-        <input type="email" class="form-control" formControlName="username" />
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col">
-        <label>Password</label>
-        <input
-          type="password"
-          class="form-control"
-          formControlName="userpassword"
-        />
-      </div>
-    </div>
-    <br />
-    <br />
-    <div class="d-grid gap-2">
-      <button class="btn btn-primary" type="submit">
-        <div
-          class="spinner-border text-light"
-          role="status"
-          style="height: 20px; width: 20px"
-          *ngIf="isLoading"
-        >
-          <span class="visually-hidden">Loading...</span>
+<div class="container-part" style="height: 100%; width: 100%">
+  <div
+    class="content-body"
+    style="position: absolute; height: 100%; z-index: 20"
+  >
+    <div class="container" style="padding-top: 100px">
+      <div class="row">
+        <div class="col-1"><div class="raya"></div></div>
+        <div class="col-6">
+          <span
+            style="
+              display: block;
+              text-align: left;
+              font: normal normal normal 30px/59px Roboto;
+              letter-spacing: 0px;
+              color: #fcfcfc;
+              opacity: 0.75;
+            "
+            >Your Trusted Partner for</span
+          >
+          <span
+            style="
+              display: block;
+              text-align: left;
+              font: normal normal bold 34px/59px Roboto;
+              letter-spacing: 0px;
+              color: #ffffff;
+            "
+            >Comprehensive Medicare Solutions</span
+          >
+          <span
+            style="
+              text-align: left;
+              font: normal normal normal 20px/32px Roboto;
+              letter-spacing: 0px;
+              color: #ffffff;
+              opacity: 1;
+            "
+          >
+            From hospital stays to prescription plans, we’re here to ensure you
+            make the most of your Medicare benefits.
+          </span>
         </div>
-        <div *ngIf="!isLoading">Sign in</div>
-      </button>
+        <div class="col-1"></div>
+        <div class="col-4">
+          <div
+            class=""
+            style="
+              width: 428px;
+              height: 550px;
+              padding: 71px 43px;
+              background: #ffffff 0% 0% no-repeat padding-box;
+              box-shadow: 0px 3px 6px #00000029;
+              border-radius: 18px;
+            "
+          >
+            <div class="row">
+              <div class="col text-center">
+                <img src="./assets/logo.png" height="60px" alt="" />
+              </div>
+            </div>
+            <br />
+
+            <form [formGroup]="myFormCreate" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="username"
+                  />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    formControlName="userpassword"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-end">
+                  <small><a class="text-secondary"> Forgot password?</a></small>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div class="d-grid gap-2">
+                <button
+                  class="btn"
+                  style="background-color: #e5283c; color: white"
+                  type="submit"
+                >
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                    style="height: 20px; width: 20px"
+                    *ngIf="isLoading"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div *ngIf="!isLoading">Sign in</div>
+                </button>
+              </div>
+              <br />
+
+              <div class="row">
+                <div class="col text-center">
+                  <small
+                    ><a class="text-primary" [routerLink]="['/public/sign-up']"
+                      >Create an Account</a
+                    ></small
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <br />
-    <small><a class="text-secondary"> Forgot password?</a></small>
-    <h6>
-      Don't have a account?
-      <small
-        ><a class="text-primary" [routerLink]="['/public/sign-up']"
-          >Create an Account</a
-        ></small
-      >
-    </h6>
-  </form>
+  </div>
+  <div class="custom-pic"></div>
+  <img class="custom-pic2" src="./assets/Web1366.png" alt="" />
 </div>
+
+<!-- <div class="custom-pic2">
+</div> -->

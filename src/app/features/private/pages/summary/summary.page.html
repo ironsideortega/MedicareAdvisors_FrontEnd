@@ -1,667 +1,304 @@
-<br />
-<div class="row">
-  <div class="col">
-    <h4 class="mb-0">All Contacts Overview</h4>
-    <p class="mb-0 text-muted">
-      A comprehensive list of all your prospects and leads.
-    </p>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
-    <div class="card overflow-hidden sales-card bg-primary-gradient">
-      <div class="px-3 pt-3 pb-2 pt-0">
-        <div>
-          <h6 class="mb-3 fs-12 text-fixed-white">Total No. of contacts</h6>
-        </div>
-        <div class="pb-0 mt-0">
-          <div class="d-flex">
-            <div>
-              <h4 class="fs-20 fw-bold mb-1 text-fixed-white">
-                {{totalItems | number:'1.0-0' }}
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="compositeline" style="min-height: 30px">
-        <div
-          id="apexchartslky2h96x"
-          class="apexcharts-canvas apexchartslky2h96x apexcharts-theme-light"
-          style="width: 366px; height: 30px"
-        >
-          <svg
-            id="SvgjsSvg2735"
-            width="366"
-            height="30"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xmlns:svgjs="http://svgjs.dev"
-            class="apexcharts-svg"
-            xmlns:data="ApexChartsNS"
-            transform="translate(0, 0)"
-            style="background: transparent"
-          >
-            <foreignObject x="0" y="0" width="366" height="30"
-              ><div
-                class="apexcharts-legend"
-                xmlns="http://www.w3.org/1999/xhtml"
-                style="max-height: 15px"
-              ></div
-            ></foreignObject>
-            <rect
-              id="SvgjsRect2739"
-              width="0"
-              height="0"
-              x="0"
-              y="0"
-              rx="0"
-              ry="0"
-              opacity="1"
-              stroke-width="0"
-              stroke="none"
-              stroke-dasharray="0"
-              fill="#fefefe"
-            ></rect>
-            <g
-              id="SvgjsG2794"
-              class="apexcharts-yaxis"
-              rel="0"
-              transform="translate(-18, 0)"
-            ></g>
-            <g
-              id="SvgjsG2737"
-              class="apexcharts-inner apexcharts-graphical"
-              transform="translate(0, 0)"
-            >
-              <defs id="SvgjsDefs2736">
-                <clipPath id="gridRectMasklky2h96x">
-                  <rect
-                    id="SvgjsRect2741"
-                    width="372"
-                    height="32"
-                    x="-3"
-                    y="-1"
-                    rx="0"
-                    ry="0"
-                    opacity="1"
-                    stroke-width="0"
-                    stroke="none"
-                    stroke-dasharray="0"
-                    fill="#fff"
-                  ></rect>
-                </clipPath>
-                <clipPath id="forecastMasklky2h96x"></clipPath>
-                <clipPath id="nonForecastMasklky2h96x"></clipPath>
-                <clipPath id="gridRectMarkerMasklky2h96x">
-                  <rect
-                    id="SvgjsRect2742"
-                    width="370"
-                    height="34"
-                    x="-2"
-                    y="-2"
-                    rx="0"
-                    ry="0"
-                    opacity="1"
-                    stroke-width="0"
-                    stroke="none"
-                    stroke-dasharray="0"
-                    fill="#fff"
-                  ></rect>
-                </clipPath>
-                <linearGradient
-                  id="SvgjsLinearGradient2747"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop
-                    id="SvgjsStop2748"
-                    stop-opacity="0.5"
-                    stop-color="rgba(255,255,255,0.5)"
-                    offset="0"
-                  ></stop>
-                  <stop
-                    id="SvgjsStop2749"
-                    stop-opacity="0.5"
-                    stop-color="rgba(255,255,255,0.5)"
-                    offset="1"
-                  ></stop>
-                  <stop
-                    id="SvgjsStop2750"
-                    stop-opacity="0.5"
-                    stop-color="rgba(255,255,255,0.5)"
-                    offset="1"
-                  ></stop>
-                </linearGradient>
-              </defs>
-              <line
-                id="SvgjsLine2740"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="30"
-                stroke="#b6b6b6"
-                stroke-dasharray="3"
-                stroke-linecap="butt"
-                class="apexcharts-xcrosshairs"
-                x="0"
-                y="0"
-                width="1"
-                height="30"
-                fill="#b1b9c4"
-                filter="none"
-                fill-opacity="0.9"
-                stroke-width="1"
-              ></line>
-              <g id="SvgjsG2753" class="apexcharts-grid">
-                <g
-                  id="SvgjsG2754"
-                  class="apexcharts-gridlines-horizontal"
-                  style="display: none"
-                >
-                  <line
-                    id="SvgjsLine2757"
-                    x1="0"
-                    y1="0"
-                    x2="366"
-                    y2="0"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2758"
-                    x1="0"
-                    y1="3"
-                    x2="366"
-                    y2="3"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2759"
-                    x1="0"
-                    y1="6"
-                    x2="366"
-                    y2="6"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2760"
-                    x1="0"
-                    y1="9"
-                    x2="366"
-                    y2="9"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2761"
-                    x1="0"
-                    y1="12"
-                    x2="366"
-                    y2="12"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2762"
-                    x1="0"
-                    y1="15"
-                    x2="366"
-                    y2="15"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2763"
-                    x1="0"
-                    y1="18"
-                    x2="366"
-                    y2="18"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2764"
-                    x1="0"
-                    y1="21"
-                    x2="366"
-                    y2="21"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2765"
-                    x1="0"
-                    y1="24"
-                    x2="366"
-                    y2="24"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2766"
-                    x1="0"
-                    y1="27"
-                    x2="366"
-                    y2="27"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                  <line
-                    id="SvgjsLine2767"
-                    x1="0"
-                    y1="30"
-                    x2="366"
-                    y2="30"
-                    stroke="#e0e0e0"
-                    stroke-dasharray="0"
-                    stroke-linecap="butt"
-                    class="apexcharts-gridline"
-                  ></line>
-                </g>
-                <g
-                  id="SvgjsG2755"
-                  class="apexcharts-gridlines-vertical"
-                  style="display: none"
-                ></g>
-                <line
-                  id="SvgjsLine2769"
-                  x1="0"
-                  y1="30"
-                  x2="366"
-                  y2="30"
-                  stroke="transparent"
-                  stroke-dasharray="0"
-                  stroke-linecap="butt"
-                ></line>
-                <line
-                  id="SvgjsLine2768"
-                  x1="0"
-                  y1="1"
-                  x2="0"
-                  y2="30"
-                  stroke="transparent"
-                  stroke-dasharray="0"
-                  stroke-linecap="butt"
-                ></line>
-              </g>
-              <g
-                id="SvgjsG2756"
-                class="apexcharts-grid-borders"
-                style="display: none"
-              ></g>
-              <g
-                id="SvgjsG2743"
-                class="apexcharts-area-series apexcharts-plot-series"
-              >
-                <g
-                  id="SvgjsG2744"
-                  class="apexcharts-series"
-                  seriesName="Value"
-                  data:longestSeries="true"
-                  rel="1"
-                  data:realIndex="0"
-                >
-                  <path
-                    id="SvgjsPath2751"
-                    d="M 0 30 L 0 21.666666666666668 L 19.263157894736842 15.000000000000002 L 38.526315789473685 21.666666666666668 L 57.78947368421053 20 L 77.05263157894737 23.333333333333336 L 96.3157894736842 10.000000000000004 L 115.57894736842105 3.552713678800501e-15 L 134.8421052631579 6.666666666666671 L 154.10526315789474 13.333333333333336 L 173.36842105263156 5.0000000000000036 L 192.6315789473684 10.000000000000004 L 211.89473684210526 21.666666666666668 L 231.1578947368421 16.666666666666668 L 250.42105263157893 21.666666666666668 L 269.6842105263158 10.000000000000004 L 288.9473684210526 21.666666666666668 L 308.2105263157895 10.000000000000004 L 327.4736842105263 13.333333333333336 L 346.7368421052631 3.3333333333333357 L 366 10.000000000000004 L 366 30M 366 10.000000000000004z"
-                    fill="url(#SvgjsLinearGradient2747)"
-                    fill-opacity="1"
-                    stroke-opacity="1"
-                    stroke-linecap="butt"
-                    stroke-width="0"
-                    stroke-dasharray="0"
-                    class="apexcharts-area"
-                    index="0"
-                    clip-path="url(#gridRectMasklky2h96x)"
-                    pathTo="M 0 30 L 0 21.666666666666668 L 19.263157894736842 15.000000000000002 L 38.526315789473685 21.666666666666668 L 57.78947368421053 20 L 77.05263157894737 23.333333333333336 L 96.3157894736842 10.000000000000004 L 115.57894736842105 3.552713678800501e-15 L 134.8421052631579 6.666666666666671 L 154.10526315789474 13.333333333333336 L 173.36842105263156 5.0000000000000036 L 192.6315789473684 10.000000000000004 L 211.89473684210526 21.666666666666668 L 231.1578947368421 16.666666666666668 L 250.42105263157893 21.666666666666668 L 269.6842105263158 10.000000000000004 L 288.9473684210526 21.666666666666668 L 308.2105263157895 10.000000000000004 L 327.4736842105263 13.333333333333336 L 346.7368421052631 3.3333333333333357 L 366 10.000000000000004 L 366 30M 366 10.000000000000004z"
-                    pathFrom="M -1 30 L -1 30 L 19.263157894736842 30 L 38.526315789473685 30 L 57.78947368421053 30 L 77.05263157894737 30 L 96.3157894736842 30 L 115.57894736842105 30 L 134.8421052631579 30 L 154.10526315789474 30 L 173.36842105263156 30 L 192.6315789473684 30 L 211.89473684210526 30 L 231.1578947368421 30 L 250.42105263157893 30 L 269.6842105263158 30 L 288.9473684210526 30 L 308.2105263157895 30 L 327.4736842105263 30 L 346.7368421052631 30 L 366 30"
-                  ></path>
-                  <path
-                    id="SvgjsPath2752"
-                    d="M 0 21.666666666666668 L 19.263157894736842 15.000000000000002 L 38.526315789473685 21.666666666666668 L 57.78947368421053 20 L 77.05263157894737 23.333333333333336 L 96.3157894736842 10.000000000000004 L 115.57894736842105 3.552713678800501e-15 L 134.8421052631579 6.666666666666671 L 154.10526315789474 13.333333333333336 L 173.36842105263156 5.0000000000000036 L 192.6315789473684 10.000000000000004 L 211.89473684210526 21.666666666666668 L 231.1578947368421 16.666666666666668 L 250.42105263157893 21.666666666666668 L 269.6842105263158 10.000000000000004 L 288.9473684210526 21.666666666666668 L 308.2105263157895 10.000000000000004 L 327.4736842105263 13.333333333333336 L 346.7368421052631 3.3333333333333357 L 366 10.000000000000004"
-                    fill="none"
-                    fill-opacity="1"
-                    stroke="rgba(255, 255, 255, 0.5)"
-                    stroke-opacity="1"
-                    stroke-linecap="butt"
-                    stroke-width="2"
-                    stroke-dasharray="0"
-                    class="apexcharts-area"
-                    index="0"
-                    clip-path="url(#gridRectMasklky2h96x)"
-                    pathTo="M 0 21.666666666666668 L 19.263157894736842 15.000000000000002 L 38.526315789473685 21.666666666666668 L 57.78947368421053 20 L 77.05263157894737 23.333333333333336 L 96.3157894736842 10.000000000000004 L 115.57894736842105 3.552713678800501e-15 L 134.8421052631579 6.666666666666671 L 154.10526315789474 13.333333333333336 L 173.36842105263156 5.0000000000000036 L 192.6315789473684 10.000000000000004 L 211.89473684210526 21.666666666666668 L 231.1578947368421 16.666666666666668 L 250.42105263157893 21.666666666666668 L 269.6842105263158 10.000000000000004 L 288.9473684210526 21.666666666666668 L 308.2105263157895 10.000000000000004 L 327.4736842105263 13.333333333333336 L 346.7368421052631 3.3333333333333357 L 366 10.000000000000004"
-                    pathFrom="M -1 30 L -1 30 L 19.263157894736842 30 L 38.526315789473685 30 L 57.78947368421053 30 L 77.05263157894737 30 L 96.3157894736842 30 L 115.57894736842105 30 L 134.8421052631579 30 L 154.10526315789474 30 L 173.36842105263156 30 L 192.6315789473684 30 L 211.89473684210526 30 L 231.1578947368421 30 L 250.42105263157893 30 L 269.6842105263158 30 L 288.9473684210526 30 L 308.2105263157895 30 L 327.4736842105263 30 L 346.7368421052631 30 L 366 30"
-                    fill-rule="evenodd"
-                  ></path>
-                  <g
-                    id="SvgjsG2745"
-                    class="apexcharts-series-markers-wrap apexcharts-hidden-element-shown"
-                    data:realIndex="0"
-                  ></g>
-                </g>
-                <g
-                  id="SvgjsG2746"
-                  class="apexcharts-datalabels"
-                  data:realIndex="0"
-                ></g>
-              </g>
-              <line
-                id="SvgjsLine2770"
-                x1="0"
-                y1="0"
-                x2="366"
-                y2="0"
-                stroke="#b6b6b6"
-                stroke-dasharray="0"
-                stroke-width="1"
-                stroke-linecap="butt"
-                class="apexcharts-ycrosshairs"
-              ></line>
-              <line
-                id="SvgjsLine2771"
-                x1="0"
-                y1="0"
-                x2="366"
-                y2="0"
-                stroke-dasharray="0"
-                stroke-width="0"
-                stroke-linecap="butt"
-                class="apexcharts-ycrosshairs-hidden"
-              ></line>
-              <g
-                id="SvgjsG2772"
-                class="apexcharts-xaxis"
-                transform="translate(0, 0)"
-              >
-                <g
-                  id="SvgjsG2773"
-                  class="apexcharts-xaxis-texts-g"
-                  transform="translate(0, -4)"
-                ></g>
-              </g>
-              <g id="SvgjsG2795" class="apexcharts-yaxis-annotations"></g>
-              <g id="SvgjsG2796" class="apexcharts-xaxis-annotations"></g>
-              <g id="SvgjsG2797" class="apexcharts-point-annotations"></g>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<br />
-<div class="row">
-  <!-- <div class="col-sm-6 col-lg-4">
-    <input type="text" class="form-control" placeholder="Search" />
-  </div> -->
-</div>
-<!-- Filter -->
-<div class="row">
-  <div class="col">
-    <div class="card custom-card">
-      <div class="card-header pb-0">
-        <div class="">
-          <h4 class="card-title mb-0">Search contacts</h4>
-        </div>
-        <p class="fs-12 text-muted mb-0">
-          Find contacts by name, phone number, email, or any other field.
+<div class="new-summary">
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-6">
+        <p class="mb-0" style="font-size: 18px; color: #fff">
+          All Contacts Overview
+        </p>
+        <p class="mb-0" style="color: #fff; font-size: 14px">
+          A comprehensive list of all your prospects and leads.
         </p>
       </div>
-      <div class="card-body">
-        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-          <div formArrayName="searchFields">
-            <div
-              *ngFor="let field of searchFields.controls; let i=index"
-              [formGroupName]="i"
-              class="search-field-group"
-            >
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group">
-                    <label for="column">Search field</label>
-                    <select
-                      formControlName="column"
-                      (change)="onColumnChange(i)"
-                      class="form-control"
-                    >
-                      <option value="" disabled>Select a field...</option>
-                      <option
-                        *ngFor="let column of availableColumns[i]"
-                        [value]="column"
-                      >
-                        {{ column }}
-                      </option>
-                    </select>
-                  </div>
+      <div class="col-6 d-flex justify-content-center">
+        <div class="custom-container-card">
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-1"><div class="vertical-line"></div></div>
+            <div class="col-3">
+              <span
+                style="
+                  text-align: center;
+                  font: normal normal bold 37px/49px Roboto;
+                  letter-spacing: 0px;
+                  color: #ffffff;
+                "
+              >
+                {{totalItems | number:'1.0-0' }}
+              </span>
+            </div>
+            <div class="col-6">
+              <div
+                class="row"
+                style="
+                  text-align: left;
+                  font: 14px;
+                  letter-spacing: 0px;
+                  color: #ffffff !important;
+                "
+              >
+                <div class="col">
+                  <span> Total </span>
                 </div>
-                <div class="col-5">
-                  <div class="form-group">
-                    <label for="searchTerm">Search term</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="searchTerm"
-                    />
-                  </div>
-                </div>
-                <div class="col-2">
-                  <button
-                    type="button"
-                    class="btn btn-danger mt-4"
-                    (click)="removeSearchField(i)"
-                    *ngIf="searchFields.length > 1"
-                  >
-                    <i class="bi bi-trash3"></i>
-                  </button>
-                </div>
+                <div class="col"><span>No. of contacts</span></div>
               </div>
-              <br />
             </div>
           </div>
-          <br />
-          <button
-            type="button"
-            class="btn btn-success"
-            (click)="addSearchField()"
-          >
-            <i class="bi bi-plus"></i> Add search field
-          </button>
-          &nbsp; &nbsp;
-          <button type="submit" class="btn btn-primary">Search</button>
-          &nbsp; &nbsp;
-          <button type="button" (click)="resetData()" class="btn btn-warning">
-            Reset
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- End Filter -->
 
-<br />
-<!-- Contact List Overview -->
-<div class="card custom-card">
-  <div class="card-header pb-0">
-    <div class="">
-      <h4 class="card-title mb-0">Contact List Overview</h4>
-    </div>
-    <p class="fs-12 text-muted mb-0">
-      A detailed list of all contacts in the system.
-    </p>
-  </div>
-  <div class="card-body mt-1 p-0">
-    <div class="row d-flex justify-content-between">
-      <div class="col-sm-6 col-lg-4"></div>
-      <div class="col-sm-4 col-lg-2 dropdown">
-        <div
-          class="custom-buttom dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          data-bs-auto-close="outside"
-        >
-          User defined field
-        </div>
-        <div class="dropdown-menu p-4">
-          <!-- Iterar sobre los campos definidos por el usuario -->
-          <div class="form-check" *ngFor="let fieldName of userDefineFields">
-            <input
-              type="radio"
-              class="form-check-input"
-              [id]="fieldName.UDV_Name + 'Checkbox'"
-              [(ngModel)]="selectedField"
-              [value]="fieldName.UDV_Name"
-              (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
-            />
-            <label
-              class="form-check-label"
-              [for]="fieldName.UDV_Name + 'Checkbox'"
-              >{{ fieldName.UDV_Name }}</label
+<div class="container">
+  <!-- Filter -->
+  <div class="row">
+    <div class="col">
+      <div class="card custom-card">
+        <div class="card-header pb-0">
+          <div class="">
+            <span
+              class="mb-0"
+              style="
+                text-align: left;
+                font: normal normal medium 16px/21px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Search contacts</span
             >
           </div>
-
-          <!-- Agregar un divisor -->
-          <div class="dropdown-divider"></div>
-
-          <!-- Botones para Create View y Edit Views -->
-          <div class="row">
-            <div class="col-12">
-              <button
-                class="btn btn-primary w-100"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModalNewViews"
+          <p class="fs-12 text-muted mb-0">
+            Find contacts by name, phone number, email, or any other field.
+          </p>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+            <div formArrayName="searchFields">
+              <div
+                *ngFor="let field of searchFields.controls; let i=index"
+                [formGroupName]="i"
+                class="search-field-group"
               >
-                Manage Views
-              </button>
+                <div class="row">
+                  <div class="col-5">
+                    <div class="form-group">
+                      <label for="column">Search field</label>
+                      <select
+                        formControlName="column"
+                        (change)="onColumnChange(i)"
+                        class="form-control"
+                      >
+                        <option value="" disabled>Select a field...</option>
+                        <option
+                          *ngFor="let column of availableColumns[i]"
+                          [value]="column"
+                        >
+                          {{ column }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <div class="form-group">
+                      <label for="searchTerm">Search term</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="searchTerm"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <button
+                      type="button"
+                      class="btn btn-danger mt-4"
+                      (click)="removeSearchField(i)"
+                      *ngIf="searchFields.length > 1"
+                    >
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+            <br />
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="addSearchField()"
+            >
+              <i class="bi bi-plus"></i> Add search field
+            </button>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary">Search</button>
+            &nbsp; &nbsp;
+            <button type="button" (click)="resetData()" class="btn btn-warning">
+              Reset
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Filter -->
+
+  <br />
+  <!-- Contact List Overview -->
+  <div class="card custom-card">
+    <div class="card-header pb-0">
+      <div class="">
+        <h4 class="card-title mb-0">Contact List Overview</h4>
+      </div>
+      <p class="fs-12 text-muted mb-0">
+        A detailed list of all contacts in the system.
+      </p>
+    </div>
+    <div class="card-body mt-1 p-0">
+      <div class="row d-flex justify-content-between">
+        <div class="col-sm-6 col-lg-4"></div>
+        <div class="col-sm-4 col-lg-2 dropdown">
+          <div
+            class="custom-buttom dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="outside"
+          >
+            User defined field
+          </div>
+          <div class="dropdown-menu p-4">
+            <!-- Iterar sobre los campos definidos por el usuario -->
+            <div class="form-check" *ngFor="let fieldName of userDefineFields">
+              <input
+                type="radio"
+                class="form-check-input"
+                [id]="fieldName.UDV_Name + 'Checkbox'"
+                [(ngModel)]="selectedField"
+                [value]="fieldName.UDV_Name"
+                (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
+              />
+              <label
+                class="form-check-label"
+                [for]="fieldName.UDV_Name + 'Checkbox'"
+                >{{ fieldName.UDV_Name }}</label
+              >
+            </div>
+
+            <!-- Agregar un divisor -->
+            <div class="dropdown-divider"></div>
+
+            <!-- Botones para Create View y Edit Views -->
+            <div class="row">
+              <div class="col-12">
+                <button
+                  class="btn btn-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalNewViews"
+                >
+                  Manage Views
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="table-responsive">
-      <table class="table align-middle table-hover">
-        <thead style="background-color: #2271b8; color: #fff; height: 50px">
-          <th *ngIf="selectedView === 'Default'">First Name</th>
-          <th *ngIf="selectedView === 'Default'">Last Name</th>
-          <th *ngIf="selectedView === 'Default'">Email</th>
-          <th *ngIf="selectedView === 'Default'">Phone</th>
+      <div class="table-responsive">
+        <table class="table align-middle table-hover">
+          <thead style="background-color: #2271b8; color: #fff; height: 50px">
+            <th *ngIf="selectedView === 'Default'">First Name</th>
+            <th *ngIf="selectedView === 'Default'">Last Name</th>
+            <th *ngIf="selectedView === 'Default'">Email</th>
+            <th *ngIf="selectedView === 'Default'">Phone</th>
 
-          <!-- Separar ngIf y ngFor -->
-          <ng-container *ngIf="selectedView !== 'Default'">
-            <th *ngFor="let field of dynamicFields">{{ field }}</th>
-          </ng-container>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let response of datasource">
-            <td *ngIf="selectedView === 'Default'">
-              {{ formatDatesInObject(response).FirstName }}
-            </td>
-            <td *ngIf="selectedView === 'Default'">
-              {{ formatDatesInObject(response).LastName }}
-            </td>
-            <td *ngIf="selectedView === 'Default'">
-              {{ formatDatesInObject(response).EmailAddressValue }}
-            </td>
-            <td *ngIf="selectedView === 'Default'">
-              {{ formatDatesInObject(response).PhoneNumber }}
-            </td>
-
+            <!-- Separar ngIf y ngFor -->
             <ng-container *ngIf="selectedView !== 'Default'">
-              <td *ngFor="let field of dynamicFields">
-                {{ formatDatesInObject(response)[field] || 'N/A' }}
-              </td>
+              <th *ngFor="let field of dynamicFields">{{ field }}</th>
             </ng-container>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let response of datasource">
+              <td *ngIf="selectedView === 'Default'">
+                {{ formatDatesInObject(response).FirstName }}
+              </td>
+              <td *ngIf="selectedView === 'Default'">
+                {{ formatDatesInObject(response).LastName }}
+              </td>
+              <td *ngIf="selectedView === 'Default'">
+                {{ formatDatesInObject(response).EmailAddressValue }}
+              </td>
+              <td *ngIf="selectedView === 'Default'">
+                {{ formatDatesInObject(response).PhoneNumber }}
+              </td>
 
-            <td>
-              <button
-                [routerLink]="['/private/detail', response.ContactID]"
-                class="btn btn-sm btn-primary"
-              >
-                Detail
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <ng-container *ngIf="selectedView !== 'Default'">
+                <td *ngFor="let field of dynamicFields">
+                  {{ formatDatesInObject(response)[field] || 'N/A' }}
+                </td>
+              </ng-container>
+
+              <td>
+                <button
+                  [routerLink]="['/private/detail', response.ContactID]"
+                  class="btn btn-sm btn-primary"
+                >
+                  Detail
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(1)" aria-label="First">
+              <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a
+              class="page-link"
+              (click)="changePage(currentPage - 1)"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li
+            *ngFor="let page of pages"
+            class="page-item"
+            [class.active]="currentPage === page"
+          >
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a
+              class="page-link"
+              (click)="changePage(currentPage + 1)"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a
+              class="page-link"
+              (click)="changePage(totalPages)"
+              aria-label="Last"
+            >
+              <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <a class="page-link" (click)="changePage(1)" aria-label="First">
-            <span aria-hidden="true">&laquo;&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <a
-            class="page-link"
-            (click)="changePage(currentPage - 1)"
-            aria-label="Previous"
-          >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li
-          *ngFor="let page of pages"
-          class="page-item"
-          [class.active]="currentPage === page"
-        >
-          <a class="page-link" (click)="changePage(page)">{{ page }}</a>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <a
-            class="page-link"
-            (click)="changePage(currentPage + 1)"
-            aria-label="Next"
-          >
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <a
-            class="page-link"
-            (click)="changePage(totalPages)"
-            aria-label="Last"
-          >
-            <span aria-hidden="true">&raquo;&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
   </div>
-</div>
 
-<br />
-<br />
-<br />
+  <br />
+  <br />
+  <br />
+</div>
 
 <div
   class="modal fade"

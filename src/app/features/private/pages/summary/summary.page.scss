@@ -1,23 +1,58 @@
-.card-people{
+.new-summary {
+  width: 100%;
+  height: 112px;
+  /* UI Properties */
+  background: transparent linear-gradient(97deg, #114d90 0%, #e5283c 100%) 0% 0%
+    no-repeat padding-box;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-container-card {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: 464px;
+  height: 79px;
+  /* UI Properties */
+  background: #ffffff48 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+}
+
+.card {
+  border: none;
+  box-shadow: none;
+}
+
+.vertical-line {
+  width: 2px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.card-people {
   height: 100px;
   width: 200px;
-  background-color: #55D6C2;
+  background-color: #55d6c2;
   border-radius: 10px;
   display: flex;
   flex-flow: column nowrap;
   margin-right: 10px;
   margin-bottom: 20px;
 
-  .number-part{
+  .number-part {
     height: 80%;
     width: 100%;
     font-size: 40px;
     font-weight: bold;
-    padding:5px  10px;
+    padding: 5px 10px;
   }
 
-  .title-part{
-    background-color: #38AE9C;
+  .title-part {
+    background-color: #38ae9c;
     font-size: 14px;
     font-weight: bold;
     border-bottom-left-radius: 10px;
@@ -26,25 +61,25 @@
   }
 }
 
-.card-duplicate{
+.card-duplicate {
   height: 100px;
   width: 200px;
-  background-color: #F9B609;
+  background-color: #f9b609;
   border-radius: 10px;
   display: flex;
   flex-flow: column nowrap;
   margin-bottom: 20px;
 
-  .number-part{
+  .number-part {
     height: 80%;
     width: 100%;
     font-size: 40px;
     font-weight: bold;
-    padding:5px  10px;
+    padding: 5px 10px;
   }
 
-  .title-part{
-    background-color: #D29B0C;
+  .title-part {
+    background-color: #d29b0c;
     font-size: 14px;
     font-weight: bold;
     border-bottom-left-radius: 10px;
@@ -53,13 +88,10 @@
   }
 }
 
-.chart-container{
-
-
+.chart-container {
 }
 
-
-.custom-buttom{
+.custom-buttom {
   background-color: #2271b8;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -69,17 +101,16 @@
   cursor: pointer;
   text-align: center;
 
-  &:hover{
+  &:hover {
     box-shadow: 0px 0px 3px 0px #000;
   }
 }
 
-
-thead{
+thead {
   vertical-align: middle !important;
   height: 40px;
 
-  th{
+  th {
     padding-right: 30px;
   }
 }
@@ -88,9 +119,9 @@ thead{
   cursor: pointer;
 }
 
-
 @media only screen and (max-width: 767px) {
-  .card-people, .card-duplicate{
+  .card-people,
+  .card-duplicate {
     width: 100%;
   }
 }

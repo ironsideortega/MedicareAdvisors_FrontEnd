@@ -53,7 +53,7 @@
   <div class="row">
     <div class="col">
       <div class="card custom-card">
-        <div class="card-header pb-0">
+        <div class="pb-0">
           <div class="">
             <span
               class="mb-0"
@@ -78,140 +78,157 @@
             Find contacts by name, phone number, email, or any other field.
           </p>
         </div>
-        <div class="card-body">
-          <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-            <div formArrayName="searchFields">
-              <div
-                *ngFor="let field of searchFields.controls; let i=index"
-                [formGroupName]="i"
-                class="search-field-group"
-              >
-                <div class="row">
-                  <div class="col-5">
-                    <div class="form-group">
-                      <label for="column">Search field</label>
-                      <select
-                        formControlName="column"
-                        (change)="onColumnChange(i)"
-                        class="form-control"
-                      >
-                        <option value="" disabled>Select a field...</option>
-                        <option
-                          *ngFor="let column of availableColumns[i]"
-                          [value]="column"
+        <div class="row">
+          <div class="col p-2">
+            <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+              <div formArrayName="searchFields">
+                <div
+                  *ngFor="let field of searchFields.controls; let i=index"
+                  [formGroupName]="i"
+                  class="search-field-group"
+                >
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label for="column">Search field</label>
+                        <select
+                          formControlName="column"
+                          (change)="onColumnChange(i)"
+                          class="form-select"
                         >
-                          {{ column }}
-                        </option>
-                      </select>
+                          <option value="" disabled>Select a field...</option>
+                          <option
+                            *ngFor="let column of availableColumns[i]"
+                            [value]="column"
+                          >
+                            {{ column }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label for="searchTerm">Search term</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="searchTerm"
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="col-2">
+                      <button
+                        type="button"
+                        class="btn btn-danger mt-4"
+                        (click)="removeSearchField(i)"
+                        *ngIf="searchFields.length > 1"
+                      >
+                        <i class="bi bi-trash3"></i>
+                      </button>
+                    </div> -->
+                    <div class="col-2 mt-4">
+                      <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-search"></i>
+                      </button>
                     </div>
                   </div>
-                  <div class="col-5">
-                    <div class="form-group">
-                      <label for="searchTerm">Search term</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="searchTerm"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-2">
-                    <button
-                      type="button"
-                      class="btn btn-danger mt-4"
-                      (click)="removeSearchField(i)"
-                      *ngIf="searchFields.length > 1"
-                    >
-                      <i class="bi bi-trash3"></i>
-                    </button>
-                  </div>
+                  <br />
                 </div>
-                <br />
               </div>
-            </div>
-            <br />
-            <button
-              type="button"
-              class="btn btn-success"
-              (click)="addSearchField()"
-            >
-              <i class="bi bi-plus"></i> Add search field
-            </button>
-            &nbsp; &nbsp;
-            <button type="submit" class="btn btn-primary">Search</button>
-            &nbsp; &nbsp;
-            <button type="button" (click)="resetData()" class="btn btn-warning">
-              Reset
-            </button>
-          </form>
+              <button
+                type="button"
+                class="btn btn-link"
+                style="
+                  text-align: left;
+                  font: normal normal normal 13px/18px Roboto;
+                  letter-spacing: 0px;
+                  color: #246fc2;
+                "
+                (click)="addSearchField()"
+              >
+                <i class="bi bi-plus"></i> Add search field
+              </button>
+              <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+              <button
+                type="button"
+                (click)="resetData()"
+                class="btn btn-warning"
+              >
+                Reset
+              </button> -->
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <!-- End Filter -->
 
-  <br />
   <!-- Contact List Overview -->
   <div class="card custom-card">
-    <div class="card-header pb-0">
+    <!-- <div class="card-header pb-0">
       <div class="">
         <h4 class="card-title mb-0">Contact List Overview</h4>
       </div>
       <p class="fs-12 text-muted mb-0">
         A detailed list of all contacts in the system.
       </p>
-    </div>
+    </div> -->
     <div class="card-body mt-1 p-0">
-      <div class="row d-flex justify-content-between">
-        <div class="col-sm-6 col-lg-4"></div>
-        <div class="col-sm-4 col-lg-2 dropdown">
-          <div
-            class="custom-buttom dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            data-bs-auto-close="outside"
-          >
-            User defined field
+      <!-- <div class="row d-flex justify-content-between">
+        <div class="col-sm-6 col-lg-4"></div> -->
+      <!-- <div class="col-sm-4 col-lg-2 dropdown">
+        <div
+          class="custom-buttom dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          data-bs-auto-close="outside"
+        >
+          User defined field
+        </div>
+        <div class="dropdown-menu p-4">
+          <div class="form-check" *ngFor="let fieldName of userDefineFields">
+            <input
+              type="radio"
+              class="form-check-input"
+              [id]="fieldName.UDV_Name + 'Checkbox'"
+              [(ngModel)]="selectedField"
+              [value]="fieldName.UDV_Name"
+              (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
+            />
+            <label
+              class="form-check-label"
+              [for]="fieldName.UDV_Name + 'Checkbox'"
+              >{{ fieldName.UDV_Name }}</label
+            >
           </div>
-          <div class="dropdown-menu p-4">
-            <!-- Iterar sobre los campos definidos por el usuario -->
-            <div class="form-check" *ngFor="let fieldName of userDefineFields">
-              <input
-                type="radio"
-                class="form-check-input"
-                [id]="fieldName.UDV_Name + 'Checkbox'"
-                [(ngModel)]="selectedField"
-                [value]="fieldName.UDV_Name"
-                (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
-              />
-              <label
-                class="form-check-label"
-                [for]="fieldName.UDV_Name + 'Checkbox'"
-                >{{ fieldName.UDV_Name }}</label
+
+          <div class="dropdown-divider"></div>
+
+          <div class="row">
+            <div class="col-12">
+              <button
+                class="btn btn-primary w-100"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModalNewViews"
               >
-            </div>
-
-            <!-- Agregar un divisor -->
-            <div class="dropdown-divider"></div>
-
-            <!-- Botones para Create View y Edit Views -->
-            <div class="row">
-              <div class="col-12">
-                <button
-                  class="btn btn-primary w-100"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModalNewViews"
-                >
-                  Manage Views
-                </button>
-              </div>
+                Manage Views
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+      <!-- </div> -->
       <div class="table-responsive">
         <table class="table align-middle table-hover">
-          <thead style="background-color: #2271b8; color: #fff; height: 50px">
+          <thead
+            style="
+              background: #dbe4ee66 0% 0% no-repeat padding-box;
+              border-radius: 5px;
+              color: #061f3a;
+              font: normal normal medium 14px/19px Roboto;
+            "
+          >
             <th *ngIf="selectedView === 'Default'">First Name</th>
             <th *ngIf="selectedView === 'Default'">Last Name</th>
             <th *ngIf="selectedView === 'Default'">Email</th>
@@ -221,7 +238,54 @@
             <ng-container *ngIf="selectedView !== 'Default'">
               <th *ngFor="let field of dynamicFields">{{ field }}</th>
             </ng-container>
-            <th></th>
+            <th
+              class="dropdown"
+              class="dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-bs-auto-close="outside"
+              style="
+                font: normal normal normal 13px/18px Roboto;
+                letter-spacing: 0px;
+                color: #246fc2;
+              "
+            >
+              Columns views
+            </th>
+            <div class="dropdown-menu p-4">
+              <div
+                class="form-check"
+                *ngFor="let fieldName of userDefineFields"
+              >
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [id]="fieldName.UDV_Name + 'Checkbox'"
+                  [(ngModel)]="selectedField"
+                  [value]="fieldName.UDV_Name"
+                  (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
+                />
+                <label
+                  class="form-check-label"
+                  [for]="fieldName.UDV_Name + 'Checkbox'"
+                  >{{ fieldName.UDV_Name }}</label
+                >
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <div class="row">
+                <div class="col-12">
+                  <button
+                    class="btn btn-danger w-100"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalNewViews"
+                  >
+                    Manage Views
+                  </button>
+                </div>
+              </div>
+            </div>
           </thead>
           <tbody>
             <tr *ngFor="let response of datasource">
@@ -247,9 +311,14 @@
               <td>
                 <button
                   [routerLink]="['/private/detail', response.ContactID]"
-                  class="btn btn-sm btn-primary"
+                  class="btn btn-sm"
+                  style="
+                    background: #fcfcfd 0% 0% no-repeat padding-box;
+                    border: 1px solid #e5e8eb;
+                    border-radius: 4px;
+                  "
                 >
-                  Detail
+                  View
                 </button>
               </td>
             </tr>
@@ -258,7 +327,7 @@
       </div>
 
       <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-end">
           <li class="page-item" [class.disabled]="currentPage === 1">
             <a class="page-link" (click)="changePage(1)" aria-label="First">
               <span aria-hidden="true">&laquo;&laquo;</span>
@@ -315,15 +384,37 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
-        <div class="row">
-          <div class="col"><h5 class="modal-title">Manage Views</h5></div>
+        <div class="row my-0">
+          <div class="col-8">
+            <span
+              style="
+                font-size: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Create a View</span
+            >
+          </div>
           <div class="col d-flex justify-content-end">
             <a (click)="closeModalViews()" class="btn btn-link"
               ><i class="bi bi-x-lg"></i
             ></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span
+              style="
+                text-align: left;
+                font-size: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Complete to create a new view</span
+            >
           </div>
         </div>
         <br />
@@ -347,7 +438,7 @@
             <div formArrayName="checkboxes">
               <div class="row">
                 <div
-                  class="col-3 mb-2"
+                  class="col-4 mb-2"
                   *ngFor="let field of customFields; let i = index"
                 >
                   <div class="form-check">
@@ -357,7 +448,15 @@
                       [value]="field.UDV_Column_ID"
                     />
                     &nbsp;
-                    <label>{{ field.UDV_Column }}</label>
+                    <label
+                      style="
+                        text-align: left;
+                        font-size: normal normal normal 13px/18px Roboto;
+                        letter-spacing: 0px;
+                        color: #0f2e4d;
+                      "
+                      >{{ field.UDV_Column }}</label
+                    >
                   </div>
                 </div>
               </div>
@@ -366,14 +465,29 @@
           <br />
           <div class="row">
             <div class="col d-flex justify-content-end">
-              <button class="btn btn-primary" (click)="saveView()">
-                Save changes
+              <button
+                class="btn"
+                style="
+                  background: #e5e8eb 0% 0% no-repeat padding-box;
+                  border: 1px solid #e5e8eb;
+                  border-radius: 4px;
+                  font-size: normal normal normal 14px/19px Roboto;
+                  letter-spacing: 0px;
+                  color: #36495f;
+                "
+                (click)="closeModalViews()"
+              >
+                Cancel
+              </button>
+              &nbsp; &nbsp; &nbsp;
+              <button class="btn btn-danger" (click)="saveView()">
+                Create
               </button>
             </div>
           </div>
           <br />
 
-          <div class="mt-2">
+          <!-- <div class="mt-2">
             <table class="table table-striped table-hover table-sm">
               <thead
                 style="background-color: #2271b8; color: #fff; height: 50px"
@@ -397,7 +511,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

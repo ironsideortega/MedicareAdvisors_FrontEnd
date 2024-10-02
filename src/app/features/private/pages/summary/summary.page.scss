@@ -92,7 +92,7 @@
 }
 
 .custom-buttom {
-  background-color: #2271b8;
+  background-color: #e5283c 0% 0% no-repeat padding-box;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 10px 15px;
@@ -117,6 +117,26 @@ thead {
 
 .pagination .page-item .page-link {
   cursor: pointer;
+}
+
+.active > .page-link {
+  background-color: #e5283c;
+  border-color: #e5283c;
+  color: white;
+}
+
+.page-link {
+  letter-spacing: 0px;
+  color: #0f2e4dbd;
+}
+
+input[type="checkbox"] {
+  accent-color: red; /* Fondo rojo */
+}
+
+input[type="checkbox"]:checked {
+  accent-color: red; /* Fondo rojo */
+  color: white; /* Check en blanco (dependiendo del navegador) */
 }
 
 @media only screen and (max-width: 767px) {

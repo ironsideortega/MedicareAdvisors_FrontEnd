@@ -214,3 +214,12 @@ h6 {
   justify-content: flex-start;
   align-items: center;
 }
+
+input[type="checkbox"] {
+  accent-color: red; /* Fondo rojo */
+}
+
+input[type="checkbox"]:checked {
+  accent-color: red; /* Fondo rojo */
+  color: white; /* Check en blanco (dependiendo del navegador) */
+}

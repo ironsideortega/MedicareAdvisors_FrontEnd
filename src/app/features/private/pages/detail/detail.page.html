@@ -762,306 +762,299 @@
             <div class="collapse show" id="rxCollapse">
               <div class="card card-body">
                 <div class="row">
-                  <br />
-                  <div class="row">
-                    <div class="col">
-                      <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                          <button
-                            class="nav-link active"
-                            id="health-rx-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#health-rx"
-                            type="button"
-                            role="tab"
-                            aria-controls="health-rx"
-                            aria-selected="false"
-                          >
-                            Health Rx
-                          </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                          <button
-                            class="nav-link"
-                            id="health-info-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#health-info"
-                            type="button"
-                            role="tab"
-                            aria-controls="health-info"
-                            aria-selected="false"
-                          >
-                            Health Info
-                          </button>
-                        </li>
-
-                        <li class="nav-item" role="presentation">
-                          <button
-                            class="nav-link"
-                            id="health-tracker-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#health-tracker"
-                            type="button"
-                            role="tab"
-                            aria-controls="health-tracker"
-                            aria-selected="true"
-                          >
-                            Health Tracker
-                          </button>
-                        </li>
-                      </ul>
-                      <div class="tab-content" id="myTabContent">
-                        <div
-                          class="tab-pane fade"
-                          id="health-tracker"
-                          role="tabpanel"
-                          aria-labelledby="health-tracker-tab"
-                        >
-                          <div class="row p-3">
-                            <div class="col">
-                              <h6>
-                                Health Tracker
-                                <i
-                                  class="bi bi-pencil-square"
-                                  style="cursor: pointer"
-                                  (click)="enabledHealTrackerFn()"
-                                ></i>
-                              </h6>
-                            </div>
+                  <div class="col">
+                    <span
+                      style="
+                        font-size: normal normal medium 16px/21px Roboto;
+                        letter-spacing: 0px;
+                        color: #061f3a;
+                      "
+                      >Health Info</span
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-10">
+                    <span
+                      style="
+                        font-size: normal normal normal 13px/18px Roboto;
+                        letter-spacing: 0px;
+                        color: #36495f;
+                      "
+                      >Personal health details like height, weight, and health
+                      notes.</span
+                    >
+                  </div>
+                  <div class="col">
+                    <button
+                      class="btn"
+                      (click)="enableFormHealthInfo()"
+                      style="
+                        background: #ffffff 0% 0% no-repeat padding-box;
+                        border: 1px solid #dbe4ee;
+                        border-radius: 4px;
+                        color: #36495f;
+                      "
+                    >
+                      <i class="bi bi-pencil"></i>&nbsp;&nbsp;Edit
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <form action="" id="healthForm">
+                      <div class="row gutter-2">
+                        <div class="col-12 col-md-4">
+                          <label for="" class="label">Height</label>
+                          <div class="input-group">
+                            <select
+                              [disabled]="enabledHealthInfo"
+                              class="form-control"
+                              style="width: 30px"
+                              name="ind_height_foot"
+                              [(ngModel)]="heightFeetValue"
+                            >
+                              <option selected="" value="0">0'</option>
+                              <option value="1">1'</option>
+                              <option value="2">2'</option>
+                              <option value="3">3'</option>
+                              <option value="4">4'</option>
+                              <option value="5">5'</option>
+                              <option value="6">6'</option>
+                              <option value="7">7'</option>
+                              <option value="8">8'</option>
+                            </select>
+                            <select
+                              [disabled]="enabledHealthInfo"
+                              class="form-control"
+                              style="width: 35px; display: inline-block"
+                              name="ind_height_inch"
+                              [(ngModel)]="heightValue"
+                            >
+                              <option selected="" value="0">0"</option>
+                              <option value="1">1"</option>
+                              <option value="2">2"</option>
+                              <option value="3">3"</option>
+                              <option value="4">4"</option>
+                              <option value="5">5"</option>
+                              <option value="6">6"</option>
+                              <option value="7">7"</option>
+                              <option value="8">8"</option>
+                              <option value="9">9"</option>
+                              <option value="10">10"</option>
+                              <option value="11">11"</option>
+                            </select>
                           </div>
-                          <div class="p-3">
-                            <div class="col-8">
-                              <form
-                                [formGroup]="healthTrackerForm"
-                                (ngSubmit)="saveHealthTracker()"
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label for="" class="label">Weight</label>
+                          <div class="input-group input-group-sm mb-3">
+                            <input
+                              [disabled]="enabledHealthInfo"
+                              type="text"
+                              class="form-control"
+                              aria-describedby="basic-addon2"
+                              name="ind_weight"
+                              value=""
+                              autocomplete="off"
+                              [(ngModel)]="weightValue"
+                            />
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="basic-addon2"
+                                >lbs</span
                               >
-                                <div class="row">
-                                  <div
-                                    class="col-6"
-                                    *ngFor="let control of healthTrackerForm.controls | keyvalue"
-                                  >
-                                    <label
-                                      *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
-                                    >
-                                      <input
-                                        *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        [formControlName]="control.key"
-                                      />
-                                      {{ control.key }}
-                                    </label>
-                                  </div>
-                                </div>
-
-                                <div class="row">
-                                  <div class="col d-flex justify-content-end">
-                                    <button
-                                      *ngIf="enabledHealthTracker"
-                                      (click)="enabledHealTrackerFn()"
-                                      class="btn btn-danger"
-                                    >
-                                      Cancel
-                                    </button>
-                                    &nbsp; &nbsp;
-                                    <button
-                                      *ngIf="enabledHealthTracker"
-                                      type="submit"
-                                      class="btn btn-primary"
-                                    >
-                                      {{ enabledHealthTrackerHasData ? 'Update'
-                                      : 'Save' }}
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="tab-pane fade"
-                          id="health-info"
-                          role="tabpanel"
-                          aria-labelledby="health-info-tab"
+                          class="col-12 col-md-4"
+                          style="margin-top: 30px !important"
                         >
-                          <div class="row p-3">
-                            <div class="col">
-                              <h6>
-                                Health Info
-                                <i
-                                  class="bi bi-pencil-square"
-                                  style="cursor: pointer"
-                                  (click)="enableFormHealthInfo()"
-                                ></i>
-                              </h6>
-                            </div>
-                          </div>
-                          <div class="p-3">
-                            <form action="" id="healthForm">
-                              <div class="row gutter-2">
-                                <div class="col-12 col-md-4">
-                                  <label for="" class="label">Height</label>
-                                  <div class="input-group">
-                                    <select
-                                      [disabled]="enabledHealthInfo"
-                                      class="form-control"
-                                      style="width: 30px"
-                                      name="ind_height_foot"
-                                      [(ngModel)]="heightFeetValue"
-                                    >
-                                      <option selected="" value="0">0'</option>
-                                      <option value="1">1'</option>
-                                      <option value="2">2'</option>
-                                      <option value="3">3'</option>
-                                      <option value="4">4'</option>
-                                      <option value="5">5'</option>
-                                      <option value="6">6'</option>
-                                      <option value="7">7'</option>
-                                      <option value="8">8'</option>
-                                    </select>
-                                    <select
-                                      [disabled]="enabledHealthInfo"
-                                      class="form-control"
-                                      style="width: 35px; display: inline-block"
-                                      name="ind_height_inch"
-                                      [(ngModel)]="heightValue"
-                                    >
-                                      <option selected="" value="0">0"</option>
-                                      <option value="1">1"</option>
-                                      <option value="2">2"</option>
-                                      <option value="3">3"</option>
-                                      <option value="4">4"</option>
-                                      <option value="5">5"</option>
-                                      <option value="6">6"</option>
-                                      <option value="7">7"</option>
-                                      <option value="8">8"</option>
-                                      <option value="9">9"</option>
-                                      <option value="10">10"</option>
-                                      <option value="11">11"</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                  <label for="" class="label">Weight</label>
-                                  <div class="input-group input-group-sm mb-3">
-                                    <input
-                                      [disabled]="enabledHealthInfo"
-                                      type="text"
-                                      class="form-control"
-                                      aria-describedby="basic-addon2"
-                                      name="ind_weight"
-                                      value=""
-                                      autocomplete="off"
-                                      [(ngModel)]="weightValue"
-                                    />
-                                    <div class="input-group-append">
-                                      <span
-                                        class="input-group-text"
-                                        id="basic-addon2"
-                                        >lbs</span
-                                      >
-                                    </div>
-                                  </div>
-                                </div>
-                                <div
-                                  class="col-12 col-md-4"
-                                  style="margin-top: 30px !important"
-                                >
-                                  <label class="checkbox-inline label">
-                                    <input
-                                      [disabled]="enabledHealthInfo"
-                                      type="checkbox"
-                                      value="checked"
-                                      name="DNR"
-                                      autocomplete="off"
-                                      [(ngModel)]="dnrValue"
-                                    />
-                                    DNR
-                                  </label>
-                                </div>
-
-                                <div class="col-12 mt-2">
-                                  <label for="" class="label"
-                                    >Health Notes</label
-                                  >
-                                  <textarea
-                                    [disabled]="enabledHealthInfo"
-                                    style="height: 75px"
-                                    class="form-control"
-                                    name="ind_health_notes"
-                                    [(ngModel)]="healthNotes"
-                                  ></textarea>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div class="row p-3">
-                            <div class="col d-flex justify-content-end">
-                              <button
-                                *ngIf="!enabledHealthInfo"
-                                (click)="cancelFormHealthInfo()"
-                                class="btn btn-danger"
-                              >
-                                Cancel
-                              </button>
-                              &nbsp; &nbsp;
-                              <button
-                                *ngIf="!enabledHealthInfo"
-                                (click)="saveHeightInfo()"
-                                class="btn btn-primary"
-                              >
-                                {{ isForUpdateHealthInfo ? 'Update' : 'Save' }}
-                              </button>
-                            </div>
-                          </div>
+                          <label class="checkbox-inline label">
+                            <input
+                              [disabled]="enabledHealthInfo"
+                              type="checkbox"
+                              value="checked"
+                              name="DNR"
+                              autocomplete="off"
+                              [(ngModel)]="dnrValue"
+                            />
+                            DNR
+                          </label>
                         </div>
-                        <div
-                          class="tab-pane fade show active"
-                          id="health-rx"
-                          role="tabpanel"
-                          aria-labelledby="health-rx-tab"
-                        >
-                          <div class="p-5">
-                            <div class="row">
-                              <div class="col d-flex justify-content-end">
-                                <button
-                                  class="btn btn-primary"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#exampleModalRx"
-                                >
-                                  Add New
-                                </button>
-                              </div>
-                            </div>
-                            <br />
-                            <div class="table-responsive">
-                              <table
-                                class="table table-bordered table-hover table-striped"
-                              >
-                                <thead>
-                                  <tr>
-                                    <th>Drug name</th>
-                                    <th>Dosage</th>
-                                    <th>Quantity</th>
-                                    <th>Pacakage</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    *ngFor="let prescriptions of prescriptionsList"
-                                  >
-                                    <td>{{prescriptions.DrugName}}</td>
-                                    <td>{{prescriptions.Dosage}}</td>
-                                    <td>{{prescriptions.Quantity}}</td>
-                                    <td>{{prescriptions.Package}}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
+
+                        <div class="col-12 mt-2">
+                          <label for="" class="label">Health Notes</label>
+                          <textarea
+                            [disabled]="enabledHealthInfo"
+                            style="height: 75px"
+                            class="form-control"
+                            name="ind_health_notes"
+                            [(ngModel)]="healthNotes"
+                          ></textarea>
                         </div>
                       </div>
-                    </div>
+                    </form>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <span
+                      style="
+                        font-size: normal normal medium 16px/21px Roboto;
+                        letter-spacing: 0px;
+                        color: #061f3a;
+                      "
+                      >Health Tracker</span
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-10">
+                    <span
+                      style="
+                        font-size: normal normal normal 13px/18px Roboto;
+                        letter-spacing: 0px;
+                        color: #36495f;
+                      "
+                      >Checklist for tracking conditions</span
+                    >
+                  </div>
+                  <div class="col">
+                    <button
+                      class="btn"
+                      (click)="enabledHealTrackerFn()"
+                      style="
+                        background: #ffffff 0% 0% no-repeat padding-box;
+                        border: 1px solid #dbe4ee;
+                        border-radius: 4px;
+                        color: #36495f;
+                      "
+                    >
+                      <i class="bi bi-pencil"></i>&nbsp;&nbsp;Edit
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <form
+                      [formGroup]="healthTrackerForm"
+                      (ngSubmit)="saveHealthTracker()"
+                    >
+                      <div class="row">
+                        <div
+                          class="col-3"
+                          *ngFor="let control of healthTrackerForm.controls | keyvalue"
+                        >
+                          <label
+                            *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
+                          >
+                            <input
+                              *ngIf="control.key !== 'CreatedDate' && control.key !== 'ContactID'"
+                              type="checkbox"
+                              [formControlName]="control.key"
+                            />
+                            {{ control.key }}
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            *ngIf="enabledHealthTracker"
+                            (click)="enabledHealTrackerFn()"
+                            class="btn btn-danger"
+                          >
+                            Cancel
+                          </button>
+                          &nbsp; &nbsp;
+                          <button
+                            *ngIf="enabledHealthTracker"
+                            type="submit"
+                            class="btn btn-primary"
+                          >
+                            {{ enabledHealthTrackerHasData ? 'Update' : 'Save'
+                            }}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <span
+                      style="
+                        font-size: normal normal medium 16px/21px Roboto;
+                        letter-spacing: 0px;
+                        color: #061f3a;
+                      "
+                      >Health Rx</span
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-10">
+                    <span
+                      style="
+                        font-size: normal normal normal 13px/18px Roboto;
+                        letter-spacing: 0px;
+                        color: #36495f;
+                      "
+                      >A list of prescribed medications.</span
+                    >
+                  </div>
+                  <div class="col">
+                    <button
+                      class="btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModalRx"
+                      style="
+                        background: #ffffff 0% 0% no-repeat padding-box;
+                        border: 1px solid #dbe4ee;
+                        border-radius: 4px;
+                        color: #36495f;
+                      "
+                    >
+                      Add New
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                  <div class="col">
+                    <table class="table table-hover table-striped">
+                      <thead
+                        style="
+                          background: #dbe4ee66 0% 0% no-repeat padding-box;
+                          border-radius: 5px;
+                          color: #061f3a;
+                          font: normal normal medium 14px/19px Roboto;
+                        "
+                      >
+                        <th>Drug name</th>
+                        <th>Dosage</th>
+                        <th>Quantity</th>
+                        <th>Pacakage</th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let prescriptions of prescriptionsList">
+                          <td>{{prescriptions.DrugName}}</td>
+                          <td>{{prescriptions.Dosage}}</td>
+                          <td>{{prescriptions.Quantity}}</td>
+                          <td>{{prescriptions.Package}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>

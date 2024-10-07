@@ -1,10 +1,252 @@
-<br />
-<div class="row">
-  <div class="col">
-    <h4 class="mb-0">Hi, welcome!</h4>
-    <p class="mb-0 text-muted">Medicare Dashboard: Prospects & Leads.</p>
+<div class="new-summary">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <p class="mb-0" style="font-size: 18px; color: #fff">Hi, welcome!</p>
+        <p class="mb-0" style="color: #fff; font-size: 14px">
+          Medicare Dashboard: Prospects & Leads.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
+
+<div
+  class="container"
+  style="position: relative; z-index: 2; height: 500px; top: -50px"
+>
+  <div class="row">
+    <div class="col-8">
+      <div class="row">
+        <div class="col-5">
+          <div
+            class="card d-flex justify-content-center align-items-start p-3"
+            style="
+              height: 196px;
+              background: #ffffff 0% 0% no-repeat padding-box;
+              box-shadow: 0px 3px 6px #36495f17;
+            "
+          >
+            <div class="card-body">
+              <div class="row">
+                <div
+                  class="col"
+                  style="
+                    font: normal normal medium 16px/21px Roboto;
+                    letter-spacing: 0px;
+                    font-weight: 500;
+                    color: #061f3a;
+                  "
+                >
+                  Contacts
+                </div>
+              </div>
+              <div class="row">
+                <div
+                  class="col"
+                  style="
+                    font: normal normal normal 13px/18px Roboto;
+                    letter-spacing: 0px;
+                    color: #8090a1;
+                  "
+                >
+                  Total number of contacts
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div
+                  class="col"
+                  style="
+                    font: normal normal bold 45px/59px Roboto;
+                    letter-spacing: 0px;
+                    color: #061f3a;
+                  "
+                >
+                  {{totalContacts}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-7">
+          <div
+            class="card"
+            class="card d-flex justify-content-center align-items-start p-3"
+            style="
+              height: 196px;
+              background: #ffffff 0% 0% no-repeat padding-box;
+              box-shadow: 0px 3px 6px #36495f17;
+            "
+          >
+            <div class="card-body" style="width: 100%">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div
+                      class="col"
+                      style="
+                        font: normal normal medium 16px/21px Roboto;
+                        letter-spacing: 0px;
+                        font-weight: 500;
+                        color: #061f3a;
+                      "
+                    >
+                      Contact Gender Overview
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="col"
+                      style="
+                        font: normal normal normal 13px/18px Roboto;
+                        letter-spacing: 0px;
+                        color: #8090a1;
+                      "
+                    >
+                      View the count of contacts by gender.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <apx-chart
+                    [series]="chartOptionsDonuts.series"
+                    [chart]="chartOptionsDonuts.chart"
+                    [labels]="chartOptionsDonuts.labels"
+                    [responsive]="chartOptionsDonuts.responsive"
+                  >
+                  </apx-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <div
+            class="card"
+            style="
+              height: 415px;
+              background: #ffffff 0% 0% no-repeat padding-box;
+              box-shadow: 0px 3px 6px #36495f17;
+            "
+          >
+            <div class="card-body">
+              <div class="card-body mt-1 p-0">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div
+                        class="col"
+                        style="
+                          font: normal normal medium 16px/21px Roboto;
+                          letter-spacing: 0px;
+                          font-weight: 500;
+                          color: #061f3a;
+                        "
+                      >
+                        Global Data Certification
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col"
+                        style="
+                          font: normal normal normal 13px/18px Roboto;
+                          letter-spacing: 0px;
+                          color: #8090a1;
+                        "
+                      >
+                        View the count of contacts by gender.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <apx-chart
+                  [series]="chartOptions.series!"
+                  [chart]="chartOptions.chart!"
+                  [xaxis]="chartOptions.xaxis!"
+                  [dataLabels]="chartOptions.dataLabels!"
+                  [plotOptions]="chartOptions.plotOptions!"
+                  [title]="chartOptions.title"
+                  [colors]="chartOptions.colors"
+                ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card" style="height: 634px">
+        <div class="card-body">
+          <div class="row">
+            <div
+              class="col"
+              style="
+                font: normal normal medium 16px/21px Roboto;
+                letter-spacing: 0px;
+                font-weight: 500;
+                color: #061f3a;
+              "
+            >
+              Contact Status Overview
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col"
+              style="
+                font: normal normal normal 13px/18px Roboto;
+                letter-spacing: 0px;
+                color: #8090a1;
+              "
+            >
+              View the count of contacts for each status category.
+            </div>
+          </div>
+          <br />
+          <div class="row mb-3" *ngFor="let kpiC of kpiContact">
+            <div class="col">
+              <div
+                style="
+                  width: 100%;
+                  padding: 20px;
+                  height: 47px;
+                  /* UI Properties */
+                  background: #e5e8eb30 0% 0% no-repeat padding-box;
+                  border-radius: 8px;
+                  display: flex;
+                  flex-flow: row nowrap;
+                  align-items: center;
+                  justify-content: space-between;
+                "
+              >
+                <div>{{kpiC.ContactStatusValue}}</div>
+                <div
+                  style="
+                    font: normal normal bold 13px/18px Roboto;
+                    letter-spacing: 0px;
+                    color: #061f3a;
+                  "
+                >
+                  {{kpiC.CNT}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
 <ng-container *ngIf="isLoading">
   <div class="row mt-3">
     <div class="col">
@@ -52,105 +294,6 @@
     <p class="placeholder-glow">
       <span class="placeholder col-12 bg-primary"></span>
     </p>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="!isLoading">
-  <div class="row mt-3">
-    <div class="col-xl-4 col-md-12 col-lg-12">
-      <div class="card custom-card">
-        <div class="card-header pb-0">
-          <div class="">
-            <h4 class="card-title mb-0">Contact Status Overview</h4>
-          </div>
-          <p class="fs-12 text-muted mb-0">
-            View the count of contacts for each status category.
-          </p>
-        </div>
-        <div class="card-body mt-1 p-0">
-          <div class="table-responsive">
-            <table class="table align-middle table-hover">
-              <thead
-                style="
-                  background-color: #2271b8;
-                  color: #fff;
-                  height: 50px;
-                  vertical-align: middle;
-                "
-              >
-                <th>Contact Status</th>
-                <th>Count</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let kpiC of kpiContact">
-                  <td>{{kpiC.ContactStatusValue}}</td>
-                  <td>{{kpiC.CNT}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-12 col-lg-12">
-      <div class="card custom-card">
-        <div class="card-header pb-0">
-          <div class="">
-            <h4 class="card-title mb-0">Contact Gender Overview</h4>
-          </div>
-          <p class="fs-12 text-muted mb-0">
-            View the count of contacts by gender.
-          </p>
-        </div>
-        <div class="card-body mt-1 p-0">
-          <ul class="list-group list-group-flush">
-            <!-- <li
-              class="list-group-item d-flex justify-content-between align-items-center"
-            >
-              <div class="">
-                <i
-                  class="bi bi-patch-exclamation custom-icon-chart missing"
-                ></i>
-                Missing Gender
-              </div>
-              <span class="badge bg-primary badge-pill"
-                >{{kpiGender[0].CNT}}</span
-              >
-            </li> -->
-            <li
-              class="list-group-item d-flex justify-content-between align-items-center"
-              *ngFor="let gender of kpiGender"
-            >
-              <div class="">{{gender.GenderValue}}</div>
-              <span class="badge badge-pill">{{gender.CNT}}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-12 col-md-12 col-lg-12">
-      <div class="card custom-card">
-        <div class="card-header pb-0">
-          <div class="">
-            <h4 class="card-title mb-0">Global Data Certification</h4>
-          </div>
-          <p class="fs-12 text-muted mb-0">
-            View the count of contacts by gender.
-          </p>
-        </div>
-        <div class="card-body mt-1 p-0">
-          <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [xaxis]="chartOptions.xaxis"
-            [dataLabels]="chartOptions.dataLabels"
-            [plotOptions]="chartOptions.plotOptions"
-            [title]="chartOptions.title"
-            [colors]="chartOptions.colors"
-          ></apx-chart>
-        </div>
-      </div>
-    </div>
   </div>
 </ng-container>
 

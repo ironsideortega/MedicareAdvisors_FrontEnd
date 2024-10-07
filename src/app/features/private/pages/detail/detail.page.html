@@ -21,7 +21,10 @@
       <div class="col-3">
         <div class="name-container">
           <div class="avatar-container">
-            <span>AJ</span>
+            <span
+              >{{prospectData.FirstName.charAt(0) +
+              prospectData.LastName.charAt(0)}}</span
+            >
           </div>
         </div>
       </div>
@@ -38,9 +41,9 @@
               >Contact Details</span
             >
           </div>
-          <div class="col d-flex justify-content-end">
-            <button class="btn btn-danger">Edit Prospect</button>
-          </div>
+          <!-- <div class="col d-flex justify-content-end" *ngIf="buttonActive.includes('Prospect')">
+            <button class="btn btn-danger" (click)="enableForm('contact')">Edit Prospect</button>
+          </div> -->
         </div>
         <div class="row">
           <div class="col">
@@ -56,7 +59,7 @@
           </div>
         </div>
 
-        <div class="row mt-2">
+        <div class="row" style="margin-top: 32px">
           <div class="col">
             <ul class="nav nav-pills">
               <li class="nav-item">
@@ -146,7 +149,77 @@
 <div class="container">
   <div class="row">
     <div class="col-3">
-      <div class="data-container"></div>
+      <div class="data-container">
+        <div class="prospect-name">
+          <span
+            style="
+              text-align: left;
+              font: normal normal medium 16px/21px Roboto;
+              font-weight: 500;
+              letter-spacing: 0px;
+              color: #061f3a;
+            "
+            >{{prospectData.FirstName}} {{prospectData.LastName}}</span
+          >
+        </div>
+        <div class="prospect-email">
+          <span
+            style="
+              font: normal normal normal 13px/18px Roboto;
+              letter-spacing: 0px;
+              color: #495664;
+            "
+            >{{contactForm.get('email')?.value}}</span
+          >
+        </div>
+        <div class="profile-status">
+          <span>{{prospectData.ContactStatusValue}}</span>
+        </div>
+        <hr style="border: 1px solid #d70000" />
+        <div class="row">
+          <div class="col" style="padding-left: 30px">
+            <div class="row mb-4">
+              <div class="col-1">
+                <div class="profile-icon">
+                  <div><i class="bi bi-telephone"></i></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="profile-info">
+                  <span class="profile-info-title">Preferred Phone</span>
+                  <span>{{contactForm.get('phone')?.value}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-1">
+                <div class="profile-icon">
+                  <div><i class="bi bi-envelope"></i></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="profile-info">
+                  <span class="profile-info-title">Preferred Email</span>
+                  <span>{{contactForm.get('email')?.value}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-1">
+                <div class="profile-icon">
+                  <div><i class="bi bi-geo"></i></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="profile-info">
+                  <span class="profile-info-title">Preferred Address</span>
+                  <span>{{contactForm.get('address')?.value}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col">
       <ng-container *ngIf="buttonActive.includes('Prospect')">
@@ -615,17 +688,17 @@
                   <br />
                   <div class="row">
                     <div class="col d-flex justify-content-end">
-                      <button
+                      <!-- <button
                         class="btn"
                         [ngClass]="{ 'btn-warning': buttonUpdateForContact === 'Update', 'btn-danger': buttonUpdateForContact !== 'Update' }"
                         (click)="enableForm('contact')"
                       >
                         {{buttonUpdateForContact}}</button
-                      >&nbsp;&nbsp;
+                      >&nbsp;&nbsp; -->
                       <button
                         *ngIf="buttonUpdateContactEnabled"
                         type="submit"
-                        class="btn btn-success"
+                        class="btn btn-danger"
                         (click)="saveData()"
                         [disabled]="isLoading"
                       >
@@ -637,7 +710,7 @@
                         >
                           <span class="visually-hidden">Loading...</span>
                         </div>
-                        <div *ngIf="!isLoading">Save</div>
+                        <div *ngIf="!isLoading">Save Changes</div>
                       </button>
                     </div>
                   </div>
@@ -679,7 +752,7 @@
                     <button
                       class="btn"
                       data-bs-toggle="modal"
-                      data-bs-target="#exampleModalDoctor"
+                      data-bs-target="#exampleDoctorPreview"
                       style="
                         background: #ffffff 0% 0% no-repeat padding-box;
                         border: 1px solid #dbe4ee;
@@ -977,7 +1050,7 @@
                           <button
                             *ngIf="enabledHealthTracker"
                             type="submit"
-                            class="btn btn-primary"
+                            class="btn btn-danger"
                           >
                             {{ enabledHealthTrackerHasData ? 'Update' : 'Save'
                             }}
@@ -1134,35 +1207,64 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-policy" role="alert">
                       This section is currently under construction.
                     </div>
                   </div>
                 </div>
                 <br />
                 <div class="row">
-                  <div class="col-2">
-                    <label for="">Security Pin</label>
-                    <input type="password" class="form-control" />
+                  <div class="col">
+                    <div class="card card-body">
+                      <div class="row">
+                        <div class="col-2">
+                          <label for="">Security Pin</label>
+                          <input type="password" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">Identification</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            Social Info
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableSocialForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              letter-spacing: 0px;
+                              font-weight: 500;
+                              color: #061f3a;
+                            "
+                            >Social Info</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >Details related to social services and
+                            support.</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableSocialForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
                       <form
                         [formGroup]="personalDetailSocialForm"
                         (ngSubmit)="onSubmitSocial()"
@@ -1194,10 +1296,7 @@
                           </div>
                           <div class="col-1">
                             <label>IRMAA</label>
-                            <select
-                              formControlName="IRMAA"
-                              class="form-control"
-                            >
+                            <select formControlName="IRMAA" class="form-select">
                               <option value="true">Yes</option>
                               <option value="false">No</option>
                             </select>
@@ -1220,7 +1319,7 @@
                           *ngIf="personalDetailSocialForm.enabled"
                         >
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1240,25 +1339,48 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">Medicare</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            Medicare
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableMedicareForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              font-weight: 500;
+                              letter-spacing: 0px;
+                              color: #061f3a;
+                            "
+                            >Medicare</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >Information about Medicare</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableMedicareForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+
                       <form
                         [formGroup]="personalDetailMedicareForm"
                         (ngSubmit)="onSubmitMedicare()"
                       >
-                        <div class="row">
+                        <div class="row mb-2">
                           <div class="col">
                             <label>Medicare Number</label>
                             <input
@@ -1284,10 +1406,8 @@
                             />
                           </div>
                         </div>
-                        <br />
                         <hr />
-                        <br />
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col">
                             <label>medicare.gov Username</label>
                             <input
@@ -1319,7 +1439,7 @@
                           *ngIf="personalDetailMedicareForm.enabled"
                         >
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1339,20 +1459,44 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">Medicaid (LIS)</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            Medicaid
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableMedicaidForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              font-weight: 500;
+                              letter-spacing: 0px;
+                              color: #061f3a;
+                            "
+                            >Medicaid (LIS)</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >Details about your Medicaid and Low-Income Subsidy
+                            (LIS) benefits.</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableMedicaidForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+
                       <form
                         [formGroup]="medicaidForm"
                         (ngSubmit)="onSubmitMedicaid()"
@@ -1372,7 +1516,7 @@
                               formControlName="Assistance_Level_ID"
                               name=""
                               id=""
-                              class="form-control"
+                              class="form-select"
                             >
                               <option selected disabled value="">
                                 Select...
@@ -1396,7 +1540,7 @@
                               class="form-control"
                             />
                           </div>
-                          <div class="col-3">
+                          <div class="col">
                             <label>Renewal</label>
                             <input
                               formControlName="Renewal"
@@ -1419,7 +1563,7 @@
                         <br />
                         <div class="row" *ngIf="medicaidForm.enabled">
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1439,20 +1583,44 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">SPAP</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            SPAP
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableSpapForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              font-weight: 500;
+                              letter-spacing: 0px;
+                              color: #061f3a;
+                            "
+                            >SPAP</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >State Pharmaceutical Assistance Program (SPAP)
+                            information for prescription coverage.</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableSpapForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+
                       <form
                         [formGroup]="personalDetailSpapForm"
                         (ngSubmit)="onSubmitSpap()"
@@ -1505,7 +1673,7 @@
                         <br />
                         <div class="row" *ngIf="personalDetailSpapForm.enabled">
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1525,20 +1693,44 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">VA</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            VA
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableVAForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              font-weight: 500;
+                              letter-spacing: 0px;
+                              color: #061f3a;
+                            "
+                            >VA</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >Veterans Affairs (VA) healthcare and benefits
+                            information.</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableVAForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+
                       <form
                         [formGroup]="personalDetailVAForm"
                         (ngSubmit)="onSubmitVA()"
@@ -1575,7 +1767,7 @@
                         <br />
                         <div class="row" *ngIf="personalDetailVAForm.enabled">
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1595,20 +1787,43 @@
                 <br />
                 <div class="row">
                   <div class="col">
-                    <div class="custom-card-header">Vault</div>
                     <div class="card card-body">
                       <div class="row">
                         <div class="col">
-                          <h6>
-                            Vault
-                            <i
-                              class="bi bi-pencil-square"
-                              style="cursor: pointer"
-                              (click)="enableVaultForm()"
-                            ></i>
-                          </h6>
+                          <span
+                            style="
+                              font: normal normal medium 16px/21px Roboto;
+                              font-weight: 500;
+                              letter-spacing: 0px;
+                              color: #061f3a;
+                            "
+                            >Vault</span
+                          >
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <span
+                            style="
+                              font-size: normal normal normal 13px/18px Roboto;
+                              letter-spacing: 0px;
+                              color: #36495f;
+                            "
+                            >Details about sensitive data</span
+                          >
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                          <button
+                            class="btn btn-default-custom"
+                            (click)="enableVaultForm()"
+                          >
+                            <i class="bi bi-pencil" style="cursor: pointer"></i
+                            >&nbsp;&nbsp;Edit
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+
                       <form
                         [formGroup]="personalDetailVaultForm"
                         (ngSubmit)="onSubmitVault()"
@@ -1629,7 +1844,7 @@
                           *ngIf="personalDetailVaultForm.enabled"
                         >
                           <div class="col">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-danger">
                               Update
                             </button>
                             &nbsp;&nbsp;
@@ -1665,20 +1880,53 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
       <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()">
         <div class="modal-body">
-          <h3>Prospect Emails</h3>
-          <br />
+          <div class="row">
+            <div class="col-6">
+              <span
+                style="
+                  font: normal normal bold 20px/26px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                  font-weight: 400;
+                "
+                >Prospect Emails</span
+              >
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-close-custom"
+                (click)="closeModalEmail()"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
           <div class="row">
             <div class="col">
+              <span
+                style="
+                  font: normal normal normal 14px/19px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                "
+                >Add, eliminate and edit emails from this prospect</span
+              >
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-4">
               <div class="form-group">
                 <label for="">Email Type</label>
                 <select
                   name=""
                   id=""
-                  class="form-control"
+                  class="form-select"
                   formControlName="EmailTypeID"
                 >
                   <option selected disabled value="">Select one...</option>
@@ -1714,6 +1962,66 @@
             </div>
           </div>
           <br />
+
+          <div class="row" *ngFor="let email of emailList">
+            <div class="col">
+              <div
+                class="mini-card-container"
+                [ngClass]="{'active': email.IsPreferredEmail}"
+                (click)="loadDataForEditEmail(email)"
+              >
+                <div class="row d-flex align-items-center w-100">
+                  <div class="col-1">
+                    <input
+                      type="radio"
+                      [checked]="email.IsPreferredEmail"
+                      [disabled]="email.IsPreferredEmail"
+                    />
+                  </div>
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal normal 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            color: #36495f;
+                          "
+                          >{{email.EmailTypeValue}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal medium 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            font-weight: 500;
+                            color: #061f3a;
+                          "
+                          >{{email.EmailAddressValue}}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3 d-flex justify-content-end">
+                    <span
+                      style="
+                        font: normal normal normal 14px/19px Roboto;
+                        letter-spacing: 0px;
+                        color: #246fc2;
+                      "
+                      >{{email.IsPreferredEmail ? 'Preferred' : ''}}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
           <div class="row">
             <div class="col d-flex justify-content-end">
               <button
@@ -1721,17 +2029,10 @@
                 class="btn btn-secondary"
                 (click)="closeModalEmail()"
               >
-                Close
+                Cancelar
               </button>
               &nbsp;&nbsp;
-              <button
-                *ngIf="emailIdUpdate !=0"
-                type="button"
-                class="btn btn-danger"
-                (click)="cancelEditEmail()"
-              >
-                Cancelar</button
-              >&nbsp;&nbsp;
+
               <ng-container *ngIf="emailIdUpdate != 0">
                 <button type="submit" class="btn btn-warning">
                   <div
@@ -1743,11 +2044,11 @@
                     <span class="visually-hidden">Loading...</span>
                   </div>
 
-                  <div *ngIf="!isLoadingEmail">Save Email</div>
+                  <div *ngIf="!isLoadingEmail">Save changes</div>
                 </button>
               </ng-container>
               <ng-container *ngIf="emailIdUpdate == 0">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                   <div
                     class="spinner-border text-light"
                     role="status"
@@ -1757,55 +2058,11 @@
                     <span class="visually-hidden">Loading...</span>
                   </div>
 
-                  <div *ngIf="!isLoadingEmail">Add Email</div>
+                  <div *ngIf="!isLoadingEmail">Save changes</div>
                 </button>
               </ng-container>
             </div>
           </div>
-
-          <br />
-          <!-- <div class="alert alert-danger" role="alert">
-            This section is currently under construction, and the preferred
-            settings are not yet fully configured.
-          </div> -->
-          <table class="table">
-            <thead>
-              <th>#</th>
-              <th>Email Type</th>
-              <th>Email Address</th>
-              <th>Is Preferred</th>
-              <th>Actions</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let email of emailList">
-                <td>{{email.EmailID}}</td>
-                <td>{{email.EmailTypeValue}}</td>
-                <td>{{email.EmailAddressValue}}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    [checked]="email.IsPreferredEmail"
-                    [disabled]="email.IsPreferredEmail"
-                  />
-                </td>
-                <td>
-                  <a class="btn btn-link"
-                    ><i
-                      class="bi bi-pencil text-warning"
-                      (click)="loadDataForEditEmail(email)"
-                    ></i
-                  ></a>
-                  &nbsp;
-                  <a
-                    *ngIf="!email.IsPreferredEmail"
-                    class="btn btn-link"
-                    (click)="deleteEmail(email.EmailID)"
-                    ><i class="bi bi-trash text-danger"></i
-                  ></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </form>
     </div>
@@ -1820,17 +2077,50 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
       <form [formGroup]="phoneForm" (ngSubmit)="onSubmitPhone()">
         <div class="modal-body">
-          <h5 class="modal-title">Prospect Phones</h5>
-          <br />
+          <div class="row">
+            <div class="col-6">
+              <span
+                style="
+                  font: normal normal bold 20px/26px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                  font-weight: 400;
+                "
+                >Prospect Phones</span
+              >
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-close-custom"
+                (click)="closeModalPhone()"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
           <div class="row">
             <div class="col">
+              <span
+                style="
+                  font: normal normal normal 14px/19px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                "
+                >Add, eliminate and edit phones from this prospect</span
+              >
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-4">
               <div class="form-group">
                 <label for="">Phone Type</label>
-                <select class="form-control" formControlName="PhoneTypeID">
+                <select class="form-select" formControlName="PhoneTypeID">
                   <option selected disabled value="">Select one...</option>
                   <option
                     *ngFor="let response of getFilteredPhoneTypes(phoneForm.controls['PhoneTypeID'].value)"
@@ -1867,6 +2157,65 @@
             </div>
           </div>
           <br />
+
+          <div class="row" *ngFor="let phone of phoneList">
+            <div class="col">
+              <div
+                class="mini-card-container"
+                [ngClass]="{'active': phone.IsPreferredPhone}"
+                (click)="loadDataForEditPhone(phone)"
+              >
+                <div class="row d-flex align-items-center w-100">
+                  <div class="col-1">
+                    <input
+                      type="radio"
+                      [checked]="phone.IsPreferredPhone"
+                      [disabled]="phone.IsPreferredPhone"
+                    />
+                  </div>
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal normal 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            color: #36495f;
+                          "
+                          >{{phone.PhoneTypeValue}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal medium 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            font-weight: 500;
+                            color: #061f3a;
+                          "
+                          >{{phone.PhoneNumber}}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3 d-flex justify-content-end">
+                    <span
+                      style="
+                        font: normal normal normal 14px/19px Roboto;
+                        letter-spacing: 0px;
+                        color: #246fc2;
+                      "
+                      >{{phone.IsPreferredPhone ? 'Preferred' : ''}}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <br />
           <div class="row">
             <div class="col d-flex justify-content-end">
@@ -1875,16 +2224,9 @@
                 class="btn btn-secondary"
                 (click)="closeModalPhone()"
               >
-                Close</button
+                Cancel</button
               >&nbsp;&nbsp;
-              <button
-                *ngIf="phoneIdUpdate !=0"
-                type="button"
-                class="btn btn-danger"
-                (click)="cancelEditPhone()"
-              >
-                Cancelar</button
-              >&nbsp;&nbsp;
+
               <ng-container *ngIf="phoneIdUpdate !=0">
                 <button type="submit" class="btn btn-warning">
                   <div
@@ -1895,11 +2237,11 @@
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <div *ngIf="!isLoadingPhone">Save Phone</div>
+                  <div *ngIf="!isLoadingPhone">Save Change</div>
                 </button>
               </ng-container>
               <ng-container *ngIf="phoneIdUpdate ==0">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                   <div
                     class="spinner-border text-light"
                     role="status"
@@ -1908,54 +2250,11 @@
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <div *ngIf="!isLoadingPhone">Add Phone</div>
+                  <div *ngIf="!isLoadingPhone">Save Change</div>
                 </button>
               </ng-container>
             </div>
           </div>
-
-          <br />
-          <!-- <div class="alert alert-danger" role="alert">
-            This section is currently under construction, and the preferred
-            settings are not yet fully configured.
-          </div> -->
-          <table class="table">
-            <thead>
-              <th>#</th>
-              <th>Phone Type</th>
-              <th>Phone Number</th>
-              <th>Is Preferred</th>
-              <th>Actions</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let phone of phoneList">
-                <td>{{phone.PhoneID}}</td>
-                <td>{{phone.PhoneTypeValue}}</td>
-                <td>{{phone.PhoneNumber}}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    [checked]="phone.IsPreferredPhone"
-                    [disabled]="phone.IsPreferredPhone"
-                  />
-                </td>
-                <td>
-                  <a class="btn btn-link"
-                    ><i
-                      class="bi bi-pencil text-warning"
-                      (click)="loadDataForEditPhone(phone)"
-                    ></i
-                  ></a>
-                  <a
-                    *ngIf="!phone.IsPreferredPhone"
-                    class="btn btn-link"
-                    (click)="deletePhone(phone.PhoneID)"
-                    ><i class="bi bi-trash text-danger"></i
-                  ></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </form>
     </div>
@@ -1970,20 +2269,53 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
       <div class="modal-body">
-        <h3>New Address</h3>
+        <div class="row">
+          <div class="col-6">
+            <span
+              style="
+                font: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+                font-weight: 400;
+              "
+              >Prospect Address</span
+            >
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalAddress()"
+            >
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Add, eliminate and edit address from this prospect</span
+            >
+          </div>
+        </div>
         <br />
         <form [formGroup]="addressForm" (ngSubmit)="onSubmitAddress()">
           <div class="row">
-            <div class="col-3">
+            <div class="col-4">
               <div class="form-group">
                 <label for="">Address Type</label>
                 <select
                   name=""
                   id=""
-                  class="form-control"
+                  class="form-select"
                   formControlName="AddressTypeID"
                 >
                   <!-- <option selected disabled value="">Select...</option> -->
@@ -2002,7 +2334,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col">
               <div class="form-group">
                 <label for="">Street</label>
                 <input class="form-control" formControlName="Street" />
@@ -2018,7 +2350,7 @@
 
           <br />
           <div class="row">
-            <div class="col-6">
+            <div class="col-4">
               <div class="form-group">
                 <label for="">City</label>
                 <input class="form-control" formControlName="City" />
@@ -2030,18 +2362,7 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="col-4">
-          <div class="form-group">
-            <label for="">Country</label>
-            <input class="form-control" formControlName="Country" />
-            <div
-              *ngIf="isInvalidAndTouchedAddress('Country')"
-              class="text-danger"
-            >
-              Country is required
-            </div>
-          </div>
-        </div> -->
+
             <div class="col-3">
               <div class="form-group">
                 <label for="">Zip</label>
@@ -2054,13 +2375,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-5">
               <div class="form-group">
                 <label for="">State</label>
                 <select
                   name=""
                   id=""
-                  class="form-control"
+                  class="form-select"
                   formControlName="StateID"
                 >
                   <option disabled selected value="">Select...</option>
@@ -2081,6 +2402,66 @@
             </div>
           </div>
           <br />
+          <div class="row" *ngFor="let address of addressList">
+            <div class="col">
+              <div
+                class="mini-card-container"
+                [ngClass]="{'active': address.IsPreferredAddress}"
+                (click)="loadDataForEditAddress(address)"
+              >
+                <div class="row d-flex align-items-center w-100">
+                  <div class="col-1">
+                    <input
+                      type="radio"
+                      [checked]="address.IsPreferredAddress"
+                      [disabled]="address.IsPreferredAddress"
+                    />
+                  </div>
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal normal 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            color: #36495f;
+                          "
+                          >{{address.AddressTypeValue}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <span
+                          style="
+                            text-align: left;
+                            font: normal normal medium 14px/19px Roboto;
+                            letter-spacing: 0px;
+                            font-weight: 500;
+                            color: #061f3a;
+                          "
+                          >{{address.Street}}, {{address.City}},
+                          {{address.StateAbbreviation}}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3 d-flex justify-content-end">
+                    <span
+                      style="
+                        font: normal normal normal 14px/19px Roboto;
+                        letter-spacing: 0px;
+                        color: #246fc2;
+                      "
+                      >{{address.IsPreferredAddress ? 'Preferred' : ''}}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
           <div class="row">
             <div class="col d-flex justify-content-end">
               <button
@@ -2088,15 +2469,7 @@
                 class="btn btn-secondary"
                 (click)="closeModalAddress()"
               >
-                Close</button
-              >&nbsp;&nbsp;
-              <button
-                *ngIf="addressIdUpdate !=0"
-                type="button"
-                class="btn btn-danger"
-                (click)="cancelEditAddress()"
-              >
-                Cancelar</button
+                Cancel</button
               >&nbsp;&nbsp;
               <ng-container *ngIf="addressIdUpdate !=0">
                 <button type="submit" class="btn btn-warning">
@@ -2108,11 +2481,11 @@
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <div *ngIf="!isLoadingAddress">Save Address</div>
+                  <div *ngIf="!isLoadingAddress">Save Changes</div>
                 </button>
               </ng-container>
               <ng-container *ngIf="addressIdUpdate ==0">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                   <div
                     class="spinner-border text-light"
                     role="status"
@@ -2121,60 +2494,89 @@
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <div *ngIf="!isLoadingAddress">Add Address</div>
+                  <div *ngIf="!isLoadingAddress">Add Changes</div>
                 </button>
               </ng-container>
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Doctor preview -->
+<div
+  class="modal fade"
+  id="exampleDoctorPreview"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalDoctorPreview()"
+            >
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <span
+              style="
+                font: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+                font-weight: 400;
+              "
+              >Add Doctor</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Find or create a new doctor</span
+            >
+          </div>
+        </div>
         <br />
-        <!-- <div class="alert alert-danger" role="alert">
-          This section is currently under construction, and the preferred
-          settings are not yet fully configured.
-        </div> -->
-        <table class="table">
-          <thead>
-            <th>#</th>
-            <th>Address Type</th>
-            <th>Street</th>
-            <th>City</th>
-            <th>State</th>
-            <!-- <th>Country</th> -->
-            <th>Is Preferred</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let address of addressList">
-              <td>{{address.ContactAddressID}}</td>
-              <td>{{address.AddressTypeValue}}</td>
-              <td>{{address.Street}}</td>
-              <td>{{address.City}}</td>
-              <td>{{address.StateAbbreviation}}</td>
-              <!-- <td>{{address.Country}}</td> -->
-              <td>
-                <input
-                  type="checkbox"
-                  [checked]="address.IsPreferredAddress"
-                  [disabled]="address.IsPreferredAddress"
-                />
-              </td>
-              <td>
-                <a class="btn btn-link"
-                  ><i
-                    class="bi bi-pencil text-warning"
-                    (click)="loadDataForEditAddress(address)"
-                  ></i
-                ></a>
-                <a
-                  *ngIf="!address.IsPreferredAddress"
-                  class="btn btn-link"
-                  (click)="deleteAddress(address.ContactAddressID)"
-                  ><i class="bi bi-trash text-danger"></i
-                ></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="button-content-doctor">
+          <div
+            class="custom-btn-doctor"
+            (click)="changeDoctorToManually(false)"
+          >
+            <img class="mb-2" src="assets/doctoradd.svg" alt="" />
+            Search
+          </div>
+          <div class="custom-btn-doctor" (click)="changeDoctorToManually(true)">
+            <img class="mb-2" src="assets/doctorsearch.svg" alt="" />
+            Add Manually
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <button
+              class="btn btn-cancel-custom"
+              (click)="closeModalDoctorPreview()"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2188,234 +2590,317 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+  <div
+    class="modal-dialog modal-dialog-scrollable"
+    [ngClass]="{'modal-xl': !addDoctorManual}"
+  >
     <div class="modal-content">
       <div class="modal-body" *ngIf="doctorSelected || addDoctorManual">
-        <form [formGroup]="doctorForm" (ngSubmit)="onSubmiteDoctor()">
-          <div class="row">
-            <div class="col">
-              <h5 class="modal-title">
-                New Doctor
-                <small
-                  *ngIf="addDoctorManual"
-                  class="bg-info py-1 px-2"
+        <div class="row">
+          <div class="col-3">
+            <div class="progress-circle-container">
+              <svg class="progress-circle" viewBox="0 0 36 36">
+                <!-- Fondo del círculo (inactivo) -->
+                <path
+                  class="progress-bg"
+                  d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <!-- Parte activa del círculo (progreso) -->
+                <path
+                  class="progress-bar"
+                  [attr.stroke-dasharray]="progress + ', 100'"
+                  d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <!-- Texto dentro del círculo -->
+                <text
+                  x="18"
+                  y="20.35"
+                  class="progress-text"
+                  text-anchor="middle"
+                >
+                  {{1}}/{{2}}
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-6">
+                <span
                   style="
-                    border-radius: 10px;
-                    margin-left: 10px;
-                    font-size: 12px;
-                    cursor: pointer;
+                    text-align: left;
+                    font: normal normal bold 20px/26px Roboto;
+                    letter-spacing: 0px;
+                    color: #061f3a;
                   "
-                  (click)="changeDoctorToManually()"
-                  >Add from API</small
+                  >New Doctor</span
                 >
-              </h5>
-            </div>
-            <div class="col-1">
-              <a (click)="closeModalDoctor()" class="btn btn-link"
-                ><i class="bi bi-x-lg"></i
-              ></a>
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col form-group">
-              <label>Last Name</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="LastName"
-              />
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('LastName')"
-                class="text-danger"
-              >
-                Last Name is required
               </div>
-            </div>
-            <div class="col form-group">
-              <label>First Name</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="FirstName"
-              />
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('FirstName')"
-                class="text-danger"
-              >
-                First Name is required
+              <div class="col-6 d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="btn btn-close-custom"
+                  (click)="closeModalDoctor()"
+                >
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+              <div class="col-12">
+                <span
+                  style="
+                    text-align: left;
+                    font: normal normal normal 14px/19px Roboto;
+                    letter-spacing: 0px;
+                    color: #36495f;
+                  "
+                  >Complete for create a doctor</span
+                >
               </div>
             </div>
           </div>
+        </div>
+        <form [formGroup]="doctorForm" (ngSubmit)="onSubmiteDoctor()">
           <br />
-          <div class="row">
-            <div class="col-3 form-group">
-              <label>Doctor ID</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="ProviderNPI"
-              />
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('ProviderNPI')"
-                class="text-danger"
-              >
-                ProviderNPI is required
+          <ng-container *ngIf="stepsForm === 1">
+            <div class="row">
+              <div class="col form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="LastName"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('LastName')"
+                  class="text-danger"
+                >
+                  Last Name is required
+                </div>
+              </div>
+              <div class="col form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="FirstName"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('FirstName')"
+                  class="text-danger"
+                >
+                  First Name is required
+                </div>
               </div>
             </div>
-            <div class="col-3 form-group">
-              <label>Doctor Phone</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="ProviderPhone"
-                appPhoneNumberMask
-                maxlength="14"
-              />
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('ProviderPhone')"
-                class="text-danger"
-              >
-                Provider phone is required
+            <br />
+            <div class="row">
+              <div class="col form-group">
+                <label>Doctor ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="ProviderNPI"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('ProviderNPI')"
+                  class="text-danger"
+                >
+                  ProviderNPI is required
+                </div>
+              </div>
+              <div class="col form-group">
+                <label>Doctor Phone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="ProviderPhone"
+                  appPhoneNumberMask
+                  maxlength="14"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('ProviderPhone')"
+                  class="text-danger"
+                >
+                  Provider phone is required
+                </div>
               </div>
             </div>
+            <br />
+            <div class="row">
+              <div class="col form-group">
+                <label for="">Specialty</label>
+                <input
+                  readonly
+                  type="text"
+                  class="form-control"
+                  formControlName="ProviderSpecialtyAPI"
+                  *ngIf="!addDoctorManual"
+                />
+                <select
+                  class="form-control"
+                  *ngIf="addDoctorManual"
+                  formControlName="ProviderSpecialtyID"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let specialty of doctorSpecialty"
+                    [value]="specialty.ProviderSpecialtyID"
+                  >
+                    {{specialty.ProviderSpecialtyValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('ProviderSpecialtyID')"
+                  class="text-danger"
+                >
+                  Specialty is required
+                </div>
+              </div>
+              <div class="col form-group">
+                <label><small class="text-danger">*</small> Importance </label>
+                <select
+                  class="form-select"
+                  formControlName="ProviderImportanceID"
+                >
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let importance of doctorImportance"
+                    [value]="importance.ProviderImportanceID"
+                  >
+                    {{importance.ProviderImportanceValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('ProviderImportanceID')"
+                  class="text-danger"
+                >
+                  Provider importance is required
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-6 form-group">
+                <label><small class="text-danger">*</small> Status</label>
+                <select class="form-select" formControlName="ProviderStatusID">
+                  <option selected disabled value="">Select one...</option>
+                  <option
+                    *ngFor="let status of doctorStatus"
+                    [value]="status.ProviderStatusID"
+                  >
+                    {{status.ProviderStatusValue}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('ProviderStatusID')"
+                  class="text-danger"
+                >
+                  Provider status is required
+                </div>
+              </div>
+            </div>
+          </ng-container>
 
-            <div class="col form-group">
-              <label>Facility Address</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="FacilityAddress"
-              />
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('FacilityAddress')"
-                class="text-danger"
-              >
-                Facility Address is required
+          <ng-container *ngIf="stepsForm === 2">
+            <div class="row">
+              <div class="col-6 form-group">
+                <label for="">Practice/Facility Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="PracticeFacilityName"
+                />
               </div>
             </div>
-          </div>
+            <br />
+            <div class="row">
+              <div class="col form-group">
+                <label>Facility Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="FacilityAddress"
+                />
+                <div
+                  *ngIf="isInvalidAndTouchedDoctor('FacilityAddress')"
+                  class="text-danger"
+                >
+                  Facility Address is required
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col form-group">
+                <label for="">Notes</label>
+                <textarea
+                  name=""
+                  id=""
+                  class="form-control"
+                  formControlName="Notes"
+                ></textarea>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col form-group">
+                <label for="">Networks</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="Networks"
+                />
+                <small style="font-size: 9pt"
+                  ><i
+                    >Seperate network names by a comma "UHC, Banner, etc"</i
+                  ></small
+                >
+              </div>
+            </div>
+            <br />
+          </ng-container>
+          <br />
           <br />
 
-          <div class="row">
-            <div class="col form-group">
-              <label for="">Specialty</label>
-              <input
-                readonly
-                type="text"
-                class="form-control"
-                formControlName="ProviderSpecialtyAPI"
-                *ngIf="!addDoctorManual"
-              />
-              <select
-                class="form-control"
-                *ngIf="addDoctorManual"
-                formControlName="ProviderSpecialtyID"
-              >
-                <option selected disabled value="">Select one...</option>
-                <option
-                  *ngFor="let specialty of doctorSpecialty"
-                  [value]="specialty.ProviderSpecialtyID"
-                >
-                  {{specialty.ProviderSpecialtyValue}}
-                </option>
-              </select>
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('ProviderSpecialtyID')"
-                class="text-danger"
-              >
-                Specialty is required
-              </div>
-            </div>
-            <div class="col form-group">
-              <label><small class="text-danger">*</small> Status</label>
-              <select class="form-control" formControlName="ProviderStatusID">
-                <option selected disabled value="">Select one...</option>
-                <option
-                  *ngFor="let status of doctorStatus"
-                  [value]="status.ProviderStatusID"
-                >
-                  {{status.ProviderStatusValue}}
-                </option>
-              </select>
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('ProviderStatusID')"
-                class="text-danger"
-              >
-                Provider status is required
-              </div>
-            </div>
-            <div class="col form-group">
-              <label><small class="text-danger">*</small> Importance </label>
-              <select
-                class="form-control"
-                formControlName="ProviderImportanceID"
-              >
-                <option selected disabled value="">Select one...</option>
-                <option
-                  *ngFor="let importance of doctorImportance"
-                  [value]="importance.ProviderImportanceID"
-                >
-                  {{importance.ProviderImportanceValue}}
-                </option>
-              </select>
-              <div
-                *ngIf="isInvalidAndTouchedDoctor('ProviderImportanceID')"
-                class="text-danger"
-              >
-                Provider importance is required
-              </div>
-            </div>
-
-            <div class="col form-group">
-              <label for="">Practice/Facility Name</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="PracticeFacilityName"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col form-group">
-              <label for="">Notes</label>
-              <textarea
-                name=""
-                id=""
-                class="form-control"
-                formControlName="Notes"
-              ></textarea>
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col form-group">
-              <label for="">Networks</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="Networks"
-              />
-              <small style="font-size: 9pt"
-                ><i
-                  >Seperate network names by a comma "UHC, Banner, etc"</i
-                ></small
-              >
-            </div>
-          </div>
-          <br />
           <div class="row">
             <div class="col d-flex justify-content-end">
               <button
+                *ngIf="stepsForm === 1"
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-steps"
                 (click)="closeModalDoctor()"
               >
-                Close
+                Cancel
               </button>
               &nbsp;&nbsp;
-              <button type="submit" class="btn btn-primary">
+              <button
+                *ngIf="stepsForm === 2"
+                type="button"
+                class="btn btn-steps"
+                (click)="changeStep(1)"
+              >
+                Back
+              </button>
+              &nbsp;&nbsp;
+              <button
+                *ngIf="stepsForm === 1"
+                type="button"
+                class="btn btn-danger"
+                (click)="changeStep(2)"
+              >
+                Next
+              </button>
+              &nbsp;&nbsp;
+
+              <button
+                type="submit"
+                class="btn btn-danger"
+                *ngIf="stepsForm === 2"
+              >
                 <div
                   class="spinner-border text-light"
                   role="status"
@@ -2432,36 +2917,42 @@
       </div>
       <div class="modal-body" *ngIf="!doctorSelected && !addDoctorManual">
         <div class="row">
-          <div class="col">
-            <h5 class="modal-title">
-              Find Doctor
-              <small
-                class="bg-warning py-1 px-2"
-                style="
-                  border-radius: 10px;
-                  margin-left: 10px;
-                  font-size: 12px;
-                  cursor: pointer;
-                "
-                (click)="changeDoctorToManually()"
-                >Add manually</small
-              >
-            </h5>
+          <div class="col-6">
+            <span
+              style="
+                font: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+                font-weight: 400;
+              "
+              >Search Doctor</span
+            >
           </div>
-          <div class="col-1">
-            <a (click)="closeModalDoctor()" class="btn btn-link"
-              ><i class="bi bi-x-lg"></i
-            ></a>
+          <div class="col-6 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalDoctor()"
+            >
+              <i class="bi bi-x"></i>
+            </button>
           </div>
         </div>
-        <br />
         <div class="row">
           <div class="col">
-            <h4>
-              Result Count:
-              <small class="text-danger">{{doctorList.length}}</small>
-            </h4>
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Find and select a Doctor to add</span
+            >
           </div>
+        </div>
+
+        <br />
+        <div class="row">
           <div class="col-3 form-group">
             <label for="">Last Name</label>
             <input
@@ -2486,27 +2977,85 @@
 
           <div class="col-1">
             <button
-              class="btn btn-primary mt-4"
+              class="btn btn-danger mt-4"
               (click)="getDoctorsByLastName()"
             >
-              Search
+              <i class="bi bi-search"></i>
             </button>
           </div>
         </div>
+        <br />
+        <div
+          *ngIf="doctorList.length === 0"
+          class="d-flex justify-content-center align-items-center"
+          style="
+            flex-direction: column;
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid #e5e8eb;
+            border-radius: 5px;
+          "
+        >
+          <div class="row">
+            <div class="col d-flex justify-content-center align-items-center">
+              <img src="assets/doctorsearch.svg" alt="" />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col d-flex justify-content-center align-items-center">
+              <span
+                style="
+                  font: normal normal bold 20px/26px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                  font-weight: 500;
+                "
+                >Search Doctor</span
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-center align-items-center">
+              <span
+                style="
+                  font: normal normal normal 14px/19px Roboto;
+                  letter-spacing: 0px;
+                  color: #061f3a;
+                  opacity: 0.8;
+                "
+                >Search a Doctor by Last Name</span
+              >
+            </div>
+          </div>
+        </div>
 
-        <div class="table-responsive mt-5">
-          <table class="table table-sm">
-            <thead>
-              <tr>
-                <th>NPI</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Primary Practice Address</th>
-                <th>State</th>
-                <th>Phone</th>
-                <th>Primary Taxonomy</th>
-                <th>Select</th>
-              </tr>
+        <div
+          *ngIf="doctorList.length > 0"
+          class="table-responsive mt-5 p-3"
+          style="
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid #e5e8eb;
+            border-radius: 5px;
+          "
+        >
+          <table class="table table-sm table-striped">
+            <thead
+              style="
+                background: #dbe4ee66 0% 0% no-repeat padding-box;
+                border-radius: 5px;
+                color: #061f3a;
+                font: normal normal medium 14px/19px Roboto;
+              "
+            >
+              <th>NPI</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Primary Practice Address</th>
+              <th>State</th>
+              <th>Phone</th>
+              <th>Primary Taxonomy</th>
+              <th></th>
             </thead>
             <tbody>
               <tr *ngFor="let doctor of doctorList">
@@ -2531,13 +3080,26 @@
                 </td>
                 <td>{{doctor.taxonomies[0].desc}}</td>
                 <td>
-                  <a class="btn btn-link" (click)="loadDoctorSelected(doctor)"
-                    ><i class="bi bi-card-checklist"></i
+                  <a
+                    class="btn btn-add-doctor"
+                    (click)="loadDoctorSelected(doctor)"
+                    ><i class="bi bi-plus"></i
                   ></a>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+        <div class="col">
+          <span
+            style="
+              font: normal normal normal 14px/19px Roboto;
+              letter-spacing: 0px;
+              color: #061f3a;
+              opacity: 0.8;
+            "
+            >{{doctorList.length}} doctors found</span
+          >
         </div>
       </div>
     </div>
@@ -2556,13 +3118,40 @@
     <div class="modal-content">
       <div class="modal-body" *ngIf="!doctorSelected">
         <div class="row">
-          <div class="col"><h3>Find Drug</h3></div>
-          <div class="col d-flex justify-content-end">
-            <a (click)="closeModalRx()" class="btn btn-link"
-              ><i class="bi bi-x-lg"></i
-            ></a>
+          <div class="col-6">
+            <span
+              style="
+                font: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+                font-weight: 400;
+              "
+              >Find Drug</span
+            >
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalRx()"
+            >
+              <i class="bi bi-x"></i>
+            </button>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Complete for create a doctor</span
+            >
+          </div>
+        </div>
+
         <br />
         <form [formGroup]="medicationForm" (ngSubmit)="onSubmitDrug()">
           <div class="row">
@@ -2571,7 +3160,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col">
+            <div class="col-10">
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -2581,14 +3170,6 @@
                   aria-describedby="button-addon2"
                   formControlName="DrugName"
                 />
-                <button
-                  class="btn btn-primary"
-                  (click)="getRxByName()"
-                  type="button"
-                  id="button-addon2"
-                >
-                  Search
-                </button>
               </div>
               <div
                 *ngIf="isInvalidAndTouchedRX('DrugName')"
@@ -2599,6 +3180,16 @@
               <!-- <label for="" class="text-danger"
           >No FDA approved drugs found
         </label> -->
+            </div>
+            <div class="col-2">
+              <button
+                class="btn btn-danger-search"
+                (click)="getRxByName()"
+                type="button"
+                id="button-addon2"
+              >
+                <i class="bi bi-search"></i>
+              </button>
             </div>
           </div>
           <div class="row">
@@ -2620,15 +3211,20 @@
                     </div></label
                   >
                 </div>
-                <div class="col d-flex justify-content-end" *ngIf="rxResult">
-                  Dosage found:&nbsp;
-                  <span class="text-danger">
-                    {{ rxResult.length > 0 ? rxResult.length : " 0" }}
-                  </span>
+                <div
+                  class="col d-flex justify-content-end"
+                  style="
+                    font: normal normal normal 13px/18px Roboto;
+                    letter-spacing: 0px;
+                    color: #061f3a;
+                  "
+                >
+                  Dosage found:&nbsp; {{rxResult !== undefined &&
+                  rxResult.length > 0 ? rxResult.length : " 0" }}
                 </div>
               </div>
               <select
-                class="form-control"
+                class="form-select"
                 [(ngModel)]="rxDosageValue"
                 (change)="getRxByCui()"
                 formControlName="Dosage"
@@ -2648,7 +3244,7 @@
             <div class="col">
               <label for="">Package</label>
               <select
-                class="form-control"
+                class="form-select"
                 [disabled]="!rxPackage || rxPackage.length === 0"
                 formControlName="Package"
               >
@@ -2675,7 +3271,7 @@
             </div>
             <div class="col">
               <label for="">Frequency/Fill</label>
-              <select class="form-control" formControlName="FrequencyID">
+              <select class="form-select" formControlName="FrequencyID">
                 <option disabled selected value="">Select one...</option>
                 <option
                   *ngFor="let frequency of drugFrequency"
@@ -2710,13 +3306,13 @@
           <div class="row">
             <div class="col d-flex justify-content-end">
               <button
-                class="btn btn-danger"
+                class="btn btn-secondary"
                 (click)="closeModalRx()"
                 type="button"
               >
                 Cancel</button
               >&nbsp;&nbsp;
-              <button class="btn btn-primary" type="submit">Save</button>
+              <button class="btn btn-danger" type="submit">Save</button>
             </div>
           </div>
         </form>
@@ -2773,7 +3369,7 @@
         <div class="row gutter-2">
           <div class="col d-flex justify-content-end">
             <button
-              class="btn btn-primary"
+              class="btn btn-danger"
               (disabled)="policySelected === ''"
               (click)="openPolicyModal()"
             >
@@ -3128,7 +3724,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addmapd">
+        <button class="btn btn-sm btn-danger save" id="addmapd">
           Add MAPD
         </button>
         <button
@@ -3438,7 +4034,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addpdp">Add PDP</button>
+        <button class="btn btn-sm btn-danger save" id="addpdp">Add PDP</button>
         <button
           class="btn btn-sm btn-secondary closeModal"
           (click)="closeModalPolicy()"
@@ -3758,7 +4354,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addsup">Add Sup</button>
+        <button class="btn btn-sm btn-danger save" id="addsup">Add Sup</button>
         <button
           class="btn btn-sm btn-secondary closeModal"
           (click)="closeModalPolicy()"
@@ -4077,7 +4673,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addanc">
+        <button class="btn btn-sm btn-danger save" id="addanc">
           Add Ancillary
         </button>
         <button
@@ -4452,7 +5048,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addlife">
+        <button class="btn btn-sm btn-danger save" id="addlife">
           Add Life
         </button>
         <button
@@ -4847,7 +5443,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addind">
+        <button class="btn btn-sm btn-danger save" id="addind">
           Add Health
         </button>
         <button
@@ -5143,7 +5739,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addAnnuity">
+        <button class="btn btn-sm btn-danger save" id="addAnnuity">
           Add Annuity
         </button>
         <button
@@ -5531,7 +6127,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addLTC">Add LTC</button>
+        <button class="btn btn-sm btn-danger save" id="addLTC">Add LTC</button>
         <button
           class="btn btn-sm btn-secondary closeModal"
           (click)="closeModalPolicy()"
@@ -5867,7 +6463,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-primary save" id="addgroup">
+        <button class="btn btn-sm btn-danger save" id="addgroup">
           Add Group
         </button>
         <button

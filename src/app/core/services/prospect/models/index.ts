@@ -6,7 +6,7 @@ export interface ContactDataResponse {
 }
 
 export interface ContactData {
-  ContactID:number;
+  ContactID: number;
   FirstName: string;
   LastName: string;
   NickName: string | null;
@@ -19,6 +19,7 @@ export interface ContactData {
   GenderValue: string | null;
   TitleValue: string | null;
   ContactStatusID: string | null;
+  ContactStatusValue: string | null;
   SourceID: string | null;
   ReferredBy: string | null;
   suffixValue: string | null;
@@ -55,12 +56,12 @@ export interface PhoneDataResponse {
   data: Phone[];
 }
 
-export interface Phone{
+export interface Phone {
   PhoneID: number;
   PhoneTypeID: number;
   IsPreferredPhone: boolean
   PhoneNumber: string;
-  PhoneTypeValue:string;
+  PhoneTypeValue: string;
 }
 
 export interface EmailDataResponse {
@@ -70,7 +71,7 @@ export interface EmailDataResponse {
   data: Email[];
 }
 
-export interface Email{
+export interface Email {
   EmailID: number;
   EmailTypeID: number;
   EmailTypeValue: string;
@@ -78,17 +79,17 @@ export interface Email{
   EmailAddressValue: string;
 }
 
-export interface Address{
-    Street:             string;
-    City:               string;
-    Country:            string;
-    IsPreferredAddress: boolean;
-    StateAbbreviation:  string;
-    AddressTypeValue:   string;
-    AddressTypeID:      number;
-    ContactID:          number;
-    stateID:            number;
-    stateNameVAlue:     string;
-    Zip:                string;
-    ContactAddressID:   number;
+export interface Address {
+  Street: string;
+  City: string;
+  Country: string;
+  IsPreferredAddress: boolean;
+  StateAbbreviation: string;
+  AddressTypeValue: string;
+  AddressTypeID: number;
+  ContactID: number;
+  stateID: number;
+  stateNameVAlue: string;
+  Zip: string;
+  ContactAddressID: number;
 }

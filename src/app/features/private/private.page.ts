@@ -14,16 +14,18 @@ declare var $: any;
   templateUrl: './private.page.html',
   styleUrls: ['./private.page.scss']
 })
-export class PrivatePage implements OnInit{
+export class PrivatePage implements OnInit {
   title = '';
   searchField = new FormControl();
   searchResults: ContactData[] = [];
   myForm!: FormGroup;
-  myFormCreate!:FormGroup;
+  myFormCreate!: FormGroup;
   submittedPhone = false;
-  isLoading:boolean = false;
+  isLoading: boolean = false;
 
-  initials:string ='';
+  initials: string = '';
+  completeName: string = '';
+  userName: string = '';
 
 
 
@@ -31,8 +33,8 @@ export class PrivatePage implements OnInit{
     private readonly router: Router,
     private http: HttpInvokeService,
     private formBuilder: FormBuilder,
-    private prospectService:ProspectService,
-    private isChangeTableService:IsChangeTableService,
+    private prospectService: ProspectService,
+    private isChangeTableService: IsChangeTableService,
     private authService: AuthService,
   ) {
     this.buildForm();
@@ -65,6 +67,8 @@ export class PrivatePage implements OnInit{
 
   getInitialsFromName(): string {
     const name = localStorage.getItem('name');
+    this.userName = localStorage.getItem('username')!;
+    this.completeName = name!;
     if (!name) {
       return '';
     }
@@ -80,7 +84,7 @@ export class PrivatePage implements OnInit{
     return initials || '';
   }
 
-  buildForm(){
+  buildForm() {
     this.myForm = this.formBuilder.group({
       searchField: [''],
     });
@@ -108,11 +112,11 @@ export class PrivatePage implements OnInit{
     });
   }
 
-  buildFormCreate(){
+  buildFormCreate() {
     this.myFormCreate = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumber:['', [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]],
       email: ['', [Validators.required, Validators.email]]
     });
   }
@@ -137,7 +141,7 @@ export class PrivatePage implements OnInit{
     }
   }
 
-  closeModalProspect(){
+  closeModalProspect() {
     this.myFormCreate.reset();
     this.buildForm();
     this.submittedPhone = false;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 // import * as Chart from 'chart.js';
 
 // import { TitleService } from "../../services/title.service";
@@ -8,7 +8,7 @@ import { PhoneService } from "src/app/core/services/phone/phone.service";
 import { ActivatedRoute } from "@angular/router";
 import { ProspectService } from "src/app/core/services/prospect/prospect.service";
 import { AddrressService } from "src/app/core/services/address/address.service";
-import { Address, Email, Phone } from "src/app/core/services/prospect/models";
+import { Address, ContactData, ContactDataResponse, Email, Phone } from "src/app/core/services/prospect/models";
 declare var $: any;
 import Swal from 'sweetalert2';
 import { formatDate } from "@angular/common";
@@ -137,6 +137,12 @@ export class DetailPage implements OnInit {
   enabledHealthTrackerHasData: boolean = false;
   policySelected: string = '';
 
+  prospectData!: ContactData;
+
+  @Input() currentValue: number = 1;  // Valor actual (numerador)
+  @Input() maxValue: number = 2;      // Valor máximo (denominador)
+  progress: number = 50;
+
 
 
   constructor(
@@ -193,6 +199,18 @@ export class DetailPage implements OnInit {
     this.createVAForm();
     this.createVaultForm();
     this.createMedicaidForm();
+  }
+
+  stepsForm: number = 1;
+
+  changeStep(value: number) {
+    this.stepsForm = value;
+    this.currentValue = value;
+    if (value == 1) {
+      this.progress = 50;
+    } else if (value == 2) {
+      this.progress = 100;
+    }
   }
 
   createFormAddress() {
@@ -456,6 +474,11 @@ export class DetailPage implements OnInit {
     this.createFormAddress();
   }
 
+  closeModalDoctorPreview() {
+    $('#exampleDoctorPreview').modal('hide');
+    this.addDoctorManual = false;
+  }
+
   closeModalDoctor() {
     this.doctorSelected = false;
     this.addDoctorManual = false;
@@ -613,6 +636,7 @@ export class DetailPage implements OnInit {
 
   getDataForProspect() {
     this.prospectService.getProspectByID(this.contactID).subscribe(response => {
+      this.prospectData = response.data;
       const utcDate = new Date(response.data.DOB!);
       // Obtener componentes de la fecha y hora en UTC
       const year = utcDate.getUTCFullYear();
@@ -901,14 +925,16 @@ export class DetailPage implements OnInit {
     });
   }
 
-  changeDoctorToManually() {
-    this.addDoctorManual = !this.addDoctorManual;
+  changeDoctorToManually(value: boolean) {
+    this.addDoctorManual = value;
     this.doctorForm.reset();
     this.doctorSelected = false;
     this.createFormDoctor();
     this.doctorList = [];
     this.doctorLastName = '';
     this.submittedDoctor = false;
+    $('#exampleDoctorPreview').modal('hide');
+    $('#exampleModalDoctor').modal('show');
 
   }
 

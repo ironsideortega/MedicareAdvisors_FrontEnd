@@ -1,18 +1,35 @@
-import {Component, OnInit, ChangeDetectorRef} from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import * as Chart from 'chart.js';
 import { KPIService } from "src/app/core/services/dashboard/dashboard.service";
 import { DataKPIContact, DataKPIGender } from "src/app/core/services/dashboard/models";
 declare var $: any;
 import * as pbi from 'powerbi-client';
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexGrid, ApexLegend, ApexPlotOptions, ApexXAxis } from "ng-apexcharts";
 
 export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  colors: any;
+  plotOptions: ApexPlotOptions;
+  dataLabels: ApexDataLabels;
+  title: any;
+  legend: ApexLegend;
+  grid: ApexGrid;
+};
+
+export type ChartOptionsDonuts = {
   series: any;
   chart: any;
   xaxis: any;
   colors: any;
   plotOptions: any;
-  dataLabels: any;
+  labels: any;
+  responsive: any;
   title: any;
+  dataLabels: any;
+  legend: any;
+  tooltip: any;
 };
 
 
@@ -23,32 +40,25 @@ export type ChartOptions = {
 })
 
 
-export class DashboardPage implements OnInit{
-  kpiContact:DataKPIContact[] = [];
-  kpiGender:DataKPIGender[] = [];
-  isLoading:boolean = false;
-  userName:string = '';
-  // public barChartOptions: any = {
-  //   scaleShowVerticalLines: false,
-  //   responsive: true,
-
-  // };
-  // public barChartLabels: string[] = [];
-  // public barChartType: Chart.ChartType = 'bar';
-  // public barChartLegend = false;
-
-  // public barChartData: any[] = [];
+export class DashboardPage implements OnInit {
+  kpiContact: DataKPIContact[] = [];
+  kpiGender: DataKPIGender[] = [];
+  isLoading: boolean = false;
+  userName: string = '';
 
   public chartOptions!: Partial<ChartOptions>;
+  public chartOptionsDonuts!: Partial<ChartOptionsDonuts>;
   public chartSeries!: any[];
 
-
+  totalContacts: number = 0;
 
   constructor(
-    private kpiService:KPIService,
+    private kpiService: KPIService,
     private cdr: ChangeDetectorRef
 
   ) {
+
+
 
   }
 
@@ -56,13 +66,54 @@ export class DashboardPage implements OnInit{
 
 
   ngOnInit(): void {
-    // this.embedPowerBIReport();
     this.getKpiForContact();
     this.getKpiForGender();
     this.getKpiChartBar();
     this.userName = this.getName();
+
+
+  }
+
+
+  chargeDonuts(dataDonuts: any, labelDonuts: any) {
+    this.chartOptionsDonuts = {
+      series: dataDonuts,
+      chart: {
+        width: 300,
+        type: 'donut',
+      },
+      dataLabels: {
+        enabled: false
+      },
+      tooltip: { enabled: false },
+      labels: labelDonuts,
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            show: false
+          }
+        }
+      }],
+      legend: {
+        position: 'right',
+        offsetY: 0,
+        height: 230,
+      }
+    };
+  }
+
+  chargeBar(dataBar: any, labelBar: any) {
     this.chartOptions = {
-      series: [],
+      series: [
+        {
+          name: 'Valores',
+          data: dataBar
+        }
+      ],
       chart: {
         type: 'bar',
         height: 350
@@ -70,51 +121,79 @@ export class DashboardPage implements OnInit{
       plotOptions: {
         bar: {
           distributed: true,
-          borderRadius: 0,
-          horizontal: false
+          borderRadius: 8,
+          horizontal: false,
+          columnWidth: "47px",
         }
       },
-      dataLabels: {
-        enabled: true,  // Habilitar etiquetas de datos
-        formatter: function(val: any) {
-          return val.toFixed(0); // Mostrar valores sin decimales
-        },
-        style: {
-          colors: ['#FFF'] // Color del texto
-        },
-        offsetY: -20
-      },
+      // dataLabels: {
+      //   enabled: false,
+      //   formatter: function (val: any) {
+      //     return val.toFixed(0);
+      //   },
+      //   style: {
+      //     colors: ['#FFF'] // Color del texto
+      //   },
+      //   offsetY: -20
+      // },
       xaxis: {
-        categories: []
+        categories: labelBar,
+        labels: {
+          style: {
+            fontSize: '8px'
+          },
+          rotate: -45
+        }
       },
       title: {
-        text: 'Population Data'
+        text: ''
       },
-      colors: ['#3A6FB3']
+      colors: ['#246FC2', '#B8D0EB'],
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      grid: {
+        show: false
+      },
     };
-    console.log(this.chartOptions);
   }
 
-  getKpiForContact(){
+  getKpiForContact() {
     this.isLoading = true;
-    this.kpiService.getKpiForContact().subscribe(response =>{
+    this.kpiService.getKpiForContact().subscribe(response => {
       console.log(response.data);
 
       this.kpiContact = response.data;
       this.isLoading = false;
+      this.totalContacts = 0;
+      this.kpiContact.forEach(kpi => {
+        this.totalContacts += kpi.CNT;
+      });
     });
   }
 
-  getKpiForGender(){
+  labelGender: any[] = [];
+  valueGender: any[] = [];
+
+  getKpiForGender() {
     this.isLoading = true;
-    this.kpiService.getKpiForGendert().subscribe(response =>{
+    this.kpiService.getKpiForGendert().subscribe(response => {
       this.kpiGender = response.data;
       this.isLoading = false;
+      response.data.forEach((e) => {
+        this.labelGender.push(e.GenderValue);
+        this.valueGender.push(e.CNT);
+      });
+      this.chargeDonuts(this.valueGender, this.labelGender);
+
     });
   }
 
-  getKpiChartBar(){
-    this.kpiService.getKpiForPopulation().subscribe(response =>{
+  getKpiChartBar() {
+    this.kpiService.getKpiForPopulation().subscribe(response => {
       const data = response.data[0];
       console.log(data);
 
@@ -124,23 +203,25 @@ export class DashboardPage implements OnInit{
       // Generar colores para cada barra
       const colors = values.map(() => this.getRandomColor());
 
-      // Configurar las opciones del gráfico
-      this.chartOptions = {
-        ...this.chartOptions,
-        series: [
-          {
-            name: 'Valores',
-            data: values
-          }
-        ],
-        xaxis: {
-          categories: categories
-        },
-        //colors: colors
-      };
+      // // Configurar las opciones del gráfico
+      // this.chartOptions = {
+      //   ...this.chartOptions,
+      //   series: [
+      //     {
+      //       name: 'Valores',
+      //       data: values
+      //     }
+      //   ],
+      //   xaxis: {
+      //     categories: categories
+      //   },
+      //   //colors: colors
+      // };
+
+      console.log(categories);
+      this.chargeBar(values, categories);
       this.cdr.detectChanges();
       this.cdr.reattach();
-      console.log(this.chartOptions);
     });
   }
 

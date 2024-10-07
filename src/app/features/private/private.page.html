@@ -1,11 +1,11 @@
 <nav class="navbar sticky-top">
   <div class="container-fluid">
-    <div class="col-12 col-sm-8">
+    <div class="col-4">
       <a class="navbar-brand">
         <i class="bi bi-heart-pulse-fill"></i>&nbsp; MA CRM</a
       >
     </div>
-    <div class="col-10 col-sm-3">
+    <div class="col-4">
       <form class="d-flex">
         <div class="input-group show">
           <input
@@ -50,15 +50,73 @@
         </div>
       </form>
     </div>
-    <div class="col-2 col-sm-1">
+    <div class="col-4 d-flex justify-content-end">
       <div class="dropdown">
         <button
           class="btn dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
+          style="
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+          "
         >
-          {{initials}}
+          <div
+            style="
+              width: 39px;
+              height: 39px;
+              /* UI Properties */
+              background: #246fc214 0% 0% no-repeat padding-box;
+              border-radius: 24px;
+              display: flex;
+              flex-flow: row;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #114d90;
+                font-size: 8px;
+              "
+              >{{initials}}</span
+            >
+          </div>
+          &nbsp; &nbsp;
+          <div
+            style="
+              display: flex;
+              flex-flow: column;
+              justify-content: center;
+              align-items: flex-start;
+            "
+          >
+            <span
+              style="
+                display: block;
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #0f2e4d;
+              "
+            >
+              {{completeName}}</span
+            >
+            <span
+              style="
+                display: block;
+                font: normal normal normal 12px/16px Roboto;
+                letter-spacing: 0px;
+                color: #8090a1;
+              "
+            >
+              {{userName}}</span
+            >
+          </div>
         </button>
         <ul class="dropdown-menu" style="left: -100px">
           <li>

@@ -1,3 +1,19 @@
 .badge-pill{
   color: #000;
 }
+
+
+.new-summary {
+  width: 100%;
+  height: 163px;
+  /* UI Properties */
+  background: transparent linear-gradient(97deg, #114d90 0%, #e5283c 100%) 0% 0%
+    no-repeat padding-box;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 30px;
+  position: relative;
+  z-index: 1;
+}

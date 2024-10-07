@@ -62,6 +62,7 @@
                 font: normal normal medium 16px/21px Roboto;
                 letter-spacing: 0px;
                 color: #061f3a;
+                font-weight: 500;
               "
               >Search contacts</span
             >
@@ -78,6 +79,7 @@
             Find contacts by name, phone number, email, or any other field.
           </p>
         </div>
+        <br />
         <div class="row">
           <div class="col p-2">
             <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">

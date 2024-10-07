@@ -1498,6 +1498,10 @@ export class DetailPage implements OnInit {
     this.policySelected = '';
   }
 
+  setPolicySelected(policiSelectedVar: string) {
+    this.policySelected = policiSelectedVar;
+  }
+
 
   openPolicyModal() {
     if (this.policySelected == '') {

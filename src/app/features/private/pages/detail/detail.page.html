@@ -2,7 +2,7 @@
   <div class="container py-0">
     <div class="row py-0">
       <div class="col">
-        <span
+        <div
           style="
             text-align: left;
             font: normal normal normal 13px/15px Rubik;
@@ -10,10 +10,29 @@
             color: #ffffff;
             cursor: pointer;
             margin-bottom: 15px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
           "
           [routerLink]="['/private/summary']"
-          >Back to the list</span
         >
+          <div
+            style="
+              width: 20px;
+              height: 20px;
+              /* UI Properties */
+              background: #ffffff50 0% 0% no-repeat padding-box;
+              border-radius: 11px;
+
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <i class="bi bi-caret-left text-white"></i>
+          </div>
+          &nbsp;&nbsp; Back to the list
+        </div>
       </div>
     </div>
     <br />
@@ -37,6 +56,7 @@
                 font-size: normal normal bold 18px/22px Rubik;
                 letter-spacing: 0px;
                 color: #ffffff;
+                font-weight: bold;
               "
               >Contact Details</span
             >
@@ -230,7 +250,15 @@
                 <form [formGroup]="contactForm">
                   <div class="row">
                     <div class="col">
-                      <span>Personal Info</span>
+                      <span
+                        style="
+                          font: normal normal medium 16px/21px Roboto;
+                          letter-spacing: 0px;
+                          font-weight: 500;
+                          color: #061f3a;
+                        "
+                        >Personal Info</span
+                      >
                     </div>
                   </div>
                   <div class="row">
@@ -363,7 +391,15 @@
                   <br />
                   <div class="row">
                     <div class="col">
-                      <span>Communication and Location</span>
+                      <span
+                        style="
+                          font: normal normal medium 16px/21px Roboto;
+                          letter-spacing: 0px;
+                          font-weight: 500;
+                          color: #061f3a;
+                        "
+                        >Communication and Location</span
+                      >
                     </div>
                   </div>
                   <div class="row">
@@ -504,7 +540,15 @@
                   <br />
                   <div class="row">
                     <div class="col">
-                      <span>Other Info</span>
+                      <span
+                        style="
+                          font: normal normal medium 16px/21px Roboto;
+                          letter-spacing: 0px;
+                          font-weight: 500;
+                          color: #061f3a;
+                        "
+                        >Other Info</span
+                      >
                     </div>
                   </div>
                   <div class="row">
@@ -613,7 +657,15 @@
                   <br />
                   <div class="row">
                     <div class="col">
-                      <span>Status & Source</span>
+                      <span
+                        style="
+                          font: normal normal medium 16px/21px Roboto;
+                          letter-spacing: 0px;
+                          font-weight: 500;
+                          color: #061f3a;
+                        "
+                        >Status & Source</span
+                      >
                     </div>
                   </div>
                   <div class="row">
@@ -729,8 +781,9 @@
                   <div class="col">
                     <span
                       style="
-                        font-size: normal normal medium 16px/21px Roboto;
+                        font: normal normal medium 16px/21px Roboto;
                         letter-spacing: 0px;
+                        font-weight: 500;
                         color: #061f3a;
                       "
                       >Doctors</span
@@ -838,8 +891,9 @@
                   <div class="col">
                     <span
                       style="
-                        font-size: normal normal medium 16px/21px Roboto;
+                        font: normal normal medium 16px/21px Roboto;
                         letter-spacing: 0px;
+                        font-weight: 500;
                         color: #061f3a;
                       "
                       >Health Info</span
@@ -977,8 +1031,9 @@
                   <div class="col">
                     <span
                       style="
-                        font-size: normal normal medium 16px/21px Roboto;
+                        font: normal normal medium 16px/21px Roboto;
                         letter-spacing: 0px;
+                        font-weight: 500;
                         color: #061f3a;
                       "
                       >Health Tracker</span
@@ -1066,8 +1121,9 @@
                   <div class="col">
                     <span
                       style="
-                        font-size: normal normal medium 16px/21px Roboto;
+                        font: normal normal medium 16px/21px Roboto;
                         letter-spacing: 0px;
+                        font-weight: 500;
                         color: #061f3a;
                       "
                       >Health Rx</span
@@ -1145,8 +1201,9 @@
                   <div class="col">
                     <span
                       style="
-                        font-size: normal normal medium 16px/21px Roboto;
+                        font: normal normal medium 16px/21px Roboto;
                         letter-spacing: 0px;
+                        font-weight: 500;
                         color: #061f3a;
                       "
                       >Policy</span
@@ -3330,42 +3387,140 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div class="row">
-          <div class="col"><h3>Policy</h3></div>
           <div class="col d-flex justify-content-end">
-            <a (click)="closeModalPolicy()" class="btn btn-link"
-              ><i class="bi bi-x-lg"></i
-            ></a>
-          </div>
-        </div>
-        <br />
-        <div class="row gutter-2">
-          <div class="col-12 col-md-12 mb-2">
-            <label for="" class="label">Select policy type</label>
-            <select
-              class="form-control form-control-sm policyType"
-              [(ngModel)]="policySelected"
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalPolicy()"
             >
-              <option value="">Select...</option>
-              <option data-id="MAPD" value="newMAPDModal">MAPD</option>
-              <option data-id="PDP" value="newPDPModal">PDP</option>
-              <option data-id="SUP" value="newMedicareSupplementsModal">
-                Medicare Supplement
-              </option>
-              <option data-id="ANC" value="newAncillaryModal">Ancillary</option>
-              <option data-id="LIFE" value="newLifeModal">Life</option>
-              <option data-id="IND" value="newIndividualHealthModal">
-                Individual Health
-              </option>
-              <option data-id="ANNUITY" value="newAnnuityModal">Annuity</option>
-              <option data-id="LTC" value="newLtcModal">LTC</option>
-              <option data-id="GROUP" value="newGroupModal">Group</option>
-            </select>
+              <i class="bi bi-x"></i>
+            </button>
           </div>
         </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <span
+              style="
+                font: normal normal bold 20px/26px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+                font-weight: 400;
+              "
+              >Policy</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <span
+              style="
+                font: normal normal normal 14px/19px Roboto;
+                letter-spacing: 0px;
+                color: #061f3a;
+              "
+              >Select the Policy type to add</span
+            >
+          </div>
+        </div>
+
+        <br />
+        <div class="row">
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newMAPDModal'}"
+              (click)="setPolicySelected('newMAPDModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; MAPD
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newPDPModal'}"
+              (click)="setPolicySelected('newPDPModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; PDP
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newMedicareSupplementsModal'}"
+              (click)="setPolicySelected('newMedicareSupplementsModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Medicare Supplement
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newAncillaryModal'}"
+              (click)="setPolicySelected('newAncillaryModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Ancillary
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newLifeModal'}"
+              (click)="setPolicySelected('newLifeModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Life
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newIndividualHealthModal'}"
+              (click)="setPolicySelected('newIndividualHealthModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Individual Health
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newAnnuityModal'}"
+              (click)="setPolicySelected('newAnnuityModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Annuity
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newLtcModal'}"
+              (click)="setPolicySelected('newLtcModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; LTC
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <div
+              class="button-card-policy"
+              [ngClass]="{'active': policySelected === 'newGroupModal'}"
+              (click)="setPolicySelected('newGroupModal')"
+            >
+              <div class="custom-radio"><span></span></div>
+              &nbsp;&nbsp; Group
+            </div>
+          </div>
+        </div>
+
         <div class="row gutter-2">
           <div class="col d-flex justify-content-end">
             <button

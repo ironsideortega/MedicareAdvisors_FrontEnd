@@ -52,6 +52,24 @@ export class SignInPage implements OnInit {
     }
   }
 
+  isPasswordVisible: boolean = false;
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+    const toggleEyeIcon = document.getElementById('toggleEye') as HTMLElement;
+
+    if (this.isPasswordVisible) {
+      passwordInput.type = 'text';
+      toggleEyeIcon.classList.remove('bi-eye-fill');
+      toggleEyeIcon.classList.add('bi-eye-slash-fill');
+    } else {
+      passwordInput.type = 'password';
+      toggleEyeIcon.classList.remove('bi-eye-slash-fill');
+      toggleEyeIcon.classList.add('bi-eye-fill');
+    }
+  }
+
 
 
 

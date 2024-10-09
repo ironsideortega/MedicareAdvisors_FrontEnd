@@ -82,6 +82,7 @@ export class DashboardPage implements OnInit {
         width: 300,
         type: 'donut',
       },
+      colors: ['#147AD6', '#79D2DE', '#EC6666'],
       dataLabels: {
         enabled: false
       },
@@ -150,7 +151,7 @@ export class DashboardPage implements OnInit {
       },
       colors: ['#246FC2', '#B8D0EB'],
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       legend: {
         show: false

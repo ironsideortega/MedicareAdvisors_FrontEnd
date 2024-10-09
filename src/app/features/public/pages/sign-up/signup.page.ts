@@ -65,8 +65,8 @@ export class SignUpPage implements OnInit {
       LastName: ['', Validators.required],
       Address: ['', Validators.required],
       City: ['', Validators.required],
-      StateID: ['1',],
-      Zip: ['', Validators.required],
+      StateID: ['',],
+      Zip: ['', [Validators.required, Validators.maxLength(5),]],
       PhoneNumber: ['', [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]],
       Picture: [''],
       NationalProducerNumber: ['', Validators.required],
@@ -118,5 +118,50 @@ export class SignUpPage implements OnInit {
   isInvalid(controlName: string): boolean {
     const control = this.profileForm.get(controlName);
     return control!.invalid;
+  }
+
+
+  validateMaxLength(event: any): void {
+    if (event.target.value.length > 5) {
+      event.target.value = event.target.value.slice(0, 5);
+      this.profileForm.get('Zip')?.setValue(event.target.value);  // Actualiza el valor del FormControl
+    }
+  }
+
+
+  isPasswordVisible: boolean = false;
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+    const toggleEyeIcon = document.getElementById('toggleEye') as HTMLElement;
+
+    if (this.isPasswordVisible) {
+      passwordInput.type = 'text';
+      toggleEyeIcon.classList.remove('bi-eye-fill');
+      toggleEyeIcon.classList.add('bi-eye-slash-fill');
+    } else {
+      passwordInput.type = 'password';
+      toggleEyeIcon.classList.remove('bi-eye-slash-fill');
+      toggleEyeIcon.classList.add('bi-eye-fill');
+    }
+  }
+
+  isRePasswordVisible: boolean = false;
+
+  toggleRePasswordVisibility() {
+    this.isRePasswordVisible = !this.isRePasswordVisible;
+    const passwordInput = document.getElementById('passwordReInput') as HTMLInputElement;
+    const toggleEyeIcon = document.getElementById('toggleEyeRe') as HTMLElement;
+
+    if (this.isRePasswordVisible) {
+      passwordInput.type = 'text';
+      toggleEyeIcon.classList.remove('bi-eye-fill');
+      toggleEyeIcon.classList.add('bi-eye-slash-fill');
+    } else {
+      passwordInput.type = 'password';
+      toggleEyeIcon.classList.remove('bi-eye-slash-fill');
+      toggleEyeIcon.classList.add('bi-eye-fill');
+    }
   }
 }

@@ -161,13 +161,21 @@
           </div>
           <div class="col">
             <label>State</label>
+            <!-- <select name="" id="" class="form-select" formControlName="StateID">
+              <option selected disabled value="">Select one...</option>
+              <option
+                *ngFor="let state of profileState"
+                [value]="state.StateID"
+              >
+                {{state.StateAbbreviation}}
+              </option>
+            </select> -->
             <select
-              name=""
-              id=""
-              class="form-control"
+              class="form-select"
+              aria-label="Default select example"
               formControlName="StateID"
             >
-              <option value="" selected disabled>Select one...</option>
+              <option selected disabled value="">Select one...</option>
               <option
                 *ngFor="let state of profileState"
                 [value]="state.StateID"
@@ -182,11 +190,12 @@
           <div class="col">
             <label>Zip</label>
             <input
-              type="text"
+              type="number"
               name=""
               id=""
               class="form-control"
               formControlName="Zip"
+              (input)="validateMaxLength($event)"
             />
             <div *ngIf="isInvalidAndTouched('Zip')" class="text-danger">
               Zip code is required
@@ -260,13 +269,32 @@
         <div class="row">
           <div class="col">
             <label>Password</label>
-            <input
-              type="password"
-              name=""
-              id=""
-              class="form-control"
-              formControlName="Userpassword"
-            />
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                formControlName="Userpassword"
+                id="passwordInput"
+                style="border-right: none"
+              />
+              <button
+                style="
+                  border-top: 1px solid #dee2e6;
+                  border-bottom: 1px solid #dee2e6;
+                  border-right: 1px solid #dee2e6;
+                "
+                class="btn btn-link"
+                type="button"
+                id="togglePassword"
+                (click)="togglePasswordVisibility()"
+              >
+                <i
+                  class="bi bi-eye-fill"
+                  style="color: #8090a1"
+                  id="toggleEye"
+                ></i>
+              </button>
+            </div>
             <div
               *ngIf="profileForm.get('Userpassword')?.invalid && profileForm.get('Userpassword')!.touched"
               class="text-danger"
@@ -286,13 +314,33 @@
         <div class="row">
           <div class="col">
             <label>Confirm Password</label>
-            <input
-              type="password"
-              name=""
-              id=""
-              class="form-control"
-              formControlName="ConfirmPassword"
-            />
+
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                formControlName="ConfirmPassword"
+                id="passwordReInput"
+                style="border-right: none"
+              />
+              <button
+                style="
+                  border-top: 1px solid #dee2e6;
+                  border-bottom: 1px solid #dee2e6;
+                  border-right: 1px solid #dee2e6;
+                "
+                class="btn btn-link"
+                type="button"
+                id="togglePasswordRe"
+                (click)="toggleRePasswordVisibility()"
+              >
+                <i
+                  class="bi bi-eye-fill"
+                  style="color: #8090a1"
+                  id="toggleEyeRe"
+                ></i>
+              </button>
+            </div>
             <div
               *ngIf="profileForm.hasError('mismatch') && profileForm.get('ConfirmPassword')?.touched"
               class="text-danger"

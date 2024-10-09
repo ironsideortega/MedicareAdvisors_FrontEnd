@@ -61,9 +61,23 @@
               >Contact Details</span
             >
           </div>
-          <!-- <div class="col d-flex justify-content-end" *ngIf="buttonActive.includes('Prospect')">
-            <button class="btn btn-danger" (click)="enableForm('contact')">Edit Prospect</button>
-          </div> -->
+          <div class="col d-flex justify-content-end">
+            <button
+              class="btn btn-danger"
+              (click)="enableForm('contact')"
+              *ngIf="buttonActive.includes('Prospect')"
+            >
+              Edit Prospect
+            </button>
+            <button
+              class="btn btn-danger"
+              style="
+                background-color: transparent !important;
+                border: none !important;
+              "
+              *ngIf="!buttonActive.includes('Prospect')"
+            ></button>
+          </div>
         </div>
         <div class="row">
           <div class="col">
@@ -683,7 +697,7 @@
                   <br />
                   <div class="row">
                     <div class="col">
-                      <div class="form-group" style="margin-top: 13px">
+                      <div class="form-group">
                         <label for="">Status</label>
                         <select
                           class="form-select"
@@ -813,7 +827,7 @@
                         color: #36495f;
                       "
                     >
-                      Add New
+                      Add Doctor
                     </button>
                   </div>
                 </div>
@@ -1331,11 +1345,11 @@
                             <label>Social Security Number</label>
                             <input
                               formControlName="SSN"
-                              type="text"
+                              type="number"
                               class="form-control"
                             />
                           </div>
-                          <div class="col-4">
+                          <div class="col-3">
                             <label>Drivers License Number</label>
                             <input
                               formControlName="DL"
@@ -1351,7 +1365,7 @@
                               class="form-control"
                             />
                           </div>
-                          <div class="col-1">
+                          <div class="col-2">
                             <label>IRMAA</label>
                             <select formControlName="IRMAA" class="form-select">
                               <option value="true">Yes</option>
@@ -2020,7 +2034,7 @@
           </div>
           <br />
 
-          <div class="row" *ngFor="let email of emailList">
+          <div class="row g-1" *ngFor="let email of emailList">
             <div class="col">
               <div
                 class="mini-card-container"
@@ -2075,6 +2089,16 @@
                     >
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="col-1">
+              <div class="modal-edit-btn">
+                <i class="bi bi-pencil-fill" style="color: black"></i>
+              </div>
+            </div>
+            <div class="col-1">
+              <div class="modal-delete-btn" style="color: black">
+                <i class="bi bi-x"></i>
               </div>
             </div>
           </div>
@@ -3428,7 +3452,7 @@
         </div>
 
         <br />
-        <div class="row">
+        <div class="row g-3">
           <div class="col-4 mb-3">
             <div
               class="button-card-policy"
@@ -3436,7 +3460,8 @@
               (click)="setPolicySelected('newMAPDModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; MAPD
+
+              <div>MAPD</div>
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3446,7 +3471,7 @@
               (click)="setPolicySelected('newPDPModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; PDP
+              PDP
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3456,7 +3481,8 @@
               (click)="setPolicySelected('newMedicareSupplementsModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; Medicare Supplement
+
+              <div style="text-align: left">Medicare Supplement</div>
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3466,7 +3492,7 @@
               (click)="setPolicySelected('newAncillaryModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; Ancillary
+              Ancillary
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3476,7 +3502,7 @@
               (click)="setPolicySelected('newLifeModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; Life
+              Life
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3486,7 +3512,8 @@
               (click)="setPolicySelected('newIndividualHealthModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; Individual Health
+
+              <div style="text-align: left">Individual Health</div>
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3496,7 +3523,7 @@
               (click)="setPolicySelected('newAnnuityModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; Annuity
+              Annuity
             </div>
           </div>
           <div class="col-4 mb-3">
@@ -3506,7 +3533,7 @@
               (click)="setPolicySelected('newLtcModal')"
             >
               <div class="custom-radio"><span></span></div>
-              &nbsp;&nbsp; LTC
+              LTC
             </div>
           </div>
           <div class="col-4 mb-3">

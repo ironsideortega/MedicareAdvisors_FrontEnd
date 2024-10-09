@@ -389,23 +389,29 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
-        <div class="row my-0">
-          <div class="col-8">
+        <div class="row">
+          <div class="col-6">
             <span
               style="
-                font-size: normal normal bold 20px/26px Roboto;
+                font: normal normal bold 20px/26px Roboto;
                 letter-spacing: 0px;
                 color: #061f3a;
+                font-weight: bold;
               "
               >Create a View</span
             >
           </div>
-          <div class="col d-flex justify-content-end">
-            <a (click)="closeModalViews()" class="btn btn-link"
-              ><i class="bi bi-x-lg"></i
-            ></a>
+          <div class="col-6 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-close-custom"
+              (click)="closeModalViews()"
+            >
+              <i class="bi bi-x"></i>
+            </button>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <span

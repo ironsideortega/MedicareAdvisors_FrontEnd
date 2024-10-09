@@ -145,3 +145,14 @@ input[type="checkbox"]:checked {
     width: 100%;
   }
 }
+
+.btn-close-custom {
+  width: 26px;
+  height: 26px;
+  /* UI Properties */
+  background: #ebebeb 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

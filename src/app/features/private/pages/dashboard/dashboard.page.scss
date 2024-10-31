@@ -1,7 +1,6 @@
-.badge-pill{
+.badge-pill {
   color: #000;
 }
-
 
 .new-summary {
   width: 100%;
@@ -16,4 +15,8 @@
   padding-top: 30px;
   position: relative;
   z-index: 1;
+}
+
+.apexcharts-datalabels {
+  color: transparent !important;
 }

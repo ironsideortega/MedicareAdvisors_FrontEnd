@@ -295,21 +295,81 @@
                 ></i>
               </button>
             </div>
-            <div
-              *ngIf="profileForm.get('Userpassword')?.invalid && profileForm.get('Userpassword')!.touched"
-              class="text-danger"
-            >
-              Password must be at least 8 characters, include 1 uppercase letter
-              and 1 number
+
+            <!-- Message for 'Password is required' -->
+            <div class="d-flex align-items-center mt-2" style="gap: 10px">
+              <div
+                [ngClass]="{
+                'bg-success': profileForm.get('Userpassword')?.valid || !profileForm.get('Userpassword')?.hasError('required'),
+                'bg-custom-error': profileForm.get('Userpassword')?.hasError('required')
+              }"
+                style="
+                  width: 9px;
+                  height: 9px;
+                  /* UI Properties */
+
+                  border-radius: 99px;
+                "
+              ></div>
+              <span
+                [ngClass]="{
+                'text-black': profileForm.get('Userpassword')?.valid || !profileForm.get('Userpassword')?.hasError('required'),
+                'text-custom-muted': profileForm.get('Userpassword')?.hasError('required')
+              }"
+                >Password is required</span
+              >
             </div>
-            <div
-              *ngIf="isInvalidAndTouched('Userpassword')"
-              class="text-danger"
-            >
-              Password is required
+
+            <!-- Message for 'Minimum 8 characters' -->
+            <div class="d-flex align-items-center" style="gap: 10px">
+              <div
+                [ngClass]="{
+  'bg-success': profileForm.get('Userpassword')?.hasError('minlength') === false && profileForm.get('Userpassword')?.value,
+  'bg-custom-error': profileForm.get('Userpassword')?.hasError('minlength') || !profileForm.get('Userpassword')?.value
+}"
+                style="
+                  width: 9px;
+                  height: 9px;
+                  /* UI Properties */
+
+                  border-radius: 99px;
+                "
+              ></div>
+              <span
+                [ngClass]="{
+                'text-black': profileForm.get('Userpassword')?.hasError('minlength') === false && profileForm.get('Userpassword')?.value,
+                'text-custom-muted': profileForm.get('Userpassword')?.hasError('minlength') || !profileForm.get('Userpassword')?.value
+              }"
+                >Minimum 8 characters</span
+              >
+            </div>
+
+            <!-- Message for 'At least 1 uppercase letter and 1 number' -->
+            <div class="d-flex align-items-center" style="gap: 10px">
+              <div
+                [ngClass]="{
+              'bg-success': profileForm.get('Userpassword')?.hasError('pattern') === false && profileForm.get('Userpassword')?.value,
+              'bg-custom-error': profileForm.get('Userpassword')?.hasError('pattern') || !profileForm.get('Userpassword')?.value
+            }"
+                style="
+                  width: 9px;
+                  height: 9px;
+                  /* UI Properties */
+
+                  border-radius: 99px;
+                "
+              ></div>
+              <span
+                [ngClass]="{
+                'text-black': profileForm.get('Userpassword')?.hasError('pattern') === false && profileForm.get('Userpassword')?.value,
+                'text-custom-muted': profileForm.get('Userpassword')?.hasError('pattern') || !profileForm.get('Userpassword')?.value
+              }"
+                >At least one uppercase letter and one number</span
+              >
             </div>
           </div>
         </div>
+
         <br />
         <div class="row">
           <div class="col">

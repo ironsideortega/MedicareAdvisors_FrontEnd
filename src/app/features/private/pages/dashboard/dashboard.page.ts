@@ -84,28 +84,40 @@ export class DashboardPage implements OnInit {
       },
       colors: ['#147AD6', '#79D2DE', '#EC6666'],
       dataLabels: {
-        enabled: false
+        enabled: false, // Deshabilita todas las etiquetas dentro del gráfico
       },
-      tooltip: { enabled: false },
+      tooltip: {
+        enabled: true,
+      },
       labels: labelDonuts,
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '65%', // Ajusta el grosor del donut
           },
-          legend: {
-            show: false
-          }
-        }
-      }],
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              show: false,
+            },
+          },
+        },
+      ],
       legend: {
         position: 'right',
         offsetY: 0,
         height: 230,
-      }
+      },
     };
   }
+
 
   chargeBar(dataBar: any, labelBar: any) {
     this.chartOptions = {

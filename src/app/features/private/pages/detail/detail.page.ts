@@ -335,7 +335,14 @@ export class DetailPage implements OnInit {
 
   isInvalidAndTouchedEmail(controlName: string): boolean {
     const control = this.emailForm.get(controlName);
-    return control!.invalid && (control!.touched || this.submittedEmail) && control!.value === '';
+    // Expresión regular que valida que el email tenga un formato adecuado y un dominio
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i; // Permite dominios como .com, .net, .org, etc.
+
+    return (
+      control!.invalid &&
+      (control!.touched || this.submittedEmail) &&
+      (control!.value === '' || !emailPattern.test(control!.value))
+    );
   }
 
   isInvalidAndTouchedAddress(controlName: string): boolean {
@@ -731,21 +738,30 @@ export class DetailPage implements OnInit {
       delete formData.address;
       console.log(formData);
       console.log(this.contactID);
-      this.prospectService.updateProspect(formData, this.contactID).subscribe(response => {
-        this.isLoading = false;
-        this.buttonUpdateContactEnabled = false;
-        this.buttonUpdateForContact = 'Update';
+      Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.prospectService.updateProspect(formData, this.contactID).subscribe(response => {
+            this.isLoading = false;
+            this.buttonUpdateContactEnabled = false;
+            this.buttonUpdateForContact = 'Update';
 
-        Swal.fire({
-          title: "Good job!",
-          text: "Contact updated successfully.",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        this.contactForm.disable();
-        this.getDataForProspect();
+
+            this.contactForm.disable();
+            this.getDataForProspect();
+            Swal.fire("Saved!", "", "success");
+          });
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
       });
+
     }
   }
 
@@ -848,37 +864,81 @@ export class DetailPage implements OnInit {
   }
 
   updateEmail() {
-    // this.filteredEmailTypes = this.getFilteredEmailTypes(email);
-    this.emailService.updateEmail(this.emailIdUpdate, this.emailForm.value).subscribe(response => {
-      this.isLoadingEmail = false;
-      this.emailForm.reset();
-      this.createFormEmail();
-      this.getEmailByProspect();
-      this.submittedEmail = false;
-      this.emailIdUpdate = 0;
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.emailService.updateEmail(this.emailIdUpdate, this.emailForm.value).subscribe(response => {
+          this.isLoadingEmail = false;
+          this.emailForm.reset();
+          this.createFormEmail();
+          this.getEmailByProspect();
+          this.submittedEmail = false;
+          this.emailIdUpdate = 0;
+          Swal.fire("Saved!", "", "success");
+        });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
+
   }
 
   updatePhone() {
-    this.phoneService.updatePhone(this.phoneIdUpdate, this.phoneForm.value).subscribe(response => {
-      this.isLoadingPhone = false;
-      this.phoneForm.reset();
-      this.createFormPhone();
-      this.getPhoneByProspect();
-      this.submittedPhone = false;
-      this.phoneIdUpdate = 0;
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.phoneService.updatePhone(this.phoneIdUpdate, this.phoneForm.value).subscribe(response => {
+          this.isLoadingPhone = false;
+          this.phoneForm.reset();
+          this.createFormPhone();
+          this.getPhoneByProspect();
+          this.submittedPhone = false;
+          this.phoneIdUpdate = 0;
+          Swal.fire("Saved!", "", "success");
+        });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
+
   }
 
   updateAddress() {
-    this.addressService.updateAddress(this.addressIdUpdate, this.addressForm.value).subscribe(response => {
-      this.isLoadingAddress = false;
-      this.addressForm.reset();
-      this.createFormAddress();
-      this.getAddressByProspect();
-      this.submittedAddress = false;
-      this.addressIdUpdate = 0;
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.addressService.updateAddress(this.addressIdUpdate, this.addressForm.value).subscribe(response => {
+          this.isLoadingAddress = false;
+          this.addressForm.reset();
+          this.createFormAddress();
+          this.getAddressByProspect();
+          this.submittedAddress = false;
+          this.addressIdUpdate = 0;
+          Swal.fire("Saved!", "", "success");
+        });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
+
   }
 
   getDoctorsByContactId() {

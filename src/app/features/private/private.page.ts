@@ -52,6 +52,7 @@ export class PrivatePage implements OnInit {
       switchMap((query: string) => this.http.GetRequest<ContactDataResponse>(`api/contact/prospect/name/${query}`))
     ).subscribe((results: ContactDataResponse) => {
       if (results.data) {
+        console.log(results.data);
         if (Array.isArray(results.data)) {
           this.searchResults = results.data;
         }

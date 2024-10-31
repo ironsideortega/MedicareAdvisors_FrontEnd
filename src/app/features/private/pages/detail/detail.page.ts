@@ -766,7 +766,7 @@ export class DetailPage implements OnInit {
   }
 
   getDoctorsByLastName() {
-    if (this.doctorLastName) {
+    if (this.doctorLastName || this.doctorZipCode) {
       this.doctorService.getDoctorByLastName(this.doctorLastName, this.doctorZipCode, this.doctorFirstName, this.doctorTaxonomy).subscribe(response => {
         this.doctorList = response.results;
       });
@@ -776,12 +776,12 @@ export class DetailPage implements OnInit {
   }
 
   onChangeDoctorLastName(value: any) {
-    if (value.length <= 0) {
-      this.doctorLastNameIsRequired = true;
-    } else {
-      this.doctorLastNameIsRequired = false;
+    // if (value.length <= 0) {
+    //   this.doctorLastNameIsRequired = true;
+    // } else {
+    //   this.doctorLastNameIsRequired = false;
 
-    }
+    // }
 
   }
 

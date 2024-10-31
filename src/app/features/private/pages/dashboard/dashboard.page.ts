@@ -93,7 +93,9 @@ export class DashboardPage implements OnInit {
       plotOptions: {
         pie: {
           donut: {
-            size: '65%', // Ajusta el grosor del donut
+            size: '65%',
+            distributed: false,
+            borderRadius: 8,
           },
         },
       },
@@ -133,7 +135,7 @@ export class DashboardPage implements OnInit {
       },
       plotOptions: {
         bar: {
-          distributed: true,
+          distributed: false,
           borderRadius: 8,
           horizontal: false,
           columnWidth: "47px",
@@ -163,7 +165,7 @@ export class DashboardPage implements OnInit {
       },
       colors: ['#246FC2', '#B8D0EB'],
       dataLabels: {
-        enabled: true
+        enabled: false
       },
       legend: {
         show: false

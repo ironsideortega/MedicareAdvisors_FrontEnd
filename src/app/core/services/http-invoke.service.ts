@@ -15,13 +15,11 @@ export class HttpInvokeService {
   private corsAnywhereUrl: string = 'https://cors-anywhere.herokuapp.com/';
 
   public constructor(private http: HttpClient, private snakbar: SnackbarService) {
-    this.backendUrl = environment.backendUrl;
+    this.backendUrl = environment.backendUrl.endsWith('/') 
+      ? environment.backendUrl 
+      : environment.backendUrl + '/';
     this.providerUrl = environment.providerUrl;
   }
-
-
-
-
 
 
   get(endpoint: string, params: HttpParams): Observable<any> {
@@ -36,27 +34,33 @@ export class HttpInvokeService {
 
   PutRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.put(`${this.backendUrl}${request}`, body));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.put(`${this.backendUrl}${endpoint}`, body));
   };
   PatchRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.patch(`${this.backendUrl}${request}`, body));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.patch(`${this.backendUrl}${endpoint}`, body));
   };
   UpdateRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.put(`${this.backendUrl}${request}`, body));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.put(`${this.backendUrl}${endpoint}`, body));
   };
   DeleteRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.delete(`${this.backendUrl}${request}`, { body }));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.delete(`${this.backendUrl}${endpoint}`, { body }));
   };
   GetRequest = <TResult>(request: string, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.get(`${this.backendUrl}${request}`));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.get(`${this.backendUrl}${endpoint}`));
   };
   PostRequest = <TResult, TSource>(request: string, body: TSource, handleError: boolean = true): Observable<TResult> => {
     this.handleError = handleError;
-    return this.filterRequest(this.http.post(`${this.backendUrl}${request}`, body));
+    const endpoint = request.startsWith('/') ? request.substring(1) : request;
+    return this.filterRequest(this.http.post(`${this.backendUrl}${endpoint}`, body));
   };
   private filterRequest = <TResult>(obs: Observable<Object>): Observable<TResult> =>
     obs

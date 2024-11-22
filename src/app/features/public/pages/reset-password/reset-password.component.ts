@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from 'src/app/core/services/auth/forgot-password.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -23,7 +24,9 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private forgotPasswordService: ForgotPasswordService
+    private forgotPasswordService: ForgotPasswordService,
+    private snackbarService: SnackbarService,
+
   ) {
     this.resetPasswordForm = this.fb.group({
       password: ['', [
@@ -67,16 +70,22 @@ export class ResetPasswordComponent implements OnInit {
         ).toPromise();
 
         if (response.status === 'success') {
+          this.snackbarService.presentToastSuccess(response?.message || '');
+
           // Redirigir al login con mensaje de éxito
           this.router.navigate(['/public/sign-in'], {
             queryParams: { resetSuccess: true }
           });
         } else {
+          this.snackbarService.presentToastWarning(response?.message || 'An error occurred during password reset');
+
           this.errorMessage = response.message || 'An error occurred during password reset';
         }
       } catch (error: any) {
         console.error('Error resetting password:', error);
         this.errorMessage = error.error?.message || 'An error occurred during password reset';
+        this.snackbarService.presentToastDanger(error.error?.message || 'An error occurred during password reset');
+
       } finally {
         this.isLoading = false;
       }
@@ -104,6 +113,8 @@ export class ResetPasswordComponent implements OnInit {
         const codeValue = this.validationForm.get('code')?.value;
 
         if (!emailValue || !codeValue) {
+          this.snackbarService.presentToastDanger('Email and code are required');
+
           throw new Error('Email and code are required');
         }
 
@@ -112,8 +123,11 @@ export class ResetPasswordComponent implements OnInit {
         
         await this.forgotPasswordService.validateResetToken(this.email, this.token).toPromise();
         this.isTokenValid = true;
+        
       } catch (error: any) {
         console.error('Token validation error:', error);
+        this.snackbarService.presentToastDanger(error.error?.message || 'An error occurred during validation');
+
         this.isTokenValid = false;
         this.errorMessage = error.error?.message || 'An error occurred during validation';
       } finally {

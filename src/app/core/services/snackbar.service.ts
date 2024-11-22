@@ -6,8 +6,9 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
   providedIn: 'root'
 })
 export class SnackbarService {
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end'; // Derecha
+  verticalPosition: MatSnackBarVerticalPosition = 'top';     // Arriba
+  
 
 
   constructor(

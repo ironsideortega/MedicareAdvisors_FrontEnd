@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from 'src/app/core/services/auth/forgot-password.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,6 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private forgotPasswordService: ForgotPasswordService,
+    private snackbarService: SnackbarService,
     private router: Router
   ) {
     this.forgotPasswordForm = this.fb.group({
@@ -38,11 +40,13 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.forgotPasswordForm.valid) {
       this.isSubmitting = true;
       try {
-        const email = this.forgotPasswordForm.get('email')?.value;
+        const email = this.forgotPasswordForm.get('email')?.value || '';
         const response = await this.forgotPasswordService.requestPasswordReset(email).toPromise();
+        this.snackbarService.presentToastSuccess(response?.message || '');
+
         this.stepsForm = 2;
-      } catch (error) {
-        console.error('Error sending reset email:', error);
+      } catch (error: any) {
+        this.snackbarService.presentToastDanger(error.error.message);
       } finally {
         this.isSubmitting = false;
       }

@@ -143,3 +143,60 @@ body {
   font-weight: 300;
   font-style: normal;
 }
+
+
+/* Estilo global para el contenedor del snackbar */
+/* Asegurar el snackbar en la parte superior derecha */
+.cdk-overlay-container {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Permite clics solo en los elementos visibles */
+}
+
+.mat-snack-bar-container {
+  position: fixed !important; /* Fija el snackbar */
+  top: 16px; /* Separación desde el borde superior */
+  right: 16px; /* Separación desde el borde derecho */
+  margin: 0; /* Elimina márgenes no deseados */
+  background-color: white !important; /* Fondo blanco */
+  color: black !important; /* Texto negro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.danger-snackbar {
+  background-color: white !important; /* Fondo blanco */
+  color: black !important;           /* Texto negro */
+  font-size: 16px;                   /* Tamaño del texto */
+  border-radius: 8px;                /* Bordes redondeados */
+  padding: 16px;                     /* Espaciado interno */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.success-snackbar {
+  background-color: white !important; /* Fondo blanco */
+  color: black !important;           /* Texto negro */
+  font-size: 16px;                   /* Tamaño del texto */
+  border-radius: 8px;                /* Bordes redondeados */
+  padding: 16px;                     /* Espaciado interno */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.warning-snackbar {
+  background-color: white !important; /* Fondo blanco */
+  color: black !important;           /* Texto negro */
+  font-size: 16px;                   /* Tamaño del texto */
+  border-radius: 8px;                /* Bordes redondeados */
+  padding: 16px;                     /* Espaciado interno */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+.cdk-global-overlay-wrapper {
+  display: flex !important;
+  justify-content: flex-end !important; /* Alinea a la derecha */
+  align-items: flex-start !important; /* Alinea en la parte superior */
+  pointer-events: none; /* Permite clics solo en los elementos visibles */
+}

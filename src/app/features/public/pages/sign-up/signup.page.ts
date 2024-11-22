@@ -3,6 +3,7 @@ import { ProfileStateData } from 'src/app/core/services/profile';
 import { ProfileService } from 'src/app/core/services/profile/profile.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 declare var $: any;
 
@@ -25,6 +26,8 @@ export class SignUpPage implements OnInit {
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private readonly router: Router,
+    private snackbarService: SnackbarService,
+
   ) { }
 
   ngOnInit() {
@@ -102,8 +105,7 @@ export class SignUpPage implements OnInit {
     } else {
       this.isLoading = false;
       console.log(this.profileForm.value);
-
-      console.log('form invalid');
+      this.snackbarService.presentToastDanger('form invalid');
 
     }
 

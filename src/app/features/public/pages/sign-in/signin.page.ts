@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ProfileService } from 'src/app/core/services/profile/profile.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ export class SignInPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private readonly router: Router,
+    private snackbarService: SnackbarService,
 
   ) { }
 
@@ -43,7 +45,8 @@ export class SignInPage implements OnInit {
           this.router.navigate(['/private']);
         } else {
           this.isLoading = false;
-          alert("Error al iniciar sesión");
+          this.snackbarService.presentToastDanger('Error al iniciar sesión');
+
         }
         //this.router.navigate(['/private']);
         console.log(response);

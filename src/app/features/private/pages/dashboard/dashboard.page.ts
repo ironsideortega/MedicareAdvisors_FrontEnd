@@ -46,7 +46,39 @@ export class DashboardPage implements OnInit {
   isLoading: boolean = false;
   userName: string = '';
 
-  public chartOptions!: Partial<ChartOptions>;
+  public chartOptions: Partial<ChartOptions> = {
+    series: [{
+      name: 'Valores',
+      data: []
+    }],
+    chart: {
+      type: 'bar',
+      height: 350
+    },
+    xaxis: {
+      categories: []
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val: number) {
+        return val.toString()
+      },
+      style: {
+        fontSize: '14px',
+        fontWeight: 'bold',
+        colors: ['#000000']
+      },
+      offsetY: -20,
+    },
+    colors: ['#246FC2', '#B8D0EB'],
+    plotOptions: {
+      bar: {
+        borderRadius: 8,
+        columnWidth: "47px"
+      }
+    }
+  };
+
   public chartOptionsDonuts!: Partial<ChartOptionsDonuts>;
   public chartSeries!: any[];
 
@@ -76,6 +108,7 @@ export class DashboardPage implements OnInit {
 
 
   chargeDonuts(dataDonuts: any, labelDonuts: any) {
+
     this.chartOptionsDonuts = {
       series: dataDonuts,
       chart: {
@@ -93,9 +126,24 @@ export class DashboardPage implements OnInit {
       plotOptions: {
         pie: {
           donut: {
-            size: '65%',
-            distributed: false,
+            size: '80%',
+            distributed: true,
             borderRadius: 8,
+            labels: {
+
+              show: true,
+              name: {
+                show: true
+              },
+              value: {
+                show: false
+              },
+              total: {
+                show: true,
+                label: 'Gender',
+                color: '#061f3a'
+              }
+            }
           },
         },
       },
@@ -139,18 +187,11 @@ export class DashboardPage implements OnInit {
           borderRadius: 8,
           horizontal: false,
           columnWidth: "47px",
+          dataLabels: {
+            position: 'top',
+          }
         }
       },
-      // dataLabels: {
-      //   enabled: false,
-      //   formatter: function (val: any) {
-      //     return val.toFixed(0);
-      //   },
-      //   style: {
-      //     colors: ['#FFF'] // Color del texto
-      //   },
-      //   offsetY: -20
-      // },
       xaxis: {
         categories: labelBar,
         labels: {
@@ -165,7 +206,16 @@ export class DashboardPage implements OnInit {
       },
       colors: ['#246FC2', '#B8D0EB'],
       dataLabels: {
-        enabled: false
+        enabled: true,
+        formatter: function(val: number) {
+          return val.toString()
+        },
+        style: {
+          fontSize: '14px',
+          fontWeight: 'bold',
+          colors: ['#000000']
+        },
+        offsetY: -20,
       },
       legend: {
         show: false
@@ -199,11 +249,14 @@ export class DashboardPage implements OnInit {
       this.kpiGender = response.data;
       this.isLoading = false;
       response.data.forEach((e) => {
-        this.labelGender.push(e.GenderValue);
+        let genderLabel = e.GenderValue;
+        if (genderLabel === 'F') genderLabel = 'Feminine';
+        else if (genderLabel === 'M') genderLabel = 'Masculine';
+
+        this.labelGender.push(genderLabel);
         this.valueGender.push(e.CNT);
       });
       this.chargeDonuts(this.valueGender, this.labelGender);
-
     });
   }
 

@@ -92,7 +92,11 @@
                   <div class="row">
                     <div class="col-3">
                       <div class="form-group">
-                        <label for="column">Search field</label>
+                        <label
+                          for="column"
+                          style="font-weight: bold; color: #0f2e4d"
+                          >Search field</label
+                        >
                         <select
                           formControlName="column"
                           (change)="onColumnChange(i)"
@@ -110,7 +114,11 @@
                     </div>
                     <div class="col-3">
                       <div class="form-group">
-                        <label for="searchTerm">Search term</label>
+                        <label
+                          for="searchTerm"
+                          style="font-weight: bold; color: #0f2e4d"
+                          >Search term</label
+                        >
                         <input
                           type="text"
                           class="form-control"
@@ -118,18 +126,21 @@
                         />
                       </div>
                     </div>
-                    <!-- <div class="col-2">
+                    <div class="col-2 d-flex align-items-end">
                       <button
+                        style="margin-right: 10px"
                         type="button"
-                        class="btn btn-danger mt-4"
+                        class="btn btn-danger mr-3"
                         (click)="removeSearchField(i)"
                         *ngIf="searchFields.length > 1"
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                    </div> -->
-                    <div class="col-2 mt-4">
-                      <button type="submit" class="btn btn-danger">
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="margin-right: 10px"
+                      >
                         <i class="bi bi-search"></i>
                       </button>
                     </div>
@@ -150,14 +161,14 @@
               >
                 <i class="bi bi-plus"></i> Add search field
               </button>
-              <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp;
               <button
                 type="button"
                 (click)="resetData()"
                 class="btn btn-warning"
               >
                 Reset
-              </button> -->
+              </button>
             </form>
           </div>
         </div>
@@ -225,9 +236,8 @@
         <table class="table align-middle table-hover">
           <thead
             style="
-              background: #dbe4ee66 0% 0% no-repeat padding-box;
-              border-radius: 5px;
-              color: #061f3a;
+              background: #f8f9fa;
+              color: #495057;
               font: normal normal medium 14px/19px Roboto;
             "
           >
@@ -236,7 +246,6 @@
             <th *ngIf="selectedView === 'Default'">Email</th>
             <th *ngIf="selectedView === 'Default'">Phone</th>
 
-            <!-- Separar ngIf y ngFor -->
             <ng-container *ngIf="selectedView !== 'Default'">
               <th *ngFor="let field of dynamicFields">{{ field }}</th>
             </ng-container>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { DoctorData, DoctorImportanceModel, DoctorModel, DoctorSpecialtyModel, DoctorStatusModel, ProviderModel } from './model';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -31,8 +32,14 @@ export class DoctorService {
   //   return this.http.GetRequestProvider(lastName)
   // }
 
-  getDoctorByLastName(lastName: string, state:string, firstName:string, taxonomy:string): Observable<ProviderModel> {
-    return this.http.GetRequest<ProviderModel>(`api/search/?last_name=${lastName}&postal_code=${state}&limit=200&version=2.1`);
+  getDoctorByLastName(lastName: string, zipCode?: string, firstName?: string, taxonomy?: string): Observable<ProviderModel> {
+    let url = `api/search/?last_name=${lastName}`;
+    if (zipCode) url += `&postal_code=${zipCode}`;
+    if (firstName) url += `&first_name=${firstName}`;
+    if (taxonomy) url += `&taxonomy=${taxonomy}`;
+    url += '&limit=200&version=2.1';
+
+    return this.http.GetRequest<ProviderModel>(url);
   }
 
   getDoctorByContactID(ContactId:number): Observable<DoctorModel>{

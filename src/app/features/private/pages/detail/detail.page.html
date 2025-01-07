@@ -63,11 +63,15 @@
           </div>
           <div class="col d-flex justify-content-end">
             <button
-              class="btn btn-danger"
+              class="btn"
+              [ngClass]="{
+                'btn-danger': !isEditing,
+                'btn-secondary': isEditing
+              }"
               (click)="enableForm('contact')"
               *ngIf="buttonActive.includes('Prospect')"
             >
-              Edit Prospect
+              {{ isEditing ? 'Cancel' : 'Edit Prospect' }}
             </button>
             <button
               class="btn btn-danger"
@@ -99,7 +103,6 @@
               <li class="nav-item">
                 <span
                   class="nav-link"
-                  aria-current="page"
                   [ngClass]="{ 'active': buttonActive.includes('Prospect') }"
                   (click)="addOrRemoveTabs('Prospect')"
                   data-bs-toggle="collapse"
@@ -114,7 +117,6 @@
                   class="nav-link"
                   [ngClass]="{ 'active': buttonActive.includes('Doctor') }"
                   (click)="addOrRemoveTabs('Doctor')"
-                  type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#doctorCollapse"
                   aria-expanded="false"
@@ -127,7 +129,6 @@
                   class="nav-link"
                   [ngClass]="{ 'active': buttonActive.includes('Rx') }"
                   (click)="addOrRemoveTabs('Rx')"
-                  type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#rxCollapse"
                   aria-expanded="false"
@@ -140,7 +141,6 @@
                   class="nav-link"
                   [ngClass]="{ 'active': buttonActive.includes('Policy') }"
                   (click)="addOrRemoveTabs('Policy')"
-                  type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#policyCollapse"
                   aria-expanded="false"
@@ -153,7 +153,6 @@
                   class="nav-link"
                   [ngClass]="{ 'active': buttonActive.includes('Private') }"
                   (click)="addOrRemoveTabs('Private')"
-                  type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#privateCollapse"
                   aria-expanded="false"
@@ -291,12 +290,15 @@
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
-                        <label for="">First Name</label>
+                        <label for="firstName">First Name</label>
                         <input
                           type="text"
                           class="form-control"
                           formControlName="firstName"
                         />
+                        <div *ngIf="contactForm.get('firstName')?.invalid && (contactForm.get('firstName')?.touched || submitted)" class="text-danger">
+                          First Name is required.
+                        </div>
                       </div>
                     </div>
                     <div class="col">
@@ -551,7 +553,6 @@
                     </div>
                   </div>
                   <br />
-                  <br />
                   <div class="row">
                     <div class="col">
                       <span
@@ -668,7 +669,6 @@
                     </div>
                   </div>
                   <br />
-                  <br />
                   <div class="row">
                     <div class="col">
                       <span
@@ -753,30 +753,29 @@
 
                   <br />
                   <div class="row">
-                    <div class="col d-flex justify-content-end">
-                      <!-- <button
-                        class="btn"
-                        [ngClass]="{ 'btn-warning': buttonUpdateForContact === 'Update', 'btn-danger': buttonUpdateForContact !== 'Update' }"
-                        (click)="enableForm('contact')"
-                      >
-                        {{buttonUpdateForContact}}</button
-                      >&nbsp;&nbsp; -->
+                    <div class="col d-flex justify-content-end gap-2">
+                      <!-- Botón Edit/Cancel -->
                       <button
-                        *ngIf="buttonUpdateContactEnabled"
-                        type="submit"
+                        class="btn"
+                        [ngClass]="{
+                          'btn-danger': !isEditing,
+                          'btn-secondary': isEditing
+                        }"
+                        (click)="enableForm('contact')"
+                        *ngIf="buttonActive.includes('Prospect')"
+                      >
+                        {{ isEditing ? 'Cancel' : 'Edit Prospect' }}
+                      </button>
+
+                      <!-- Botón Save -->
+                      <button
+                        *ngIf="isEditing && buttonActive.includes('Prospect')"
                         class="btn btn-danger"
                         (click)="saveData()"
-                        [disabled]="isLoading"
+                        [disabled]="isLoading || !contactForm.valid"
                       >
-                        <div
-                          class="spinner-border text-light"
-                          role="status"
-                          style="height: 20px; width: 20px"
-                          *ngIf="isLoading"
-                        >
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <div *ngIf="!isLoading">Save Changes</div>
+                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                        Save Changes
                       </button>
                     </div>
                   </div>
@@ -1944,204 +1943,118 @@
 <br />
 
 <!-- Modal Email -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content p-3">
       <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()">
         <div class="modal-body">
+          <!-- Header -->
           <div class="row">
             <div class="col-6">
-              <span
-                style="
-                  font: normal normal bold 20px/26px Roboto;
-                  letter-spacing: 0px;
-                  color: #061f3a;
-                  font-weight: 400;
-                "
-                >Prospect Emails</span
-              >
+              <span class="modal-title">Prospect Emails</span>
             </div>
             <div class="col-6 d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-close-custom"
-                (click)="closeModalEmail()"
-              >
+              <button type="button" class="btn btn-close-custom" (click)="closeModalEmail()">
                 <i class="bi bi-x"></i>
               </button>
             </div>
           </div>
-          <div class="row">
+
+          <!-- Subtitle -->
+          <div class="row mb-3">
             <div class="col">
-              <span
-                style="
-                  font: normal normal normal 14px/19px Roboto;
-                  letter-spacing: 0px;
-                  color: #061f3a;
-                "
-                >Add, eliminate and edit emails from this prospect</span
-              >
+              <span class="modal-subtitle">Add, eliminate and edit emails from this prospect</span>
             </div>
           </div>
-          <br />
-          <div class="row">
+
+          <!-- Form Fields -->
+          <div class="row mb-3">
             <div class="col-4">
               <div class="form-group">
-                <label for="">Email Type</label>
-                <select
-                  name=""
-                  id=""
-                  class="form-select"
-                  formControlName="EmailTypeID"
-                >
-                  <option selected disabled value="">Select one...</option>
-                  <option
-                    *ngFor="let response of getFilteredEmailTypes(emailForm.controls['EmailTypeID'].value)"
-                    value="{{response.EmailTypeID}}"
-                  >
-                    {{response.EmailTypeValue}}
+                <label>Email Type</label>
+                <select class="form-select" formControlName="EmailTypeID">
+                  <option value="">Select one...</option>
+                  <option *ngFor="let type of getFilteredEmailTypes(emailForm.get('EmailTypeID')?.value)"
+                          [value]="type.EmailTypeID">
+                    {{type.EmailTypeValue}}
                   </option>
                 </select>
-                <div
-                  *ngIf="isInvalidAndTouchedEmail('EmailTypeID')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedEmail('EmailTypeID')" class="text-danger">
                   Email Type is required
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label for="">Email</label>
-                <input
-                  class="form-control"
-                  formControlName="EmailAddressValue"
-                />
-                <div
-                  *ngIf="isInvalidAndTouchedEmail('EmailAddressValue')"
-                  class="text-danger"
-                >
+                <label>Email</label>
+                <input class="form-control" formControlName="EmailAddressValue"/>
+                <div *ngIf="isInvalidAndTouchedEmail('EmailAddressValue')" class="text-danger">
                   Invalid Email Address
                 </div>
               </div>
             </div>
           </div>
-          <br />
 
-          <div class="row g-1" *ngFor="let email of emailList">
+          <!-- Email List -->
+          <div class="row mb-2" *ngFor="let email of emailList">
             <div class="col">
-              <div
-                class="mini-card-container"
-                [ngClass]="{'active': email.IsPreferredEmail}"
-                (click)="loadDataForEditEmail(email)"
-              >
+              <div class="mini-card-container"
+                   [ngClass]="{'active': email.IsPreferredEmail, 'selected': email.EmailID === selectedEmail?.EmailID}"
+                   (click)="toggleEmailSelection(email)">
                 <div class="row d-flex align-items-center w-100">
                   <div class="col-1">
-                    <input
-                      type="radio"
-                      [checked]="email.IsPreferredEmail"
-                      [disabled]="email.IsPreferredEmail"
-                    />
+                    <input type="radio"
+                           [checked]="email.IsPreferredEmail"
+                           [disabled]="email.IsPreferredEmail"/>
                   </div>
-                  <div class="col-8">
+                  <div class="col-7">
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal normal 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            color: #36495f;
-                          "
-                          >{{email.EmailTypeValue}}</span
-                        >
+                        <span class="email-type">{{email.EmailTypeValue}}</span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal medium 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            font-weight: 500;
-                            color: #061f3a;
-                          "
-                          >{{email.EmailAddressValue}}</span
-                        >
+                        <span class="email-value">{{email.EmailAddressValue}}</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-3 d-flex justify-content-end">
-                    <span
-                      style="
-                        font: normal normal normal 14px/19px Roboto;
-                        letter-spacing: 0px;
-                        color: #246fc2;
-                      "
-                      >{{email.IsPreferredEmail ? 'Preferred' : ''}}</span
-                    >
+                  <div class="col-4 d-flex justify-content-end">
+                    <span class="preferred-label">{{email.IsPreferredEmail ? 'Preferred' : ''}}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-1">
-              <div class="modal-edit-btn">
-                <i class="bi bi-pencil-fill" style="color: black"></i>
-              </div>
-            </div>
-            <div class="col-1">
-              <div class="modal-delete-btn" style="color: black">
+            <div class="col-2" *ngIf="selectedEmail?.EmailID === email.EmailID">
+              <div class="modal-delete-btn d-flex align-items-center justify-content-center"
+                   style="height: 90%;width: 100%;"
+                   (click)="deleteEmail(email.EmailID)">
                 <i class="bi bi-x"></i>
               </div>
             </div>
           </div>
-          <br />
-          <div class="row">
-            <div class="col d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                (click)="closeModalEmail()"
-              >
-                Cancelar
+
+          <!-- Footer Buttons -->
+          <div class="row mt-3">
+            <div class="col d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary" (click)="closeModalEmail()">
+                Cancel
               </button>
-              &nbsp;&nbsp;
 
-              <ng-container *ngIf="emailIdUpdate != 0">
-                <button type="submit" class="btn btn-warning">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingEmail"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
+              <!-- Cancel Edit Button -->
+              <button *ngIf="emailIdUpdate !== 0"
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="cancelEmailEdit()">
+                Cancel Edit
+              </button>
 
-                  <div *ngIf="!isLoadingEmail">Save changes</div>
-                </button>
-              </ng-container>
-              <ng-container *ngIf="emailIdUpdate == 0">
-                <button type="submit" class="btn btn-danger">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingEmail"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-
-                  <div *ngIf="!isLoadingEmail">Save changes</div>
-                </button>
-              </ng-container>
+              <!-- Save Button -->
+              <button type="submit"
+                      [class]="emailIdUpdate !== 0 ? 'btn btn-warning' : 'btn btn-danger'">
+                <span *ngIf="isLoadingEmail" class="spinner-border spinner-border-sm me-1"></span>
+                {{emailIdUpdate !== 0 ? 'Update' : 'Save'}}
+              </button>
             </div>
           </div>
         </div>
@@ -2151,189 +2064,122 @@
 </div>
 
 <!-- Modal Phone -->
-<div
-  class="modal fade"
-  id="exampleModalPhone"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModalPhone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content p-3">
       <form [formGroup]="phoneForm" (ngSubmit)="onSubmitPhone()">
         <div class="modal-body">
+          <!-- Header -->
           <div class="row">
             <div class="col-6">
-              <span
-                style="
-                  font: normal normal bold 20px/26px Roboto;
-                  letter-spacing: 0px;
-                  color: #061f3a;
-                  font-weight: 400;
-                "
-                >Prospect Phones</span
-              >
+              <span class="modal-title">Prospect Phones</span>
             </div>
             <div class="col-6 d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-close-custom"
-                (click)="closeModalPhone()"
-              >
+              <button type="button" class="btn btn-close-custom" (click)="closeModalPhone()">
                 <i class="bi bi-x"></i>
               </button>
             </div>
           </div>
-          <div class="row">
+
+          <!-- Subtitle -->
+          <div class="row mb-3">
             <div class="col">
-              <span
-                style="
-                  font: normal normal normal 14px/19px Roboto;
-                  letter-spacing: 0px;
-                  color: #061f3a;
-                "
-                >Add, eliminate and edit phones from this prospect</span
-              >
+              <span class="modal-subtitle">Add, eliminate and edit phones from this prospect</span>
             </div>
           </div>
-          <br />
-          <div class="row">
+
+          <!-- Form Fields -->
+          <div class="row mb-3">
             <div class="col-4">
               <div class="form-group">
-                <label for="">Phone Type</label>
+                <label>Phone Type</label>
                 <select class="form-select" formControlName="PhoneTypeID">
-                  <option selected disabled value="">Select one...</option>
-                  <option
-                    *ngFor="let response of getFilteredPhoneTypes(phoneForm.controls['PhoneTypeID'].value)"
-                    value="{{response.PhoneTypeID}}"
-                  >
-                    {{response.PhoneTypeValue}}
+                  <option value="">Select one...</option>
+                  <option *ngFor="let type of getFilteredPhoneTypes(phoneForm.get('PhoneTypeID')?.value)"
+                          [value]="type.PhoneTypeID">
+                    {{type.PhoneTypeValue}}
                   </option>
                 </select>
-                <div
-                  *ngIf="isInvalidAndTouched('PhoneTypeID')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouched('PhoneTypeID')" class="text-danger">
                   Phone Type is required
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label for="">Phone Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="PhoneNumber"
-                  appPhoneNumberMask
-                  maxlength="14"
-                />
-                <div
-                  *ngIf="isInvalidAndTouched('PhoneNumber')"
-                  class="text-danger"
-                >
+                <label>Phone Number</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="PhoneNumber"
+                       appPhoneNumberMask
+                       maxlength="14"/>
+                <div *ngIf="isInvalidAndTouched('PhoneNumber')" class="text-danger">
                   Invalid Phone Number
                 </div>
               </div>
             </div>
           </div>
-          <br />
 
-          <div class="row" *ngFor="let phone of phoneList">
+          <!-- Phone List -->
+          <div class="row mb-2" *ngFor="let phone of phoneList">
             <div class="col">
-              <div
-                class="mini-card-container"
-                [ngClass]="{'active': phone.IsPreferredPhone}"
-                (click)="loadDataForEditPhone(phone)"
-              >
+              <div class="mini-card-container"
+                   [ngClass]="{'active': phone.IsPreferredPhone, 'selected': phone.PhoneID === selectedPhone?.PhoneID}"
+                   (click)="togglePhoneSelection(phone)">
                 <div class="row d-flex align-items-center w-100">
                   <div class="col-1">
-                    <input
-                      type="radio"
-                      [checked]="phone.IsPreferredPhone"
-                      [disabled]="phone.IsPreferredPhone"
-                    />
+                    <input type="radio"
+                           [checked]="phone.IsPreferredPhone"
+                           [disabled]="phone.IsPreferredPhone"/>
                   </div>
-                  <div class="col-8">
+                  <div class="col-7">
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal normal 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            color: #36495f;
-                          "
-                          >{{phone.PhoneTypeValue}}</span
-                        >
+                        <span class="phone-type">{{phone.PhoneTypeValue}}</span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal medium 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            font-weight: 500;
-                            color: #061f3a;
-                          "
-                          >{{phone.PhoneNumber}}</span
-                        >
+                        <span class="phone-number">{{phone.PhoneNumber}}</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-3 d-flex justify-content-end">
-                    <span
-                      style="
-                        font: normal normal normal 14px/19px Roboto;
-                        letter-spacing: 0px;
-                        color: #246fc2;
-                      "
-                      >{{phone.IsPreferredPhone ? 'Preferred' : ''}}</span
-                    >
+                  <div class="col-4 d-flex justify-content-end">
+                    <span class="preferred-label">{{phone.IsPreferredPhone ? 'Preferred' : ''}}</span>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="col-2" *ngIf="selectedPhone?.PhoneID === phone.PhoneID">
+              <div class="modal-delete-btn d-flex align-items-center justify-content-center"
+                   style="height: 90%;width: 100%;"
+                   (click)="deletePhone(phone.PhoneID)">
+                <i class="bi bi-x"></i>
+              </div>
+            </div>
           </div>
-          <br />
-          <div class="row">
-            <div class="col d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                (click)="closeModalPhone()"
-              >
-                Cancel</button
-              >&nbsp;&nbsp;
 
-              <ng-container *ngIf="phoneIdUpdate !=0">
-                <button type="submit" class="btn btn-warning">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingPhone"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div *ngIf="!isLoadingPhone">Save Change</div>
-                </button>
-              </ng-container>
-              <ng-container *ngIf="phoneIdUpdate ==0">
-                <button type="submit" class="btn btn-danger">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingPhone"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div *ngIf="!isLoadingPhone">Save Change</div>
-                </button>
-              </ng-container>
+          <!-- Footer Buttons -->
+          <div class="row mt-3">
+            <div class="col d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary" (click)="closeModalPhone()">
+                Cancel
+              </button>
+
+              <!-- Cancel Edit Button -->
+              <button *ngIf="phoneIdUpdate !== 0"
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="cancelPhoneEdit()">
+                Cancel Edit
+              </button>
+
+              <!-- Save Button -->
+              <button type="submit"
+                      [class]="phoneIdUpdate !== 0 ? 'btn btn-warning' : 'btn btn-danger'">
+                <span *ngIf="isLoadingPhone" class="spinner-border spinner-border-sm me-1"></span>
+                {{phoneIdUpdate !== 0 ? 'Update' : 'Save'}}
+              </button>
             </div>
           </div>
         </div>
@@ -2343,245 +2189,160 @@
 </div>
 
 <!-- Modal Address -->
-<div
-  class="modal fade"
-  id="exampleModalAddress"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModalAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content p-3">
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-6">
-            <span
-              style="
-                font: normal normal bold 20px/26px Roboto;
-                letter-spacing: 0px;
-                color: #061f3a;
-                font-weight: 400;
-              "
-              >Prospect Address</span
-            >
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <button
-              type="button"
-              class="btn btn-close-custom"
-              (click)="closeModalAddress()"
-            >
-              <i class="bi bi-x"></i>
-            </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <span
-              style="
-                font: normal normal normal 14px/19px Roboto;
-                letter-spacing: 0px;
-                color: #061f3a;
-              "
-              >Add, eliminate and edit address from this prospect</span
-            >
-          </div>
-        </div>
-        <br />
-        <form [formGroup]="addressForm" (ngSubmit)="onSubmitAddress()">
+      <form [formGroup]="addressForm" (ngSubmit)="onSubmitAddress()">
+        <div class="modal-body">
+          <!-- Header -->
           <div class="row">
+            <div class="col-6">
+              <span class="modal-title">Prospect Address</span>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <button type="button" class="btn btn-close-custom" (click)="closeModalAddress()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Subtitle -->
+          <div class="row mb-3">
+            <div class="col">
+              <span class="modal-subtitle">Add, eliminate and edit address from this prospect</span>
+            </div>
+          </div>
+
+          <!-- Form Fields -->
+          <div class="row mb-3">
             <div class="col-4">
               <div class="form-group">
-                <label for="">Address Type</label>
-                <select
-                  name=""
-                  id=""
-                  class="form-select"
-                  formControlName="AddressTypeID"
-                >
-                  <!-- <option selected disabled value="">Select...</option> -->
-                  <option
-                    *ngFor="let address of getFilteredAddressTypes(addressForm.controls['AddressTypeID'].value)"
-                    [value]="address.AddressTypeID"
-                  >
-                    {{address.AddressTypeValue}}
+                <label>Address Type</label>
+                <select class="form-select" formControlName="AddressTypeID">
+                  <option value="">Select one...</option>
+                  <option *ngFor="let type of getFilteredAddressTypes(addressForm.get('AddressTypeID')?.value)"
+                          [value]="type.AddressTypeID">
+                    {{type.AddressTypeValue}}
                   </option>
                 </select>
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('AddressTypeID')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedAddress('AddressTypeID')" class="text-danger">
                   Address Type is required
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label for="">Street</label>
+                <label>Street</label>
                 <input class="form-control" formControlName="Street" />
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('Street')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedAddress('Street')" class="text-danger">
                   Street is required
                 </div>
               </div>
             </div>
           </div>
 
-          <br />
-          <div class="row">
+          <div class="row mb-3">
             <div class="col-4">
               <div class="form-group">
-                <label for="">City</label>
+                <label>City</label>
                 <input class="form-control" formControlName="City" />
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('City')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedAddress('City')" class="text-danger">
                   City is required
                 </div>
               </div>
             </div>
-
             <div class="col-3">
               <div class="form-group">
-                <label for="">Zip</label>
+                <label>Zip</label>
                 <input class="form-control" formControlName="Zip" />
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('Zip')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedAddress('Zip')" class="text-danger">
                   Zip code is required
                 </div>
               </div>
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label for="">State</label>
-                <select
-                  name=""
-                  id=""
-                  class="form-select"
-                  formControlName="StateID"
-                >
-                  <option disabled selected value="">Select...</option>
-                  <option
-                    *ngFor="let state of stateList"
-                    [value]="state.StateID"
-                  >
+                <label>State</label>
+                <select class="form-select" formControlName="StateID">
+                  <option value="">Select...</option>
+                  <option *ngFor="let state of stateList" [value]="state.StateID">
                     {{state.StateAbbreviation}}
                   </option>
                 </select>
-                <div
-                  *ngIf="isInvalidAndTouchedAddress('StateID')"
-                  class="text-danger"
-                >
+                <div *ngIf="isInvalidAndTouchedAddress('StateID')" class="text-danger">
                   State is required
                 </div>
               </div>
             </div>
           </div>
-          <br />
-          <div class="row" *ngFor="let address of addressList">
+
+          <!-- Address List -->
+          <div class="row mb-2" *ngFor="let address of addressList">
             <div class="col">
-              <div
-                class="mini-card-container"
-                [ngClass]="{'active': address.IsPreferredAddress}"
-                (click)="loadDataForEditAddress(address)"
-              >
+              <div class="mini-card-container"
+                   [ngClass]="{'active': address.IsPreferredAddress, 'selected': address.ContactAddressID === selectedAddress?.ContactAddressID}"
+                   (click)="toggleAddressSelection(address)">
                 <div class="row d-flex align-items-center w-100">
                   <div class="col-1">
-                    <input
-                      type="radio"
-                      [checked]="address.IsPreferredAddress"
-                      [disabled]="address.IsPreferredAddress"
-                    />
+                    <input type="radio"
+                           [checked]="address.IsPreferredAddress"
+                           (click)="setPreferredAddress(address)"
+                           [disabled]="!addressForm.enabled"/>
                   </div>
                   <div class="col-8">
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal normal 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            color: #36495f;
-                          "
-                          >{{address.AddressTypeValue}}</span
-                        >
+                        <span class="address-type">{{address.AddressTypeValue}}</span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <span
-                          style="
-                            text-align: left;
-                            font: normal normal medium 14px/19px Roboto;
-                            letter-spacing: 0px;
-                            font-weight: 500;
-                            color: #061f3a;
-                          "
-                          >{{address.Street}}, {{address.City}},
-                          {{address.StateAbbreviation}}</span
-                        >
+                        <span class="address-details">{{address.Street}}, {{address.City}}, {{address.StateAbbreviation}}</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-3 d-flex justify-content-end">
-                    <span
-                      style="
-                        font: normal normal normal 14px/19px Roboto;
-                        letter-spacing: 0px;
-                        color: #246fc2;
-                      "
-                      >{{address.IsPreferredAddress ? 'Preferred' : ''}}</span
-                    >
+                    <span class="preferred-label">{{address.IsPreferredAddress ? 'Preferred' : ''}}</span>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="col-2" *ngIf="selectedAddress?.ContactAddressID === address.ContactAddressID">
+              <div class="modal-delete-btn d-flex align-items-center justify-content-center"
+                   style="height: 90%;width: 100%;"
+                   (click)="deleteAddress(address.ContactAddressID)">
+                <i class="bi bi-x"></i>
+              </div>
+            </div>
+
           </div>
-          <br />
-          <div class="row">
-            <div class="col d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                (click)="closeModalAddress()"
-              >
-                Cancel</button
-              >&nbsp;&nbsp;
-              <ng-container *ngIf="addressIdUpdate !=0">
-                <button type="submit" class="btn btn-warning">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingAddress"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div *ngIf="!isLoadingAddress">Save Changes</div>
-                </button>
-              </ng-container>
-              <ng-container *ngIf="addressIdUpdate ==0">
-                <button type="submit" class="btn btn-danger">
-                  <div
-                    class="spinner-border text-light"
-                    role="status"
-                    style="height: 20px; width: 20px"
-                    *ngIf="isLoadingAddress"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div *ngIf="!isLoadingAddress">Add Changes</div>
-                </button>
-              </ng-container>
+
+          <!-- Footer Buttons -->
+          <div class="row mt-3">
+            <div class="col d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary" (click)="closeModalAddress()">
+                Cancel
+              </button>
+
+              <!-- Cancel Edit Button -->
+              <button *ngIf="addressIdUpdate !== 0"
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="cancelAddressEdit()">
+                Cancel Edit
+              </button>
+
+              <!-- Save Button -->
+              <button type="submit"
+                      [class]="addressIdUpdate !== 0 ? 'btn btn-warning' : 'btn btn-danger'">
+                <span *ngIf="isLoadingAddress" class="spinner-border spinner-border-sm me-1"></span>
+                {{addressIdUpdate !== 0 ? 'Update' : 'Save'}}
+              </button>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -3053,6 +2814,8 @@
               type="text"
               class="form-control"
               [(ngModel)]="doctorZipCode"
+              [value]="preferredAddressZip"
+              [readonly]="hasPreferredAddress"
             />
           </div>
 
@@ -4665,205 +4428,205 @@
                 id="policy_effective_message"
               ></small>
             </div>
-          </div>
 
-          <div class="row gutter-2 writtenRow">
-            <div class="col-12 col-md-4 mb-2 compdiv">
-              <label for="" class="label"
-                >Premium* <small><i>(monthly)</i></small></label
-              >
-              <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">$</div>
+            <div class="row gutter-2 writtenRow">
+              <div class="col-12 col-md-4 mb-2 compdiv">
+                <label for="" class="label"
+                  >Premium* <small><i>(monthly)</i></small></label
+                >
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm isPremium"
+                    name="policy_premium"
+                    value="0.00"
+                    required=""
+                    autocomplete="off"
+                  />
                 </div>
-                <input
-                  type="text"
-                  class="form-control form-control-sm isPremium"
-                  name="policy_premium"
-                  value="0.00"
-                  required=""
-                  autocomplete="off"
-                />
+              </div>
+
+              <div class="col-12 col-md-4 mb-2 compdiv compPremDiv">
+                <label for="" class="label">Commissionable Premium* </label>
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="policy_com_prem"
+                    value="0.00"
+                    required=""
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 mb-2">
+                <label for="" class="label mr-2">Bonus</label>
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="policy_survey"
+                    value="0.00"
+                    autocomplete="off"
+                  />
+                </div>
               </div>
             </div>
-
-            <div class="col-12 col-md-4 mb-2 compdiv compPremDiv">
-              <label for="" class="label">Commissionable Premium* </label>
-              <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">$</div>
-                </div>
+            <div class="row gutter-2">
+              <div class="col-12 col-md-4 mb-2">
+                <label for="" class="label">Billing Method</label>
+                <select
+                  class="form-control form-control-sm"
+                  name="policy_billing_method"
+                >
+                  <option value="NULL">Select...</option>
+                  <option value="EFT">EFT</option>
+                  <option value="SSI Deduction">SSI Deduction</option>
+                  <option value="Direct Bill (M)">Direct Bill (M)</option>
+                  <option value="Direct Bill (Q)">Direct Bill (Q)</option>
+                  <option value="Direct Bill (S)">Direct Bill (S)</option>
+                  <option value="Direct Bill (A)">Direct Bill (A)</option>
+                  <option value="Credit Card">Credit Card</option>
+                </select>
+                <small
+                  class="text-danger"
+                  id="policy_billing_method_message"
+                ></small>
+              </div>
+              <div class="col-12 col-md-4 mb-2">
+                <label for="" class="label">Policy Number</label>
                 <input
                   type="text"
                   class="form-control form-control-sm"
-                  name="policy_com_prem"
-                  value="0.00"
-                  required=""
+                  name="policy_number"
+                  autocomplete="off"
+                />
+                <small class="text-danger" id="policy_number_message"></small>
+              </div>
+
+              <div class="col-12 col-md-4 mb-2">
+                <label for="" class="label">Replacing </label>
+                <select
+                  class="form-control form-control-sm replacingModal"
+                  name="policy_replacing"
+                >
+                  <option value="">Select..</option>
+                  <option value="0">n/a</option>
+                </select>
+                <input
+                  type="hidden"
+                  name="policy_replace_name"
                   autocomplete="off"
                 />
               </div>
             </div>
-
-            <div class="col-12 col-md-4 mb-2">
-              <label for="" class="label mr-2">Bonus</label>
-              <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">$</div>
-                </div>
+            <div class="row gutter-2">
+              <div class="col-2 mb-2">
                 <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  name="policy_survey"
-                  value="0.00"
+                  type="checkbox"
+                  value="AOR Change"
+                  name="policy_written_as"
+                  class="aorChangeModal"
                   autocomplete="off"
                 />
+                <span class="label">AOR Change</span>
               </div>
-            </div>
-          </div>
-          <div class="row gutter-2">
-            <div class="col-12 col-md-4 mb-2">
-              <label for="" class="label">Billing Method</label>
-              <select
-                class="form-control form-control-sm"
-                name="policy_billing_method"
-              >
-                <option value="NULL">Select...</option>
-                <option value="EFT">EFT</option>
-                <option value="SSI Deduction">SSI Deduction</option>
-                <option value="Direct Bill (M)">Direct Bill (M)</option>
-                <option value="Direct Bill (Q)">Direct Bill (Q)</option>
-                <option value="Direct Bill (S)">Direct Bill (S)</option>
-                <option value="Direct Bill (A)">Direct Bill (A)</option>
-                <option value="Credit Card">Credit Card</option>
-              </select>
-              <small
-                class="text-danger"
-                id="policy_billing_method_message"
-              ></small>
-            </div>
-            <div class="col-12 col-md-4 mb-2">
-              <label for="" class="label">Policy Number</label>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                name="policy_number"
-                autocomplete="off"
-              />
-              <small class="text-danger" id="policy_number_message"></small>
-            </div>
-
-            <div class="col-12 col-md-4 mb-2">
-              <label for="" class="label">Replacing </label>
-              <select
-                class="form-control form-control-sm replacingModal"
-                name="policy_replacing"
-              >
-                <option value="">Select..</option>
-                <option value="0">n/a</option>
-              </select>
-              <input
-                type="hidden"
-                name="policy_replace_name"
-                autocomplete="off"
-              />
-            </div>
-          </div>
-          <div class="row gutter-2">
-            <div class="col-2 mb-2">
-              <input
-                type="checkbox"
-                value="AOR Change"
-                name="policy_written_as"
-                class="aorChangeModal"
-                autocomplete="off"
-              />
-              <span class="label">AOR Change</span>
-            </div>
-            <div class="col-2 mb-2 aorDateColModal d-none">
-              <label for="" class="label">AOR Date</label>
-              <div class="input-group date" data-provide="datepicker">
-                <input
-                  name="policy_aor_date"
-                  type="text"
-                  class="form-control form-control-sm aorDateDisplayModal needsSlashes"
-                  value=""
-                  autocomplete="off"
-                />
-                <div class="input-group-addon">
-                  <span class="glyphicon glyphicon-th"></span>
+              <div class="col-2 mb-2 aorDateColModal d-none">
+                <label for="" class="label">AOR Date</label>
+                <div class="input-group date" data-provide="datepicker">
+                  <input
+                    name="policy_aor_date"
+                    type="text"
+                    class="form-control form-control-sm aorDateDisplayModal needsSlashes"
+                    value=""
+                    autocomplete="off"
+                  />
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
                 </div>
               </div>
+              <div class="col-12 mb-2">
+                <label for="" class="label">Riders</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="policy_riders"
+                  autocomplete="off"
+                />
+              </div>
             </div>
-            <div class="col-12 mb-2">
-              <label for="" class="label">Riders</label>
-              <input
-                type="text"
-                class="form-control"
-                name="policy_riders"
-                autocomplete="off"
-              />
+            <div class="row gutter-2">
+              <div class="col-12 mb-2">
+                <label for="" class="label">Notes</label>
+                <textarea class="form-control" name="policy_notes"></textarea>
+              </div>
             </div>
+            <input
+              type="hidden"
+              class="modalIndStatus"
+              name="ind_status"
+              value="Prospect"
+              autocomplete="off"
+            />
+            <input
+              type="hidden"
+              class="form-control form-control-sm keep"
+              name="policy_enrolled"
+              value=""
+              autocomplete="off"
+            />
+            <input
+              type="hidden"
+              class="form-control form-control-sm keep"
+              name="policy_was_agent"
+              value=""
+              autocomplete="off"
+            />
+            <input
+              type="hidden"
+              class="form-control form-control-sm keep"
+              name="policy_type"
+              value="ANC"
+              autocomplete="off"
+            />
+            <input
+              type="hidden"
+              class="form-control form-control-sm keep"
+              name="ind_id"
+              value="1420524"
+              autocomplete="off"
+            />
+            <input
+              type="hidden"
+              class="keep"
+              value="agent/ProfileController/insertNewPolicyAction/"
+              name="controllerURL"
+              autocomplete="off"
+            />
           </div>
-          <div class="row gutter-2">
-            <div class="col-12 mb-2">
-              <label for="" class="label">Notes</label>
-              <textarea class="form-control" name="policy_notes"></textarea>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-danger save" id="addanc">
+              Add Ancillary
+            </button>
+            <button
+              class="btn btn-sm btn-secondary closeModal"
+              (click)="closeModalPolicy()"
+            >
+              Close
+            </button>
           </div>
-          <input
-            type="hidden"
-            class="modalIndStatus"
-            name="ind_status"
-            value="Prospect"
-            autocomplete="off"
-          />
-          <input
-            type="hidden"
-            class="form-control form-control-sm keep"
-            name="policy_enrolled"
-            value=""
-            autocomplete="off"
-          />
-          <input
-            type="hidden"
-            class="form-control form-control-sm keep"
-            name="policy_was_agent"
-            value=""
-            autocomplete="off"
-          />
-          <input
-            type="hidden"
-            class="form-control form-control-sm keep"
-            name="policy_type"
-            value="ANC"
-            autocomplete="off"
-          />
-          <input
-            type="hidden"
-            class="form-control form-control-sm keep"
-            name="ind_id"
-            value="1420524"
-            autocomplete="off"
-          />
-          <input
-            type="hidden"
-            class="keep"
-            value="agent/ProfileController/insertNewPolicyAction/"
-            name="controllerURL"
-            autocomplete="off"
-          />
         </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-sm btn-danger save" id="addanc">
-          Add Ancillary
-        </button>
-        <button
-          class="btn btn-sm btn-secondary closeModal"
-          (click)="closeModalPolicy()"
-        >
-          Close
-        </button>
       </div>
     </div>
   </div>
@@ -5169,6 +4932,8 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row gutter-2">
             <div class="col-12 mb-2">
               <label for="" class="label">Riders</label>
               <input
@@ -6658,3 +6423,4 @@
     </div>
   </div>
 </div>
+

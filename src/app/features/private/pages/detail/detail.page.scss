@@ -2,8 +2,8 @@
   width: 100%;
   height: 200px;
   /* UI Properties */
-  background: transparent linear-gradient(102deg, #114d90 0%, #e5283c 100%) 0%
-    0% no-repeat padding-box;
+  background: transparent linear-gradient(97deg, #246FC2 0%, #6B4B8A 100%) 0% 0%
+    no-repeat padding-box;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -542,4 +542,8 @@ td {
     border: 1px solid #e5283c;
     cursor: pointer;
   }
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
 }

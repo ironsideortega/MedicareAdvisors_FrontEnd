@@ -32,4 +32,8 @@ export class AddrressService {
   updateAddress(ContactAddressID:number, addressData:any): Observable<any>{
     return this.http.PutRequest(`api/address/${ContactAddressID}`, addressData);
   }
+
+  setPreferredAddress(contactId: number, addressId: number) {
+    return this.http.PutRequest(`api/address/preferred/${contactId}/${addressId}`, {});
+  }
 }

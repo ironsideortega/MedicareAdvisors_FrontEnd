@@ -1,10 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import * as Chart from 'chart.js';
 import { KPIService } from "src/app/core/services/dashboard/dashboard.service";
 import { DataKPIContact, DataKPIGender } from "src/app/core/services/dashboard/models";
 declare var $: any;
 import * as pbi from 'powerbi-client';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexGrid, ApexLegend, ApexPlotOptions, ApexXAxis } from "ng-apexcharts";
+import { ChartComponent } from "ng-apexcharts";
+import * as ApexCharts from 'apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -36,11 +38,12 @@ export type ChartOptionsDonuts = {
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  styleUrls: ['./dashboard.page.scss']
 })
 
 
 export class DashboardPage implements OnInit {
+  @ViewChild("chart") chart!: ChartComponent;
   kpiContact: DataKPIContact[] = [];
   kpiGender: DataKPIGender[] = [];
   isLoading: boolean = false;
@@ -98,31 +101,30 @@ export class DashboardPage implements OnInit {
 
 
   ngOnInit(): void {
+    this.initializeChartOptions();
+
     this.getKpiForContact();
     this.getKpiForGender();
     this.getKpiChartBar();
     this.userName = this.getName();
-
-
   }
 
-
-  chargeDonuts(dataDonuts: any, labelDonuts: any) {
-
+  private initializeChartOptions(): void {
     this.chartOptionsDonuts = {
-      series: dataDonuts,
+      series: [],
       chart: {
-        width: 300,
+        width: '100%',
+        height: 350,
         type: 'donut',
       },
       colors: ['#147AD6', '#79D2DE', '#EC6666'],
       dataLabels: {
-        enabled: false, // Deshabilita todas las etiquetas dentro del gráfico
+        enabled: false,
       },
       tooltip: {
         enabled: true,
       },
-      labels: labelDonuts,
+      labels: [],
       plotOptions: {
         pie: {
           donut: {
@@ -130,7 +132,6 @@ export class DashboardPage implements OnInit {
             distributed: true,
             borderRadius: 8,
             labels: {
-
               show: true,
               name: {
                 show: true
@@ -152,10 +153,11 @@ export class DashboardPage implements OnInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200,
+              width: '100%',
             },
             legend: {
-              show: false,
+              position: 'bottom',
+              show: true,
             },
           },
         },
@@ -166,6 +168,72 @@ export class DashboardPage implements OnInit {
         height: 230,
       },
     };
+  }
+
+  chargeDonuts(dataDonuts: any, labelDonuts: any) {
+    this.chartOptionsDonuts = {
+      series: dataDonuts,
+      chart: {
+        width: '100%',
+        height: 120,
+        type: 'donut',
+        redrawOnParentResize: true,
+        redrawOnWindowResize: true
+      },
+      colors: ['#147AD6', '#79D2DE', '#EC6666'],
+      dataLabels: {
+        enabled: true,
+        formatter: function(val: any, opts: any) {
+          return opts.w.config.series[opts.seriesIndex]
+        }
+      },
+      tooltip: {
+        enabled: true,
+      },
+      labels: labelDonuts,
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '70%',
+            labels: {
+              show: true,
+              total: {
+                show: true,
+                label: 'Total',
+                formatter: function(w: { globals: { seriesTotals: number[] } }) {
+                  return w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0)
+                }
+              }
+            }
+          }
+        }
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: '100%',
+            },
+            legend: {
+              show: true,
+              position: 'bottom',
+              offsetY: 0
+            }
+          }
+        }
+      ],
+      legend: {
+        show: true,
+        position: 'right',
+        offsetY: -20,
+        height: 200
+      }
+    };
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
   }
 
 
@@ -179,7 +247,15 @@ export class DashboardPage implements OnInit {
       ],
       chart: {
         type: 'bar',
-        height: 350
+        height: 350,
+        animations: {
+          enabled: true
+        },
+        events: {
+          mounted: (chart) => {
+            chart.windowResizeHandler();
+          }
+        }
       },
       plotOptions: {
         bar: {
@@ -245,51 +321,60 @@ export class DashboardPage implements OnInit {
 
   getKpiForGender() {
     this.isLoading = true;
-    this.kpiService.getKpiForGendert().subscribe(response => {
-      this.kpiGender = response.data;
-      this.isLoading = false;
-      response.data.forEach((e) => {
-        let genderLabel = e.GenderValue;
-        if (genderLabel === 'F') genderLabel = 'Feminine';
-        else if (genderLabel === 'M') genderLabel = 'Masculine';
+    this.kpiService.getKpiForGendert().subscribe({
+      next: (response) => {
+        this.kpiGender = response.data;
+        this.labelGender = [];
+        this.valueGender = [];
 
-        this.labelGender.push(genderLabel);
-        this.valueGender.push(e.CNT);
-      });
-      this.chargeDonuts(this.valueGender, this.labelGender);
+        response.data.forEach((e) => {
+          let genderLabel = e.GenderValue;
+          if (genderLabel === 'F') genderLabel = 'Feminine';
+          else if (genderLabel === 'M') genderLabel = 'Masculine';
+
+          this.labelGender.push(genderLabel);
+          this.valueGender.push(e.CNT);
+        });
+
+        this.chargeDonuts(this.valueGender, this.labelGender);
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading gender data:', error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
     });
   }
 
   getKpiChartBar() {
-    this.kpiService.getKpiForPopulation().subscribe(response => {
-      const data = response.data[0];
-      console.log(data);
+    return new Promise<void>((resolve) => {
+      this.kpiService.getKpiForPopulation().subscribe({
+        next: (response) => {
+          const data = response.data[0];
+          const categories = Object.keys(data);
+          const values = Object.values(data);
 
-      const categories = Object.keys(data);
-      const values = Object.values(data);
+          this.chargeBar(values, categories);
 
-      // Generar colores para cada barra
-      const colors = values.map(() => this.getRandomColor());
+          // Esperar a que el DOM se actualice
+          setTimeout(() => {
+            if (this.chart) {
+              this.chart.render();
+              window.dispatchEvent(new Event('resize'));
+            }
+          }, 100);
 
-      // // Configurar las opciones del gráfico
-      // this.chartOptions = {
-      //   ...this.chartOptions,
-      //   series: [
-      //     {
-      //       name: 'Valores',
-      //       data: values
-      //     }
-      //   ],
-      //   xaxis: {
-      //     categories: categories
-      //   },
-      //   //colors: colors
-      // };
-
-      console.log(categories);
-      this.chargeBar(values, categories);
-      this.cdr.detectChanges();
-      this.cdr.reattach();
+          this.cdr.detectChanges();
+          resolve();
+        },
+        error: (error) => {
+          console.error('Error loading chart data:', error);
+          resolve();
+        }
+      });
     });
   }
 
@@ -358,6 +443,16 @@ export class DashboardPage implements OnInit {
     );
 
     powerbi.embed(reportContainer!, embedConfig);
+  }
+
+  ngAfterViewInit() {
+    // Asegurarse de que el gráfico se renderice correctamente después de que la vista se inicialice
+    setTimeout(() => {
+      if (this.chart) {
+        this.chart.render();
+        window.dispatchEvent(new Event('resize'));
+      }
+    }, 100);
   }
 
 }

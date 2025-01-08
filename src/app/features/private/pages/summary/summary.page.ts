@@ -345,6 +345,13 @@ Math: any;
     }
   }
 
+  resetFilters(): void {
+    this.searchForm.reset();
+    this.searchFields.clear();
+    this.addSearchField();
+    this.getAllData(1);
+  }
+
 
 
 }

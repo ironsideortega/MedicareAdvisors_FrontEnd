@@ -20,3 +20,140 @@
 .apexcharts-datalabels {
   color: transparent !important;
 }
+
+.card {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%;
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #061f3a;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.75rem;
+    color: #8090a1;
+    margin-bottom: 1rem;
+  }
+}
+
+.stats-number {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #061f3a;
+}
+
+.pulse-graph {
+  height: 30px;
+  opacity: 0.5;
+}
+
+/* Estilos para la leyenda del gráfico de género */
+.chart-legend {
+  margin-top: 1rem;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .legend-value {
+      font-weight: 500;
+      margin-right: 0.5rem;
+    }
+
+    .legend-label {
+      color: #8090a1;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Estilos para la lista de estados */
+.status-list {
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .status-label {
+      color: #061f3a;
+      font-size: 0.875rem;
+    }
+
+    .status-value {
+      font-weight: 500;
+      color: #061f3a;
+    }
+  }
+}
+
+/* Ajustes para el contenedor del gráfico */
+.chart-container {
+  position: relative;
+  height: auto;
+  min-height: 200px;
+}
+
+.dashboard-container {
+  position: relative;
+  z-index: 2;
+  margin-top: -50px;
+}
+
+.dashboard-card {
+  height: 196px;
+  background: #ffffff;
+  box-shadow: 0px 3px 6px #36495f17;
+  border-radius: 8px;
+  border: none;
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 196px;
+  }
+}
+
+.dashboard-card-tall {
+  height: 634px;
+  background: #ffffff;
+  box-shadow: 0px 3px 6px #36495f17;
+  border-radius: 8px;
+  border: none;
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+/* Ajustes para gráficos responsivos */
+apx-chart {
+  width: 100%;
+  min-height: 200px;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+}

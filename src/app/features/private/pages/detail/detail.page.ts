@@ -410,11 +410,11 @@ export class DetailPage implements OnInit {
             this.getAddressByProspect();
             this.resetAddressForm();
             this.isLoadingAddress = false;
-            this.snackBar.open('Dirección actualizada correctamente', 'Cerrar', { duration: 3000 });
+            this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
           },
           error: () => {
             this.isLoadingAddress = false;
-            this.snackBar.open('Error al actualizar la dirección', 'Cerrar', { duration: 3000 });
+            this.snackBar.open('Error updating address', 'Close', { duration: 3000 });
           }
         });
       } else {
@@ -424,11 +424,11 @@ export class DetailPage implements OnInit {
             this.getAddressByProspect();
             this.resetAddressForm();
             this.isLoadingAddress = false;
-            this.snackBar.open('Dirección guardada correctamente', 'Cerrar', { duration: 3000 });
+            this.snackBar.open('Address saved successfully', 'Close', { duration: 3000 });
           },
           error: () => {
             this.isLoadingAddress = false;
-            this.snackBar.open('Error al guardar la dirección', 'Cerrar', { duration: 3000 });
+            this.snackBar.open('Error saving address', 'Close', { duration: 3000 });
           }
         });
       }
@@ -1596,7 +1596,12 @@ export class DetailPage implements OnInit {
 
   openPolicyModal() {
     if (this.policySelected == '') {
-      alert('Please select a policy');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Please select a policy',
+        confirmButtonColor: '#e5283c'
+      });
       return;
     }
     $('#exampleModalPolicy').modal('hide');
@@ -1650,14 +1655,14 @@ export class DetailPage implements OnInit {
 
   deletePhone(id: number) {
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción",
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
     }).then((result) => {
       if (result.isConfirmed) {
         this.phoneService.deletePhone(id).subscribe(response => {
@@ -1669,8 +1674,8 @@ export class DetailPage implements OnInit {
           this.phoneForm.get('PhoneTypeID')?.enable();
           this.phoneForm.get('PhoneNumber')?.enable();
           Swal.fire(
-            "¡Eliminado!",
-            "El teléfono ha sido eliminado.",
+            "Deleted!",
+            "The phone has been deleted.",
             "success"
           );
         });
@@ -1745,10 +1750,10 @@ export class DetailPage implements OnInit {
           ...addr,
           IsPreferredAddress: addr.ContactAddressID === address.ContactAddressID
         }));
-        this.snackBar.open('Dirección preferida actualizada', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Address preferred updated', 'Close', { duration: 3000 });
       },
       error: () => {
-        this.snackBar.open('Error al actualizar la dirección preferida', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error updating address preferred', 'Close', { duration: 3000 });
       }
     });
   }
@@ -1761,14 +1766,14 @@ export class DetailPage implements OnInit {
 
   deleteAddress(addressId: number) {
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción",
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
     }).then((result) => {
       if (result.isConfirmed) {
         this.addressService.deleteAddress(addressId).subscribe({
@@ -1778,15 +1783,15 @@ export class DetailPage implements OnInit {
             this.addressForm.reset();
             this.addressIdUpdate = 0;
             Swal.fire(
-              "¡Eliminado!",
-              "La dirección ha sido eliminada.",
+              "Deleted!",
+              "The address has been deleted.",
               "success"
             );
           },
           error: () => {
             Swal.fire(
               "Error",
-              "No se pudo eliminar la dirección.",
+              "Could not delete the address.",
               "error"
             );
           }
@@ -1809,23 +1814,44 @@ export class DetailPage implements OnInit {
   }
 
   deleteEmail(emailId: number): void {
-    if (confirm('¿Está seguro que desea eliminar este email?')) {
-      this.isLoadingEmail = true;
-      this.emailService.deleteEmail(emailId).subscribe({
-        next: () => {
-          this.getEmailByProspect();
-          this.selectedEmail = null;
-          this.snackBar.open('Email eliminado exitosamente', 'Cerrar', { duration: 3000 });
-        },
-        error: (error) => {
-          this.snackBar.open('Error al eliminar el email', 'Cerrar', { duration: 3000 });
-          console.error('Error:', error);
-        },
-        complete: () => {
-          this.isLoadingEmail = false;
-        }
-      });
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isLoadingEmail = true;
+        this.emailService.deleteEmail(emailId).subscribe({
+          next: () => {
+            this.getEmailByProspect();
+            this.selectedEmail = null;
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Email has been deleted successfully',
+              confirmButtonColor: '#3085d6'
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error deleting email',
+              confirmButtonColor: '#d33'
+            });
+            console.error('Error:', error);
+          },
+          complete: () => {
+            this.isLoadingEmail = false;
+          }
+        });
+      }
+    });
   }
 
   cancelEmailEdit(): void {
@@ -1881,11 +1907,11 @@ export class DetailPage implements OnInit {
           this.isEditing = false;
           this.contactForm.disable();
           this.getDataForProspect();
-          this.snackBar.open('Datos actualizados correctamente', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Data updated successfully', 'Close', { duration: 3000 });
         },
         error: (error) => {
           this.isLoading = false;
-          this.snackBar.open('Error al actualizar los datos', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Error updating data', 'Close', { duration: 3000 });
         }
       });
     }
@@ -1928,6 +1954,33 @@ export class DetailPage implements OnInit {
     this.buttonActive.push('Prospect');
     // Asegúrate de que el formulario esté habilitado para edición
     this.contactForm.enable();
+  }
+
+  showSuccessMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'success',
+      title: title,
+      text: message,
+      confirmButtonColor: '#3085d6'
+    });
+  }
+
+  showErrorMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: title,
+      text: message,
+      confirmButtonColor: '#d33'
+    });
+  }
+
+  showWarningMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'warning',
+      title: title,
+      text: message,
+      confirmButtonColor: '#f8bb86'
+    });
   }
 
 }

@@ -54,121 +54,48 @@
     <div class="col">
       <div class="card custom-card">
         <div class="pb-0">
-          <div class="">
-            <span
-              class="mb-0"
-              style="
-                text-align: left;
-                font: normal normal medium 16px/21px Roboto;
-                letter-spacing: 0px;
-                color: #061f3a;
-                font-weight: 500;
-              "
-              >Search contacts</span
-            >
-          </div>
-          <p
-            class="mb-0"
-            style="
-              text-align: left;
-              font: normal normal normal 13px/18px Roboto;
-              letter-spacing: 0px;
-              color: #36495f;
-            "
-          >
-            Find contacts by name, phone number, email, or any other field.
-          </p>
+          <span class="mb-0">Search contacts</span>
+          <p class="mb-0">Find contacts by name, phone number, email, or any other field.</p>
         </div>
-        <br />
         <div class="row">
           <div class="col p-2">
             <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
               <div formArrayName="searchFields">
-                <div
-                  *ngFor="let field of searchFields.controls; let i=index"
-                  [formGroupName]="i"
-                  class="search-field-group"
-                >
-                  <div class="row">
-                    <div class="col-3">
-                      <div class="form-group">
-                        <label
-                          for="column"
-                          style="font-weight: bold; color: #0f2e4d"
-                          >Search field</label
-                        >
-                        <select
-                          formControlName="column"
-                          (change)="onColumnChange(i)"
-                          class="form-select"
-                        >
-                          <option value="" disabled>Select a field...</option>
-                          <option
-                            *ngFor="let column of availableColumns[i]"
-                            [value]="column"
-                          >
-                            {{ column }}
-                          </option>
-                        </select>
-                      </div>
+                <div *ngFor="let field of searchFields.controls; let i=index" [formGroupName]="i">
+                  <div class="row mb-3">
+                    <div class="col-5">
+                      <label>Search field</label>
+                      <select formControlName="column" (change)="onColumnChange(i)" class="form-select">
+                        <option value="" disabled>Select a field</option>
+                        <option *ngFor="let column of availableColumns[i]" [value]="column">
+                          {{ column }}
+                        </option>
+                      </select>
                     </div>
-                    <div class="col-3">
-                      <div class="form-group">
-                        <label
-                          for="searchTerm"
-                          style="font-weight: bold; color: #0f2e4d"
-                          >Search term</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="searchTerm"
-                        />
-                      </div>
+                    <div class="col-5">
+                      <label>Search term</label>
+                      <input type="text" class="form-control" formControlName="searchTerm" />
                     </div>
                     <div class="col-2 d-flex align-items-end">
-                      <button
-                        style="margin-right: 10px"
-                        type="button"
-                        class="btn btn-danger mr-3"
-                        (click)="removeSearchField(i)"
-                        *ngIf="searchFields.length > 1"
-                      >
-                        <i class="bi bi-trash3"></i>
-                      </button>
-                      <button
-                        type="submit"
-                        class="btn btn-primary"
-                        style="margin-right: 10px"
-                      >
-                        <i class="bi bi-search"></i>
+                      <button type="button" class="btn btn-link text-danger border border-danger rounded" (click)="removeSearchField(i)" *ngIf="searchFields.length > 1">
+                        <i class="bi bi-x"></i>
                       </button>
                     </div>
                   </div>
-                  <br />
                 </div>
               </div>
-              <button
-                type="button"
-                class="btn btn-link"
-                style="
-                  text-align: left;
-                  font: normal normal normal 13px/18px Roboto;
-                  letter-spacing: 0px;
-                  color: #246fc2;
-                "
-                (click)="addSearchField()"
-              >
-                <i class="bi bi-plus"></i> Add search field
-              </button>
-              &nbsp; &nbsp; &nbsp; &nbsp;
-              <button
-                type="button"
-                (click)="resetData()"
-                class="btn btn-warning"
-              >
-                Reset
-              </button>
+              <div class="d-flex gap-2">
+
+                <a class="btn btn-link text-primary p-0" (click)="addSearchField()">
+                  + Add search field
+                </a>
+                <button type="button" class="btn btn-link text-secondary p-0" (click)="resetFilters()">
+                  Reset filters
+                </button>
+                <button type="submit" class="btn btn-primary  ">
+                  <i class="bi bi-search"></i> Buscar
+                </button>
+              </div>
             </form>
           </div>
         </div>

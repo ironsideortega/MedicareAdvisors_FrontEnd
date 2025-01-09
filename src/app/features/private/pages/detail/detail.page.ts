@@ -143,7 +143,16 @@ export class DetailPage implements OnInit {
   @Input() maxValue: number = 2;      // Valor máximo (denominador)
   progress: number = 50;
 
+  selectedPhone: any = null;
+  selectedEmail: any = null;
+  selectedAddress: any = null;
 
+  isEditing: boolean = false;
+
+  preferredAddressZip: string = '';
+  hasPreferredAddress: boolean = false;
+
+  submitted = false;
 
   constructor(
     // private titleService: TitleService,
@@ -158,7 +167,7 @@ export class DetailPage implements OnInit {
     private dataLoaderService: DataLoaderService,
     private profileService: ProfileService,
     private personalService: PersonalService,
-
+    private snackBar: MatSnackBar,
   ) {
     // this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     this.contactID = parseInt(this.route.snapshot.paramMap.get('id')!);
@@ -240,7 +249,17 @@ export class DetailPage implements OnInit {
       ContactID: [this.contactID],
       PhoneTypeID: ['', Validators.required],
       PhoneNumber: ['', [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]],
-      IsPreferredPhone: [false,]
+      IsPreferredPhone: [false]
+    });
+
+    // Suscribirse a los cambios del PhoneTypeID
+    this.phoneForm.get('PhoneTypeID')?.valueChanges.subscribe(value => {
+      const phoneNumberControl = this.phoneForm.get('PhoneNumber');
+      if (value) {
+        phoneNumberControl?.enable();
+      } else {
+        phoneNumberControl?.disable();
+      }
     });
   }
 
@@ -311,6 +330,7 @@ export class DetailPage implements OnInit {
     this.getVaultById();
     this.getAllAssistenceLevels();
     this.getMedicaidById();
+    this.loadPreferredAddress();
   }
 
 
@@ -376,23 +396,40 @@ export class DetailPage implements OnInit {
 
   onSubmitAddress() {
     this.submittedAddress = true;
-    if (this.addressIdUpdate != 0) {
-      this.updateAddress();
-    } else {
-      if (this.addressList.length == 0) {
-        this.addressForm.patchValue({
-          IsPreferredAddress: true,
+    if (this.addressForm.valid) {
+      this.isLoadingAddress = true;
+      const formData = {
+        ...this.addressForm.value,
+        IsPreferredAddress: this.addressList.length === 0 // Primera dirección será la preferida
+      };
+
+      if (this.addressIdUpdate !== 0) {
+        // Actualizar dirección existente
+        this.addressService.updateAddress(this.addressIdUpdate, formData).subscribe({
+          next: () => {
+            this.getAddressByProspect();
+            this.resetAddressForm();
+            this.isLoadingAddress = false;
+            this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
+          },
+          error: () => {
+            this.isLoadingAddress = false;
+            this.snackBar.open('Error updating address', 'Close', { duration: 3000 });
+          }
         });
-      }
-      if (this.addressForm.valid) {
-        this.isLoadingAddress = true;
-        this.addressService.saveNewAddress(this.addressForm.value).subscribe(response => {
-          this.isLoadingAddress = false;
-          this.addressForm.reset();
-          this.createFormAddress();
-          this.getAddressByProspect();
-          this.getDataForProspect();
-          this.submittedAddress = false;
+      } else {
+        // Crear nueva dirección
+        this.addressService.saveNewAddress(formData).subscribe({
+          next: () => {
+            this.getAddressByProspect();
+            this.resetAddressForm();
+            this.isLoadingAddress = false;
+            this.snackBar.open('Address saved successfully', 'Close', { duration: 3000 });
+          },
+          error: () => {
+            this.isLoadingAddress = false;
+            this.snackBar.open('Error saving address', 'Close', { duration: 3000 });
+          }
         });
       }
     }
@@ -419,36 +456,47 @@ export class DetailPage implements OnInit {
 
   onSubmitPhone() {
     this.submittedPhone = true;
-    if (this.phoneIdUpdate != 0) {
-      this.updatePhone();
-    } else {
-      if (this.phoneForm.valid) {
-        this.isLoadingPhone = true;
-        this.phoneService.saveNewPhone(this.phoneForm.value).subscribe(response => {
-          this.isLoadingPhone = false;
-          this.phoneForm.reset();
-          this.createFormPhone();
-          this.getPhoneByProspect();
-          this.getDataForProspect();
-          this.submittedPhone = false;
+    if (this.phoneForm.valid) {
+      this.isLoadingPhone = true;
+      const formData = this.phoneForm.value;
+
+      if (this.phoneIdUpdate !== 0) {
+        // Actualizar teléfono existente
+        this.phoneService.updatePhone(this.phoneIdUpdate, formData).subscribe({
+          next: () => {
+            this.getPhoneByProspect();
+            this.resetPhoneForm();
+            this.isLoadingPhone = false;
+          },
+          error: () => {
+            this.isLoadingPhone = false;
+          }
+        });
+      } else {
+        // Crear nuevo teléfono
+        this.phoneService.saveNewPhone(formData).subscribe({
+          next: () => {
+            this.getPhoneByProspect();
+            this.resetPhoneForm();
+            this.isLoadingPhone = false;
+          },
+          error: () => {
+            this.isLoadingPhone = false;
+          }
         });
       }
     }
-
   }
 
   closeModalPhone() {
+    $('#exampleModalPhone').modal('hide');
     this.phoneForm.reset();
     this.submittedPhone = false;
     this.createFormPhone();
-    $('#exampleModalPhone').modal('hide');
   }
 
   cancelEditPhone() {
-    this.phoneForm.reset();
-    this.submittedPhone = false;
-    this.createFormPhone();
-    this.phoneIdUpdate = 0;
+    this.resetPhoneForm();
   }
 
   closeModalEmail() {
@@ -557,23 +605,23 @@ export class DetailPage implements OnInit {
     });
   }
 
-  deletePhone(id: number) {
-    this.phoneService.deletePhone(id).subscribe(response => {
-      this.getPhoneByProspect();
-    });
-  }
+  // deletePhone(id: number) {
+  //   this.phoneService.deletePhone(id).subscribe(response => {
+  //     this.getPhoneByProspect();
+  //   });
+  // }
 
-  deleteAddress(id: number) {
-    this.addressService.deleteAddress(id).subscribe(response => {
-      this.getAddressByProspect();
-    });
-  }
+  // deleteAddress(id: number) {
+  //   this.addressService.deleteAddress(id).subscribe(response => {
+  //     this.getAddressByProspect();
+  //   });
+  // }
 
-  deleteEmail(id: number) {
-    this.emailService.deleteEmail(id).subscribe(response => {
-      this.getEmailByProspect();
-    });
-  }
+  // deleteEmail(id: number) {
+  //   this.emailService.deleteEmail(id).subscribe(response => {
+  //     this.getEmailByProspect();
+  //   });
+  // }
 
   getEmailType() {
     this.emailService.getEmailType().subscribe(response => {
@@ -689,25 +737,16 @@ export class DetailPage implements OnInit {
   }
 
 
-  enableForm(formName: string) {
-    switch (formName) {
-      case 'contact':
-        if (this.contactForm.enabled) {
-          this.contactForm.disable();
-          this.buttonUpdateForContact = 'Update';
-          this.buttonUpdateContactEnabled = false;
-          this.isLoading = false;
-          this.getDataForProspect();
-        } else {
-          this.contactForm.enable();
-          this.buttonUpdateForContact = 'Cancel';
-          this.contactForm.get('email')!.disable();
-          this.contactForm.get('phone')!.disable();
-          this.contactForm.get('address')!.disable();
-          this.buttonUpdateContactEnabled = true;
-
-        }
+  enableForm(section: string) {
+    if (section === 'contact') {
+      this.isEditing = !this.isEditing;
+      if (this.isEditing) {
+        this.contactForm.enable();
+      } else {
+        this.contactForm.disable();
+      }
     }
+    // ... lógica para otras secciones ...
   }
 
   getPhoneByProspect() {
@@ -730,7 +769,7 @@ export class DetailPage implements OnInit {
   }
 
   saveData() {
-    if (!this.contactForm.valid) {
+    if (this.contactForm.valid) {
       this.isLoading = true;
       const formData = { ...this.contactForm.value };
       delete formData.email;
@@ -765,15 +804,15 @@ export class DetailPage implements OnInit {
     }
   }
 
-  getDoctorsByLastName() {
-    if (this.doctorLastName || this.doctorZipCode) {
-      this.doctorService.getDoctorByLastName(this.doctorLastName, this.doctorZipCode, this.doctorFirstName, this.doctorTaxonomy).subscribe(response => {
-        this.doctorList = response.results;
-      });
-    } else {
-      this.doctorLastNameIsRequired = true;
-    }
-  }
+  // getDoctorsByLastName() {
+  //   if (this.doctorLastName || this.doctorZipCode) {
+  //     this.doctorService.getDoctorByLastName(this.doctorLastName, this.doctorZipCode, this.doctorFirstName, this.doctorTaxonomy).subscribe(response => {
+  //       this.doctorList = response.results;
+  //     });
+  //   } else {
+  //     this.doctorLastNameIsRequired = true;
+  //   }
+  // }
 
   onChangeDoctorLastName(value: any) {
     // if (value.length <= 0) {
@@ -837,16 +876,7 @@ export class DetailPage implements OnInit {
     }
   }
 
-  loadDataForEditPhone(phone: Phone) {
-    this.phoneIdUpdate = phone.PhoneID;
-    this.phoneForm.patchValue({
-      PhoneTypeID: phone.PhoneTypeID,
-      PhoneNumber: phone.PhoneNumber,
-    });
-    if (this.getFilteredPhoneTypes().length === 0) {
-      this.phoneForm.get('PhoneTypeID')!.disable();
-    }
-  }
+
 
   loadDataForEditAddress(address: Address) {
     this.addressIdUpdate = address.ContactAddressID;
@@ -854,9 +884,10 @@ export class DetailPage implements OnInit {
       AddressTypeID: address.AddressTypeID,
       Street: address.Street,
       City: address.City,
+      Zip: address.Zip,
       StateID: address.stateID,
       Country: address.Country,
-      Zip: address.Zip,
+      IsPreferredAddress: address.IsPreferredAddress
     });
     if (this.getFilteredAddressTypes().length === 0) {
       this.addressForm.get('AddressTypeID')!.disable();
@@ -1180,30 +1211,30 @@ export class DetailPage implements OnInit {
     });
   }
 
-  getFilteredPhoneTypes(phoneTypeIdBeingEdited?: number) {
-    const usedPhoneTypeIDs = this.phoneList.map(phone => phone.PhoneTypeID);
+  getFilteredPhoneTypes(currentTypeId: number | null = null): PhoneTypeModel[] {
+    // Obtener los tipos de teléfono ya utilizados
+    const usedTypes = this.phoneList
+      .filter(phone => phone.PhoneID !== this.phoneIdUpdate) // Excluir el teléfono actual si está en edición
+      .map(phone => phone.PhoneTypeID);
 
-    return this.phoneType.filter(phoneType => {
-      // Permitir que el phoneType que se está editando sea visible
-      if (phoneTypeIdBeingEdited && phoneTypeIdBeingEdited === phoneType.PhoneTypeID) {
-        return true;
-      }
-      // Filtrar los que ya están en uso
-      return !usedPhoneTypeIDs.includes(phoneType.PhoneTypeID);
-    });
+    // Filtrar los tipos disponibles
+    return this.phoneType.filter(type =>
+      !usedTypes.includes(type.PhoneTypeID) ||
+      type.PhoneTypeID === currentTypeId
+    );
   }
 
-  getFilteredAddressTypes(addressTypeIdBeingEdited?: number) {
-    const usedAddressTypeIDs = this.addressList.map(address => address.AddressTypeID);
+  getFilteredAddressTypes(currentTypeId: number | null = null): AddressTypeModel[] {
+    // Obtener los tipos de dirección ya utilizados
+    const usedTypes = this.addressList
+      .filter(address => address.AddressTypeID !== this.addressIdUpdate) // Excluir la dirección actual si está en edición
+      .map(address => address.AddressTypeID);
 
-    return this.addressType.filter(addressType => {
-      // Permitir que el addressType que se está editando sea visible
-      if (addressTypeIdBeingEdited && addressTypeIdBeingEdited === addressType.AddressTypeID) {
-        return true;
-      }
-      // Filtrar los que ya están en uso
-      return !usedAddressTypeIDs.includes(addressType.AddressTypeID);
-    });
+    // Filtrar los tipos disponibles
+    return this.addressType.filter(type =>
+      !usedTypes.includes(type.AddressTypeID) ||
+      type.AddressTypeID === currentTypeId
+    );
   }
 
 
@@ -1565,11 +1596,391 @@ export class DetailPage implements OnInit {
 
   openPolicyModal() {
     if (this.policySelected == '') {
-      alert('Please select a policy');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Please select a policy',
+        confirmButtonColor: '#e5283c'
+      });
       return;
     }
     $('#exampleModalPolicy').modal('hide');
     $(`#${this.policySelected}`).modal('show');
+  }
+
+  selectPhone(phone: any) {
+    this.selectedPhone = phone;
+  }
+
+  loadDataForEditPhone(phone: Phone) {
+    this.phoneIdUpdate = phone.PhoneID;
+    this.phoneForm.patchValue({
+      PhoneTypeID: phone.PhoneTypeID,
+      PhoneNumber: phone.PhoneNumber,
+      IsPreferredPhone: phone.IsPreferredPhone
+    });
+  }
+
+  shouldDisablePhoneType(): boolean {
+    // Si estamos editando, no deshabilitar el tipo actual
+    if (this.phoneIdUpdate !== 0) {
+      return false;
+    }
+
+    // Verificar tipos disponibles solo si no estamos editando
+    const availableTypes = this.getFilteredPhoneTypes(this.phoneForm.get('PhoneTypeID')?.value);
+    return availableTypes.length === 0;
+  }
+
+  shouldDisablePhoneNumber(): boolean {
+    // Deshabilitar si no hay tipo de teléfono seleccionado
+    return !this.phoneForm.get('PhoneTypeID')?.value;
+  }
+
+  togglePhoneSelection(phone: Phone): void {
+    if (this.selectedPhone?.PhoneID === phone.PhoneID) {
+      // Deseleccionar si se hace click en el mismo teléfono
+      this.selectedPhone = null;
+      this.phoneIdUpdate = 0;
+      this.phoneForm.reset();
+      // Habilitar los inputs al deseleccionar
+      this.phoneForm.get('PhoneTypeID')?.enable();
+      this.phoneForm.get('PhoneNumber')?.enable();
+    } else {
+      // Seleccionar nuevo teléfono
+      this.selectedPhone = phone;
+      this.loadDataForEditPhone(phone);
+    }
+  }
+
+  deletePhone(id: number) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.phoneService.deletePhone(id).subscribe(response => {
+          this.getPhoneByProspect();
+          this.selectedPhone = null;
+          this.phoneForm.reset();
+          this.phoneIdUpdate = 0;
+          // Habilitar los inputs después de eliminar
+          this.phoneForm.get('PhoneTypeID')?.enable();
+          this.phoneForm.get('PhoneNumber')?.enable();
+          Swal.fire(
+            "Deleted!",
+            "The phone has been deleted.",
+            "success"
+          );
+        });
+      }
+    });
+  }
+
+  resetPhoneForm() {
+    // Primero deseleccionar el teléfono
+    this.selectedPhone = null;
+    this.phoneIdUpdate = 0;
+
+    // Luego resetear el formulario
+    this.phoneForm.reset({
+      ContactID: this.contactID,
+      PhoneTypeID: '',
+      PhoneNumber: '',
+      IsPreferredPhone: false
+    });
+
+    this.submittedPhone = false;
+  }
+
+  cancelPhoneEdit() {
+    // Deseleccionar el teléfono
+    this.selectedPhone = null;
+
+    // Resetear el ID de actualización
+    this.phoneIdUpdate = 0;
+
+    // Resetear el formulario a sus valores iniciales
+    this.phoneForm.reset({
+      ContactID: this.contactID,
+      PhoneTypeID: '',
+      PhoneNumber: '',
+      IsPreferredPhone: false
+    });
+
+    // Resetear el estado de envío
+    this.submittedPhone = false;
+
+    // Forzar la actualización de la validación del selector de tipos
+    this.phoneForm.get('PhoneTypeID')?.updateValueAndValidity();
+  }
+
+  toggleAddressSelection(address: any) {
+    if (this.selectedAddress?.ContactAddressID === address.ContactAddressID) {
+      this.selectedAddress = null;
+      this.addressForm.reset();
+      this.addressIdUpdate = 0;
+    } else {
+      this.selectedAddress = address;
+      this.addressIdUpdate = address.ContactAddressID;
+      this.addressForm.patchValue({
+        AddressTypeID: address.AddressTypeID,
+        Street: address.Street,
+        City: address.City,
+        Zip: address.Zip,
+        StateID: address.stateID
+      });
+    }
+  }
+
+  setPreferredAddress(address: Address) {
+    if (!this.addressForm.enabled) return; // No hacer nada si el formulario está deshabilitado
+
+    // Actualizar el estado en el backend
+    this.addressService.setPreferredAddress(this.contactID, address.ContactAddressID).subscribe({
+      next: () => {
+        // Actualizar la lista local
+        this.addressList = this.addressList.map(addr => ({
+          ...addr,
+          IsPreferredAddress: addr.ContactAddressID === address.ContactAddressID
+        }));
+        this.snackBar.open('Address preferred updated', 'Close', { duration: 3000 });
+      },
+      error: () => {
+        this.snackBar.open('Error updating address preferred', 'Close', { duration: 3000 });
+      }
+    });
+  }
+
+  cancelAddressEdit() {
+    this.selectedAddress = null;
+    this.addressForm.reset();
+    this.addressIdUpdate = 0;
+  }
+
+  deleteAddress(addressId: number) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.addressService.deleteAddress(addressId).subscribe({
+          next: () => {
+            this.getAddressByProspect();
+            this.selectedAddress = null;
+            this.addressForm.reset();
+            this.addressIdUpdate = 0;
+            Swal.fire(
+              "Deleted!",
+              "The address has been deleted.",
+              "success"
+            );
+          },
+          error: () => {
+            Swal.fire(
+              "Error",
+              "Could not delete the address.",
+              "error"
+            );
+          }
+        });
+      }
+    });
+  }
+
+  toggleEmailSelection(email: any): void {
+    if (this.selectedEmail?.EmailID === email.EmailID) {
+      this.selectedEmail = null;
+    } else {
+      this.selectedEmail = email;
+      this.emailForm.patchValue({
+        EmailTypeID: email.EmailTypeID,
+        EmailAddressValue: email.EmailAddressValue
+      });
+      this.emailIdUpdate = email.EmailID;
+    }
+  }
+
+  deleteEmail(emailId: number): void {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isLoadingEmail = true;
+        this.emailService.deleteEmail(emailId).subscribe({
+          next: () => {
+            this.getEmailByProspect();
+            this.selectedEmail = null;
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Email has been deleted successfully',
+              confirmButtonColor: '#3085d6'
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error deleting email',
+              confirmButtonColor: '#d33'
+            });
+            console.error('Error:', error);
+          },
+          complete: () => {
+            this.isLoadingEmail = false;
+          }
+        });
+      }
+    });
+  }
+
+  cancelEmailEdit(): void {
+    this.emailForm.reset();
+    this.emailIdUpdate = 0;
+    this.selectedEmail = null;
+  }
+
+  shouldDisableAddressType(): boolean {
+    // Si estamos editando, no deshabilitar el tipo actual
+    if (this.addressIdUpdate !== 0) {
+      return false;
+    }
+
+    // Verificar tipos disponibles solo si no estamos editando
+    const availableTypes = this.getFilteredAddressTypes(this.addressForm.get('AddressTypeID')?.value);
+    return availableTypes.length === 0;
+  }
+
+  shouldDisableAddressFields(): boolean {
+    // Deshabilitar si no hay tipo de dirección seleccionado
+    return !this.addressForm.get('AddressTypeID')?.value;
+  }
+
+  resetAddressForm() {
+    // Primero deseleccionar la dirección
+    this.selectedAddress = null;
+    this.addressIdUpdate = 0;
+
+    // Luego resetear el formulario
+    this.addressForm.reset({
+      ContactID: this.contactID,
+      AddressTypeID: '',
+      Street: '',
+      City: '',
+      Zip: '',
+      StateID: '',
+      Country: 'USA',
+      IsPreferredAddress: false
+    });
+
+    this.submittedAddress = false;
+    this.addressForm.enable();
+  }
+
+  // Método para manejar la actualización de datos
+  onSubmitContact() {
+    if (this.contactForm.valid) {
+      this.isLoading = true;
+      this.prospectService.updateProspect(this.contactID, this.contactForm.value).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          this.isEditing = false;
+          this.contactForm.disable();
+          this.getDataForProspect();
+          this.snackBar.open('Data updated successfully', 'Close', { duration: 3000 });
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.snackBar.open('Error updating data', 'Close', { duration: 3000 });
+        }
+      });
+    }
+  }
+
+  loadPreferredAddress() {
+    if (this.addressList && this.addressList.length > 0) {
+      const preferredAddress = this.addressList.find(addr => addr.IsPreferredAddress);
+      if (preferredAddress) {
+        this.preferredAddressZip = preferredAddress.Zip;
+        this.hasPreferredAddress = true;
+        this.doctorZipCode = preferredAddress.Zip;
+      }
+    }
+  }
+
+  getDoctorsByLastName() {
+    if (!this.doctorLastName || this.doctorLastName.length < 3) {
+      this.doctorLastNameIsRequired = true;
+      this.doctorLastNameMessage = 'Last name must be at least 3 characters';
+      return;
+    }
+
+    this.isLoadingDoctor = true;
+    this.doctorService.getDoctorByLastName(this.doctorLastName, this.doctorZipCode)
+      .subscribe({
+        next: (response) => {
+          this.doctorList = response.results;
+          this.isLoadingDoctor = false;
+        },
+        error: (error) => {
+          console.error('Error fetching doctors:', error);
+          this.isLoadingDoctor = false;
+        }
+      });
+  }
+
+  enableEditMode() {
+    this.isEditing = true;
+    this.buttonActive.push('Prospect');
+    // Asegúrate de que el formulario esté habilitado para edición
+    this.contactForm.enable();
+  }
+
+  showSuccessMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'success',
+      title: title,
+      text: message,
+      confirmButtonColor: '#3085d6'
+    });
+  }
+
+  showErrorMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: title,
+      text: message,
+      confirmButtonColor: '#d33'
+    });
+  }
+
+  showWarningMessage(title: string, message: string) {
+    Swal.fire({
+      icon: 'warning',
+      title: title,
+      text: message,
+      confirmButtonColor: '#f8bb86'
+    });
   }
 
 }

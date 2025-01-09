@@ -400,6 +400,7 @@ export class DetailPage implements OnInit {
       this.isLoadingAddress = true;
       const formData = {
         ...this.addressForm.value,
+        ContactID: this.contactID,
         IsPreferredAddress: this.addressList.length === 0 // Primera dirección será la preferida
       };
 
@@ -410,11 +411,11 @@ export class DetailPage implements OnInit {
             this.getAddressByProspect();
             this.resetAddressForm();
             this.isLoadingAddress = false;
-            this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
+            this.snackBar.open('Dirección actualizada exitosamente', 'Cerrar', { duration: 3000 });
           },
           error: () => {
             this.isLoadingAddress = false;
-            this.snackBar.open('Error updating address', 'Close', { duration: 3000 });
+            this.snackBar.open('Error al actualizar la dirección', 'Cerrar', { duration: 3000 });
           }
         });
       } else {
@@ -424,11 +425,11 @@ export class DetailPage implements OnInit {
             this.getAddressByProspect();
             this.resetAddressForm();
             this.isLoadingAddress = false;
-            this.snackBar.open('Address saved successfully', 'Close', { duration: 3000 });
+            this.snackBar.open('Dirección guardada exitosamente', 'Cerrar', { duration: 3000 });
           },
           error: () => {
             this.isLoadingAddress = false;
-            this.snackBar.open('Error saving address', 'Close', { duration: 3000 });
+            this.snackBar.open('Error al guardar la dirección', 'Cerrar', { duration: 3000 });
           }
         });
       }
@@ -726,7 +727,7 @@ export class DetailPage implements OnInit {
       });
       console.log(response)
       if (response.data.Address) {
-        console.log("Esto esta vacioooooooo")
+        console.log("This is emptyyyyyy")
       }
 
     });
@@ -1175,7 +1176,7 @@ export class DetailPage implements OnInit {
       ContactID: this.contactID,
     });
     if (this.enabledHealthTrackerHasData) {
-      console.log('Modo edicion');
+      console.log('Edit mode');
       this.rxService.updateHealthTracker(this.contactID, this.healthTrackerForm.value).subscribe(response => {
         console.log(response);
         console.log(this.healthTrackerForm.value);
@@ -1186,7 +1187,7 @@ export class DetailPage implements OnInit {
         this.healthTrackerForm.disable();
       });
     } else {
-      console.log('Modo creacion');
+      console.log('Create mode');
 
       this.rxService.saveHealthTracker(this.healthTrackerForm.value).subscribe(response => {
         console.log(response);
@@ -1889,12 +1890,10 @@ export class DetailPage implements OnInit {
       City: '',
       Zip: '',
       StateID: '',
-      Country: 'USA',
       IsPreferredAddress: false
     });
 
     this.submittedAddress = false;
-    this.addressForm.enable();
   }
 
   // Método para manejar la actualización de datos
@@ -1981,6 +1980,12 @@ export class DetailPage implements OnInit {
       text: message,
       confirmButtonColor: '#f8bb86'
     });
+  }
+
+  resetDoctorSearch(): void {
+    this.doctorLastName = '';
+    this.doctorZipCode = '';
+    this.doctorList = [];
   }
 
 }

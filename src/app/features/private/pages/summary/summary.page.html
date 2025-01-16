@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row d-flex align-items-center">
       <div class="col-6">
-        <p class="mb-0" style="font-size: 18px; color: #fff">
+        <p class="mb-0" style="font-size: 18px; color: #fff; font-weight: bold;">
           All Contacts Overview
         </p>
         <p class="mb-0" style="color: #fff; font-size: 14px">
@@ -36,9 +36,9 @@
                 "
               >
                 <div class="col">
-                  <span> Total </span>
+                  <span> Total No.  </span>
                 </div>
-                <div class="col"><span>No. of contacts</span></div>
+                <div class="col"><span>of contacts</span></div>
               </div>
             </div>
           </div>
@@ -54,8 +54,8 @@
     <div class="col">
       <div class="card custom-card">
         <div class="pb-0">
-          <span class="mb-0">Search contacts</span>
-          <p class="mb-0">Find contacts by name, phone number, email, or any other field.</p>
+          <span class="mb-0" style="font-size: 18px; color: #0F2E4D; font-weight: bold;">Search contacts</span>
+          <p class="mb-0" style="font-size: 14px; color: #36495F; font-weight: 500;">Find contacts by name, phone number, email, or any other field.</p>
         </div>
         <div class="row">
           <div class="col p-2">
@@ -64,7 +64,7 @@
                 <div *ngFor="let field of searchFields.controls; let i=index" [formGroupName]="i">
                   <div class="row mb-3">
                     <div class="col-5">
-                      <label>Search field</label>
+                      <label style="font-size: 16px; color: #0F2E4D; font-weight: bold;">Search field</label>
                       <select formControlName="column" (change)="onColumnChange(i)" class="form-select">
                         <option value="" disabled>Select a field</option>
                         <option *ngFor="let column of availableColumns[i]" [value]="column">
@@ -73,7 +73,7 @@
                       </select>
                     </div>
                     <div class="col-5">
-                      <label>Search term</label>
+                      <label style="font-size: 16px; color: #0F2E4D; font-weight: bold;">Search term</label>
                       <input type="text" class="form-control" formControlName="searchTerm" />
                     </div>
                     <div class="col-2 d-flex align-items-end">
@@ -85,15 +85,14 @@
                 </div>
               </div>
               <div class="d-flex gap-2">
-
-                <a class="btn btn-link text-primary p-0" (click)="addSearchField()">
+                <a class="btn btn-link text-primary p-0 d-flex align-items-center" (click)="addSearchField()">
                   + Add search field
                 </a>
-                <button type="button" class="btn btn-link text-secondary p-0" (click)="resetFilters()">
+                <button type="button" class="btn btn-link text-secondary p-0 d-flex align-items-center" (click)="resetFilters()">
                   Reset filters
                 </button>
-                <button type="submit" class="btn btn-primary  ">
-                  <i class="bi bi-search"></i> Buscar
+                <button type="submit" class="btn btn-primary d-flex align-items-center">
+                  <i class="bi bi-search"></i> Search
                 </button>
               </div>
             </form>
@@ -106,59 +105,9 @@
 
   <!-- Contact List Overview -->
   <div class="card custom-card">
-    <!-- <div class="card-header pb-0">
-      <div class="">
-        <h4 class="card-title mb-0">Contact List Overview</h4>
-      </div>
-      <p class="fs-12 text-muted mb-0">
-        A detailed list of all contacts in the system.
-      </p>
-    </div> -->
+
     <div class="card-body mt-1 p-0">
-      <!-- <div class="row d-flex justify-content-between">
-        <div class="col-sm-6 col-lg-4"></div> -->
-      <!-- <div class="col-sm-4 col-lg-2 dropdown">
-        <div
-          class="custom-buttom dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          data-bs-auto-close="outside"
-        >
-          User defined field
-        </div>
-        <div class="dropdown-menu p-4">
-          <div class="form-check" *ngFor="let fieldName of userDefineFields">
-            <input
-              type="radio"
-              class="form-check-input"
-              [id]="fieldName.UDV_Name + 'Checkbox'"
-              [(ngModel)]="selectedField"
-              [value]="fieldName.UDV_Name"
-              (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
-            />
-            <label
-              class="form-check-label"
-              [for]="fieldName.UDV_Name + 'Checkbox'"
-              >{{ fieldName.UDV_Name }}</label
-            >
-          </div>
 
-          <div class="dropdown-divider"></div>
-
-          <div class="row">
-            <div class="col-12">
-              <button
-                class="btn btn-primary w-100"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModalNewViews"
-              >
-                Manage Views
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- </div> -->
       <div class="table-responsive">
         <table class="table align-middle table-hover">
           <thead
@@ -168,13 +117,43 @@
               font: normal normal medium 14px/19px Roboto;
             "
           >
-            <th *ngIf="selectedView === 'Default'">First Name</th>
-            <th *ngIf="selectedView === 'Default'">Last Name</th>
-            <th *ngIf="selectedView === 'Default'">Email</th>
-            <th *ngIf="selectedView === 'Default'">Phone</th>
+            <th *ngIf="selectedView === 'Default'" (click)="sortColumn('FirstName')" style="cursor: pointer">
+              First Name
+              <i class="bi" [ngClass]="{
+                'bi-sort-alpha-down': sortField !== 'FirstName' || sortDirection === 'asc',
+                'bi-sort-alpha-up': sortField === 'FirstName' && sortDirection === 'desc'
+              }"></i>
+            </th>
+            <th *ngIf="selectedView === 'Default'" (click)="sortColumn('LastName')" style="cursor: pointer">
+              Last Name
+              <i class="bi" [ngClass]="{
+                'bi-sort-alpha-down': sortField !== 'LastName' || sortDirection === 'asc',
+                'bi-sort-alpha-up': sortField === 'LastName' && sortDirection === 'desc'
+              }"></i>
+            </th>
+            <th *ngIf="selectedView === 'Default'" (click)="sortColumn('EmailAddressValue')" style="cursor: pointer">
+              Email
+              <i class="bi" [ngClass]="{
+                'bi-sort-alpha-down': sortField !== 'EmailAddressValue' || sortDirection === 'asc',
+                'bi-sort-alpha-up': sortField === 'EmailAddressValue' && sortDirection === 'desc'
+              }"></i>
+            </th>
+            <th *ngIf="selectedView === 'Default'" (click)="sortColumn('PhoneNumber')" style="cursor: pointer">
+              Phone
+              <i class="bi" [ngClass]="{
+                'bi-sort-alpha-down': sortField !== 'PhoneNumber' || sortDirection === 'asc',
+                'bi-sort-alpha-up': sortField === 'PhoneNumber' && sortDirection === 'desc'
+              }"></i>
+            </th>
 
             <ng-container *ngIf="selectedView !== 'Default'">
-              <th *ngFor="let field of dynamicFields">{{ field }}</th>
+              <th *ngFor="let field of dynamicFields" (click)="sortColumn(field)" style="cursor: pointer">
+                {{ field }}
+                <i  class="bi sort-icon" [ngClass]="{
+                  'bi-sort-alpha-down': sortField !== field || sortDirection === 'asc',
+                  'bi-sort-alpha-up': sortField === field && sortDirection === 'desc'
+                }" style="background: transparent;"></i>
+              </th>
             </ng-container>
             <th
               class="dropdown"
@@ -191,23 +170,28 @@
               Columns views
             </th>
             <div class="dropdown-menu p-4">
-              <div
-                class="form-check"
-                *ngFor="let fieldName of userDefineFields"
-              >
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  [id]="fieldName.UDV_Name + 'Checkbox'"
-                  [(ngModel)]="selectedField"
-                  [value]="fieldName.UDV_Name"
-                  (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
-                />
-                <label
-                  class="form-check-label"
-                  [for]="fieldName.UDV_Name + 'Checkbox'"
-                  >{{ fieldName.UDV_Name }}</label
+              <div class="form-check d-flex justify-content-between align-items-center" *ngFor="let fieldName of userDefineFields">
+                <div>
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    [id]="fieldName.UDV_Name + 'Checkbox'"
+                    [(ngModel)]="selectedField"
+                    [value]="fieldName.UDV_Name"
+                    (change)="onViewChange(fieldName.UDV_Name, fieldName.UDV_Name_ID)"
+                  />
+                  <label
+                    class="form-check-label"
+                    [for]="fieldName.UDV_Name + 'Checkbox'"
+                  >{{ fieldName.UDV_Name }}</label>
+                </div>
+                <button
+                  *ngIf="fieldName.UDV_Name !== 'Default'"
+                  class="btn btn-link text-danger p-0"
+                  (click)="deleteUDV(fieldName.UDV_Name_ID, fieldName.UDV_Name)"
                 >
+                  <i class="bi bi-trash"></i>
+                </button>
               </div>
 
               <div class="dropdown-divider"></div>

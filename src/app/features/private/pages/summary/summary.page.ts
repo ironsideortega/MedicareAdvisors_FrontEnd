@@ -6,6 +6,7 @@ import { IsChangeTableService } from "../../services/ejecutor.service";
 import { MatSnackBar, } from "@angular/material/snack-bar";
 import { SearchService } from "src/app/core/services/search/search.service";
 import { UserDefineService } from "src/app/core/services/userDefine/userDefine.service";
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -50,6 +51,8 @@ export class SummaryPage implements OnInit {
   dynamicForm!: FormGroup;
   udvName:string = '';
   customFields: any[] = [];
+  sortField: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 Math: any;
@@ -106,9 +109,26 @@ Math: any;
   }
 
   getParams(): void {
-    this.searchService.getSearchParams().subscribe(response => {
-      this.columns = response.data.map((element: any) => element.COLUMN_NAME);
-      this.updateAvailableColumns();
+    this.searchService.getSearchParams().subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.columns = response.data.map((element: any) => element.COLUMN_NAME);
+          this.updateAvailableColumns();
+        } else {
+          console.error('La respuesta no tiene el formato esperado:', response);
+          this.columns = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener los parámetros:', error);
+        this.columns = [];
+        // Opcional: Mostrar mensaje de error al usuario
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron cargar los parámetros de búsqueda'
+        });
+      }
     });
   }
 
@@ -132,29 +152,50 @@ Math: any;
   }
 
   saveView() {
-    console.log(this.getSelectedValues());
     const profileID = parseInt(localStorage.getItem('userId')!);
     const udvName = this.udvName;
     const selectedColumnIDs = this.getSelectedValues();
 
     if(selectedColumnIDs.length === 0) {
-      console.log('No se han seleccionado columnas');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please select at least one column for the view'
+      });
       return;
     }
 
     if(udvName === ''){
-      console.log('No se ha ingresado nombre de vista');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please enter a name for the view'
+      });
       return;
     }
 
-    this.userDefineService.createUserDefinedView(profileID, udvName, selectedColumnIDs).subscribe(response => {
-      console.log(response);
-      this.getAllData(1);
-      this.udvName = '';
-      this.dynamicForm.reset();
-      this.selectedField = 'Default';
-      this.getUserDefineField();
-      this.getAllFields();
+    this.userDefineService.createUserDefinedView(profileID, udvName, selectedColumnIDs).subscribe({
+      next: (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'The view has been created successfully'
+        });
+        this.getAllData(1);
+        this.udvName = '';
+        this.dynamicForm.reset();
+        this.selectedField = 'Default';
+        this.getUserDefineField();
+        this.getAllFields();
+        this.closeModalViews();
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'There was an error creating the view. Please try again.'
+        });
+      }
     });
   }
 
@@ -261,14 +302,34 @@ Math: any;
     const userId = localStorage.getItem('userId');
     if (userId !== null) {
       const profileID = parseInt(userId);
-      this.userDefineService.getUserDefineByProfile(profileID).subscribe(response => {
-        this.userDefineFieldsList = response.data;
-        this.userDefineFields = [{ UDV_Name: 'Default' }, ...response.data];
+      this.userDefineService.getUserDefineByProfile(profileID).subscribe({
+        next: (response) => {
+          if (response && response.data) {
+            this.userDefineFieldsList = response.data;
+            this.userDefineFields = [{ UDV_Name: 'Default' }, ...response.data];
+          } else {
+            console.error('La respuesta no tiene el formato esperado:', response);
+            this.initializeDefaultFields();
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener los campos definidos por el usuario:', error);
+          this.initializeDefaultFields();
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudieron cargar las vistas personalizadas'
+          });
+        }
       });
     } else {
-      // Inicializa solo con "Default" si no hay userId
-      this.userDefineFields = [{ UDV_Name: 'Default' }];
+      this.initializeDefaultFields();
     }
+  }
+
+  private initializeDefaultFields() {
+    this.userDefineFieldsList = [];
+    this.userDefineFields = [{ UDV_Name: 'Default' }];
   }
 
   getFieldNames(culumnId: number) {
@@ -285,19 +346,42 @@ Math: any;
   }
 
 
-  onViewChange(view: string,  idView: number) {
+  onViewChange(view: string, idView: number) {
     this.selectedView = view;
-
-    console.log('Selected View:', this.selectedView);
+    this.selectedField = view;
 
     if (this.selectedView === 'Default') {
-      // Handle the default view where only specific fields are shown
+      // Limpiar campos dinámicos cuando se selecciona la vista Default
+      this.dynamicFields = [];
       this.dynamicFields.forEach(field => {
         this.fieldVisibility[field] = false;
       });
     } else {
-      this.getFieldNames(idView)
+      // Obtener las columnas para la vista seleccionada
+      this.userDefineService.getUserDefineColumns(idView).subscribe({
+        next: (response) => {
+          this.dynamicFields = response.data.map((field: { COLUMN_NAME: any; }) => field.COLUMN_NAME);
+          console.log('Dynamic Fields:', this.dynamicFields);
+
+          // Actualizar la visibilidad de los campos
+          this.dynamicFields.forEach(field => {
+            this.fieldVisibility[field] = true;
+          });
+        },
+        error: (error) => {
+          console.error('Error loading columns:', error);
+          // Opcional: Mostrar mensaje de error al usuario
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error loading view columns. Please try again.'
+          });
+        }
+      });
     }
+
+    // Recargar los datos de la tabla
+    this.getAllData(1);
   }
 
   formatDatesInObject(obj: any): any {
@@ -336,13 +420,43 @@ Math: any;
     $('#exampleModalNewViews').modal('hide');
   }
 
-  deleteUDV(id: number) {
-    if(confirm('¿Está seguro que desea eliminar este campo?')) {
-      this.userDefineService.deleteUDV(id).subscribe(response => {
-        this.getAllFields();
-        this.getUserDefineField();
-      });
-    }
+  deleteUDV(id: number, viewName: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to delete the view "${viewName}"`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userDefineService.deleteUDV(id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Deleted!',
+              'The view has been deleted successfully.',
+              'success'
+            );
+            this.selectedField = 'Default';
+            this.selectedView = 'Default';
+            this.dynamicFields.forEach(field => {
+              this.fieldVisibility[field] = false;
+            });
+            this.getUserDefineField();
+            this.getAllData(1);
+          },
+          error: () => {
+            Swal.fire(
+              'Error!',
+              'There was an error deleting the view.',
+              'error'
+            );
+          }
+        });
+      }
+    });
   }
 
   resetFilters(): void {
@@ -350,6 +464,51 @@ Math: any;
     this.searchFields.clear();
     this.addSearchField();
     this.getAllData(1);
+  }
+
+  sortColumn(field: string) {
+    // Si el campo es el mismo, cambiamos la dirección
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Si es un nuevo campo, establecemos el campo y dirección por defecto
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+
+    // Ordenar el datasource
+    this.datasource.sort((a, b) => {
+      const valueA = this.getFieldValue(a, field);
+      const valueB = this.getFieldValue(b, field);
+
+      if (valueA === valueB) return 0;
+
+      const comparison = valueA < valueB ? -1 : 1;
+      return this.sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }
+
+  getFieldValue(item: any, field: string): any {
+    // Manejar valores nulos o indefinidos
+    const value = item[field];
+    if (value === null || value === undefined) return '';
+
+    // Si es una fecha, convertirla a timestamp para comparación
+    if (this.isValidDate(value)) {
+      return new Date(value).getTime();
+    }
+
+    // Si es un número como string, convertirlo a número
+    if (!isNaN(value) && !isNaN(parseFloat(value))) {
+      return parseFloat(value);
+    }
+
+    // Para strings, convertir a minúsculas para comparación insensible a mayúsculas
+    if (typeof value === 'string') {
+      return value.toLowerCase();
+    }
+
+    return value;
   }
 
 

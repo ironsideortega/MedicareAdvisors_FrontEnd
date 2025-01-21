@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild} from "@angular/core";
 import { MatPaginator } from '@angular/material/paginator';
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ProspectService } from "src/app/core/services/prospect/prospect.service";
-import { IsChangeTableService } from "../../services/ejecutor.service";
-import { MatSnackBar, } from "@angular/material/snack-bar";
 import { SearchService } from "src/app/core/services/search/search.service";
 import { UserDefineService } from "src/app/core/services/userDefine/userDefine.service";
 import Swal from 'sweetalert2';

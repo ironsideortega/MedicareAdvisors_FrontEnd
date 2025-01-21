@@ -174,20 +174,20 @@ export class DetailPage implements OnInit {
     this.contactForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      midleName: ['', Validators.required],
-      gender: ['', Validators.required],
-      suffix: ['', Validators.required],
-      title: ['', Validators.required],
-      dob: ['', Validators.required],
-      spouse: ['', Validators.required],
-      maritalStatus: ['', Validators.required],
-      preferredLanguage: ['', Validators.required],
-      specialDesignation: ['', Validators.required],
-      ocupation: ['', Validators.required],
-      residentStatus: ['', Validators.required],
-      status: ['', Validators.required],
-      source: ['', Validators.required],
-      referredBy: ['', Validators.required],
+      midleName: [''],
+      gender: [''],
+      suffix: [''],
+      title: [''],
+      dob: [''],
+      spouse: [''],
+      maritalStatus: [''],
+      preferredLanguage: [''],
+      specialDesignation: [''],
+      ocupation: [''],
+      residentStatus: [''],
+      status: [''],
+      source: [''],
+      referredBy: [''],
       email: ['',],
       phone: ['',],
       address: ['',],
@@ -490,10 +490,8 @@ export class DetailPage implements OnInit {
   }
 
   closeModalPhone() {
+    this.resetPhoneModal();
     $('#exampleModalPhone').modal('hide');
-    this.phoneForm.reset();
-    this.submittedPhone = false;
-    this.createFormPhone();
   }
 
   cancelEditPhone() {
@@ -501,6 +499,7 @@ export class DetailPage implements OnInit {
   }
 
   closeModalEmail() {
+    this.resetEmailModal();
     this.emailForm.reset();
     this.submittedEmail = false;
     this.emailIdUpdate = 0;
@@ -509,6 +508,7 @@ export class DetailPage implements OnInit {
   }
 
   closeModalAddress() {
+    this.resetAddressModal();
     this.addressForm.reset();
     this.submittedAddress = false;
     this.addressIdUpdate = 0;
@@ -779,29 +779,34 @@ export class DetailPage implements OnInit {
       console.log(formData);
       console.log(this.contactID);
       Swal.fire({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
+        title: "¿Guardar cambios?",
+        text: "La información del prospecto será actualizada. Esta acción no se puede deshacer.",
+        icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`
+        confirmButtonText: "Sí, guardar",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#6c757d"
       }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           this.prospectService.updateProspect(formData, this.contactID).subscribe(response => {
             this.isLoading = false;
             this.buttonUpdateContactEnabled = false;
             this.buttonUpdateForContact = 'Update';
-
-
             this.contactForm.disable();
             this.getDataForProspect();
-            Swal.fire("Saved!", "", "success");
+            Swal.fire({
+              title: "¡Guardado!",
+              text: "Los cambios se han guardado exitosamente",
+              icon: "success",
+              timer: 2000
+            });
           });
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
+        } else {
+          // Resetear el estado de carga si el usuario cancela
+          this.isLoading = false;
         }
       });
-
     }
   }
 
@@ -1986,6 +1991,27 @@ export class DetailPage implements OnInit {
     this.doctorLastName = '';
     this.doctorZipCode = '';
     this.doctorList = [];
+  }
+
+  resetEmailModal() {
+    this.emailForm.reset();
+    this.emailIdUpdate = 0;
+    this.selectedEmail = null;
+    this.isLoadingEmail = false;
+  }
+
+  resetPhoneModal() {
+    this.phoneForm.reset();
+    this.phoneIdUpdate = 0;
+    this.selectedPhone = null;
+    this.isLoadingPhone = false;
+  }
+
+  resetAddressModal() {
+    this.addressForm.reset();
+    this.addressIdUpdate = 0;
+    this.selectedAddress = null;
+    this.isLoadingAddress = false;
   }
 
 }

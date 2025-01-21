@@ -77,7 +77,7 @@ export class DashboardPage implements OnInit {
     plotOptions: {
       bar: {
         borderRadius: 8,
-        columnWidth: "47px"
+        columnWidth: "px"
       }
     }
   };
@@ -115,58 +115,53 @@ export class DashboardPage implements OnInit {
       chart: {
         width: '100%',
         height: 350,
-        type: 'donut',
+        type: 'donut'
       },
       colors: ['#147AD6', '#79D2DE', '#EC6666'],
       dataLabels: {
-        enabled: false,
-      },
-      tooltip: {
         enabled: true,
+        style: {
+          colors: ['#000000'],
+          fontWeight: 'bold'
+        },
+        formatter: function(val: any, opts: any) {
+          return opts.w.config.series[opts.seriesIndex] + '%';
+        }
       },
-      labels: [],
       plotOptions: {
         pie: {
           donut: {
             size: '80%',
-            distributed: true,
-            borderRadius: 8,
             labels: {
               show: true,
               name: {
-                show: true
+                show: true,
+                color: '#000000'
               },
               value: {
-                show: false
+                show: true,
+                color: '#000000',
+                formatter: function(val: number) {
+                  return val.toString() + '%';
+                }
               },
               total: {
                 show: true,
-                label: 'Gender',
-                color: '#061f3a'
+                color: '#000000',
+                label: 'Total'
               }
             }
-          },
-        },
+          }
+        }
       },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: '100%',
-            },
-            legend: {
-              position: 'bottom',
-              show: true,
-            },
-          },
-        },
-      ],
       legend: {
         position: 'right',
         offsetY: 0,
         height: 230,
-      },
+        labels: {
+          colors: '#000000'
+        }
+      }
     };
   }
 
@@ -272,7 +267,8 @@ export class DashboardPage implements OnInit {
         categories: labelBar,
         labels: {
           style: {
-            fontSize: '8px'
+            fontSize: '12px',
+            fontWeight: 'bold'
           },
           rotate: -45
         }
@@ -288,7 +284,7 @@ export class DashboardPage implements OnInit {
         },
         style: {
           fontSize: '14px',
-          fontWeight: 'bold',
+          fontWeight: 'normal',
           colors: ['#000000']
         },
         offsetY: -20,
@@ -329,8 +325,8 @@ export class DashboardPage implements OnInit {
 
         response.data.forEach((e) => {
           let genderLabel = e.GenderValue;
-          if (genderLabel === 'F') genderLabel = 'Feminine';
-          else if (genderLabel === 'M') genderLabel = 'Masculine';
+          if (genderLabel === 'F') genderLabel = 'Female';
+          else if (genderLabel === 'M') genderLabel = 'Male';
 
           this.labelGender.push(genderLabel);
           this.valueGender.push(e.CNT);

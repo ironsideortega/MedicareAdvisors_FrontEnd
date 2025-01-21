@@ -2,7 +2,7 @@
   width: 100%;
   height: 200px;
   /* UI Properties */
-  background: transparent linear-gradient(97deg, #246FC2 0%, #6B4B8A 100%) 0% 0%
+  background: transparent linear-gradient(97deg, #114d90 0%, #853962 100%) 0% 0%
     no-repeat padding-box;
   display: flex;
   flex-flow: row nowrap;
@@ -546,4 +546,51 @@ td {
 
 input.ng-invalid.ng-touched {
   border-color: red;
+}
+
+.nav-pills {
+  background: #ffffff;
+  border-radius: 6px 6px 0 0;
+  padding: 10px 15px 0;
+  margin: 0;
+  border-bottom: 0;
+
+  .nav-item {
+    margin-bottom: 0;
+
+    .nav-link {
+      color: #192a56;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 6px 6px 0 0;
+      margin-right: 2px;
+      background: transparent;
+
+      &.active {
+        background: #ffffff;
+        color: #192a56;
+        min-width: 122px;
+        text-align: center;
+        border-bottom: 2px solid #e5283c; // Añadir línea roja inferior para el tab activo
+      }
+
+      &:not(.active) {
+        color: #36495f;
+      }
+    }
+  }
+}
+
+.card {
+  border-radius: 0;
+  margin-top: 0;
+  background: #ffffff;
+}
+
+// Contenedor para los tabs y el contenido
+.tabs-container {
+  background: #ffffff;
+  border-radius: 6px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
